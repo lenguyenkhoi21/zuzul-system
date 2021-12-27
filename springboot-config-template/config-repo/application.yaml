@@ -1,0 +1,16 @@
+server:
+  port: 8077
+
+spring:
+  application:
+    name: zuzul-config-server
+  profiles:
+    active: git
+  cloud:
+    config:
+      server:
+        git:
+          uri: <GIT REPO>
+          private-key: <YOUR PRIVATE SSH KEY, NOTE - ONLY RSA KEY, NOT OPEN SSH"
+          passphrase: <YOUR PASSPHRASE SSH>
+          ignore-local-ssh-settings: true

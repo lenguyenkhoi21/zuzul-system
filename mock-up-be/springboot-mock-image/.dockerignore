@@ -1,0 +1,19 @@
+# Config
+.gradle
+.idea
+bin
+build
+
+# Project
+HELP.md
+
+# Docker
+.dockerignore
+Dockerfile
+
+#Git
+.gitignore
+
+#token
+tokens
+credentials

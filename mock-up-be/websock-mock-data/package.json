@@ -1,0 +1,13 @@
+{
+  "name": "websock-mock-data",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "express": "^4.17.1",
+    "socket.io": "^4.4.0"
+  }
+}

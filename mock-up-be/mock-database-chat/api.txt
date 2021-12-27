@@ -1,0 +1,3 @@
+/initStatusBox [GET] : Run once, init the status dummy
+/box-status/:userid [GET] : Get the status of the box ( user-01 -> user-03 -> user-04, etc... )
+/message [POST]: Insert message to Database and Synchronization the box chat

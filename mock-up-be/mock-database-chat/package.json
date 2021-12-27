@@ -1,0 +1,18 @@
+{
+  "name": "mock-database-chat",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongodb": "^4.2.1",
+    "mongoose": "^6.0.14",
+    "uuid": "^8.3.2"
+  },
+  "scripts": {
+    "start": "node ./index2.js",
+    "serve": "node ./index3.js"
+  }
+}

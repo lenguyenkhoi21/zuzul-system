@@ -1,0 +1,61 @@
+/* ./styles/globals.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+
+  select {
+    outline: none;
+    scroll-behavior: smooth;
+    background-color: rgba(249, 249, 249, 1);
+  }
+
+  @font-face {
+    font-family: 'Poppins';
+    src: url("/public/font/poppins/Poppins-Bold.ttf");
+  }
+
+  @font-face {
+    font-family: 'Poppins';
+    src: url("/public/font/poppins/Poppins-SemiBold.ttf");
+  }
+
+
+  @font-face {
+    font-family: 'Poppins';
+    src: url("/public/font/poppins/Poppins-Medium.ttf");
+  }
+
+  @font-face {
+    font-family: 'Solway';
+    src: url("/public/font/Solway/Solway-Medium.ttf");
+  }
+}
+
+@layer utilities {
+
+  /*Navigation Bar*/
+  .px-330 {
+    padding-left: 330px;
+    padding-right: 330px;
+  }
+
+  .font-poppins {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+  }
+
+  .font-sloway {
+    font-family: Sloway;
+  }
+
+  .img-ProductShort {
+    border-radius: 12px;
+  }
+}
+
+
+

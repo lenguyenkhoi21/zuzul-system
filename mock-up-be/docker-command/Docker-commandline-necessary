@@ -1,0 +1,1 @@
+docker run --name Mongodb-mock-chat --rm -v 'Your path:/data/db' -p 27018:27017 -d mongo:latest

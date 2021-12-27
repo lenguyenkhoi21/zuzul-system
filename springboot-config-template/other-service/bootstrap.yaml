@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: <NAME SERVICE, MUST BE SAME WITH NAME .YAML IN CONFIG REPO>
+  profiles:
+    active: <Default - dev,  [qa, prod, test]>
+  cloud:
+    config:
+      uri: <URL CONFIG SERVER TO FETCH CONFIG>
+      label: <NAME OF YOUR BRANCH IN CONFIG REPO>

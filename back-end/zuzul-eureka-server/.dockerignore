@@ -1,0 +1,17 @@
+# Config
+.gradle
+.idea
+bin
+build
+
+# Project
+.classpath
+.project
+HELP.md
+
+# Docker
+.dockerignore
+Dockerfile
+
+#Git
+.gitignore

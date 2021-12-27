@@ -1,0 +1,18 @@
+//chat
+
+send-message: client - emit / SERVER - ON
+
+synchronization: client - on / server - emit
+
+read-message: client - emit / SERVER - ON
+
+error: client - on / server - emit
+
+receive-message: client on / server - emit
+
+fetch-message-of-a-room: client on / server - emit
+
+// cart
+
+synchronization-cart: client - on / server - emit
+
