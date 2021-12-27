@@ -1,0 +1,9 @@
+.vscode
+.idea
+
+# Data persit of container
+data/**
+
+# Config for each teamate
+config/**
+/Docker-compose.yaml
