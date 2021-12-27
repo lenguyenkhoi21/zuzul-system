@@ -9,7 +9,7 @@ services:
       - '9200:9200'
       - '9300:9300'
     volumes:
-      - E:\Final Project\source\data\elasticsearch-monitor:/usr/share/elasticsearch/data
+      - <Your folder>:/usr/share/elasticsearch/data
     environment:
       - node.name=elasticsearch
       - discovery.type=single-node
@@ -28,8 +28,8 @@ services:
     ports:
       - '5000:5000'
     volumes:
-      - E:\Final Project\source\config\logstash-server\pipeline:/usr/share/logstash/pipeline
-      - E:\Final Project\source\config\logstash-server\conf\logstash.yaml:/usr/share/logstash/config/logstash.yml
+      - <Your folder>:/usr/share/logstash/pipeline
+      - <Your folder>:/usr/share/logstash/config/logstash.yml
     healthcheck:
       test: [ "CMD-SHELL", "curl --silent --fail localhost:9600 || exit 1" ]
       interval: 30s
@@ -75,7 +75,7 @@ services:
       - POSTGRESQL_USERNAME=bn_keycloak
       - POSTGRESQL_DATABASE=bitnami_keycloak
     volumes:
-      - E:\Final Project\source\data\postgresql:/bitnami/postgresql
+      - <Your folder>:/bitnami/postgresql
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
