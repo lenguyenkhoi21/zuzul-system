@@ -111,8 +111,8 @@ For Web user:
 * In the folder `./component/` contains the `Component` using `in pages`
   * At `top folder`, the component that using in `_app.js`
   * The file in `./common`: component that using in `at least 2 page`
-  * In the folder `./<page_name>`: component that using in `/<page>`
 * In the folder `./pages`, where the NextJS `render` pages and `cache CDN` for us, read more at: [Next.JS docs](https://nextjs.org/docs/getting-started)
+  * In the folder `./<page_name>`: component that using in `/<page>`
 * In the folder `./public` is where we put the `public resource` like font, logo, image
 * In the folder `./styles` contain `globals.css` for styling `all app`
 * In the folder `./reducer`, the place we put the `Context` and `its logic`
