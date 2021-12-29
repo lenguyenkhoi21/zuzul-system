@@ -81,7 +81,7 @@ This is the heart of the system, so I give `preference` to port 8080. `Without k
   * `Logstash`: Process lo log and save it in `Elasticsearch`
   * `Kibana`: Querry, Visualize
 * `Zipkin`: Tracing in microservice
-* `Config Server`: When a service `start`, it need to `get config` from config server
+* `Config Server`: When a service `start`, it need to `get config` from config server. [Repo here](https://github.com/lenguyenkhoi21/Zuzul-Config-System-)
 * `Eureka Server`: `Management`, `receive` heart beats and `send` the status for every service which `still alive`
 
 ![image](image/architechture.png)
