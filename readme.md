@@ -84,7 +84,7 @@ This is the heart of the system, so I give `preference` to port 8080. `Without k
 * `Config Server`: When a service `start`, it need to `get config` from config server
 * `Eureka Server`: `Management`, `receive` heart beats and `send` the status for every service which `still alive`
 
-![image](https://drive.google.com/uc?export=view&id=15R60jn8143rAf6SntJnSumIf_cK2BBpK)
+![image](image/architechture.png)
 
 ---
 
@@ -156,10 +156,10 @@ For Web user:
     export default ComponentName
     ```
 3. Global CSS:
-* In` @layer base`, override the default tailwind css
+* In `@layer base`, override the default tailwind css
 * Put `font` in folder `public/font/`
 * Each `font-weight` import from `public/font/` 
-* In` @layer utilities`, A style like padding, margin that using in system
+* In `@layer utilities`, A style like padding, margin that using in system
 * `Some style not updated in runtime`
 
 For Admin-Portal: will update soon
@@ -202,62 +202,118 @@ Service
                 └───zuzul
                     └───zuzulauthenticationservice
     ```
-   * Follow rule folder structure of [spring boot project](https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.structuring-your-code): 
-   * `api` package is the logic for routes
-     1. `Each route `is base on a package. EX: `/zuzul-authentication-service/v1/api/login` to  `api.v1.login`. here is example: 
-        ```
-        └───v1
-            ├───login
-            │       LoginControllers.java
-            │       LoginPOSTResponse.java
-            │       LoginServices.java
-            │
-            ├───register
-            │       RegisterControllers.java
-            │       RegisterPOSTResponse.java
-            │       RegisterServices.java
-            │
-            ├───service_info
-            │       ServiceInfo.java
-            │       ServiceInfoControllers.java
-            │
-            └───valid_token
-                    ValidTokenControllers.java
-        ```
-     2. The top at level is `@RequestMapping(Constant.rootPath)`
-     3. Method is` @PostMapping("/routes")`, etc... for this route
-     4. We also put the `@service` for handle logic of this route
-     5. If these routes have many method like `POST`, `PATCH`, `PUT`, `DELETE`, name the response and the payload of this in the package
-     6. `Don’t put logic in Controller Class, just in Service Class`
-   * A `common package` is the config app, model used in `2 or more routes`, config app, constant, etc...
-     ```
-     ├───adminclient
-     │       AdminClient.java
-     │       Keycloak.java
-     │       TokenFetchSchedule.java
-     │
-     ├───model
-     │   ├───api
-     │   │   └───v1
-     │   │           POSTUserPayload.java
-     │   │
-     │   └───keycloak
-     │           CompositeRole.java
-     │           Credential.java
-     │           Token.java
-     │           UserInfo.java
-     │           UserInfoAccess.java
-     │           UserKeyCloakPayload.java
-     │
-     ├───ultis
-     │       Constant.java
-     │
-     └───usercontext
-     UserContext.java
-     UserContextFilter.java
+* Follow rule folder structure of [spring boot project](https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.structuring-your-code): 
+* `api` package is the logic for routes
+  * `Each route `is base on a package. EX: `/zuzul-authentication-service/v1/api/login` to  `api.v1.login`. here is example:
+   ```
+   ├───api
+   │   └───v1
+   │       ├───login
+   │       │       LoginControllers.java      
+   │       │       LoginPOSTResponse.java     
+   │       │       LoginServices.java
+   │       │       
+   │       ├───register
+   │       │       RegisterControllers.java   
+   │       │       RegisterPOSTResponse.java  
+   │       │       RegisterServices.java      
+   │       │       
+   │       ├───service_info
+   │       │       ServiceInfo.java
+   │       │       ServiceInfoControllers.java
+   │       │       
+   │       └───valid_token
+   │               ValidTokenControllers.java
+   ```
+  * The top at level is `@RequestMapping(Constant.rootPath)`
+  * Method is` @PostMapping("/routes")`, etc... for this route
+  * We also put the `@service` for handle logic of this route
+  * If these routes have many method like `POST`, `PATCH`, `PUT`, `DELETE`, name the response and the payload of this in the package
+  * `Don’t put logic in Controller Class, just in Service Class`
 
-       ```
-     1. `@Component` is the bean that using in more services
+* A `common package` is the config app, model used in `2 or more routes`, config app, constant, etc...
+  ```
+  ├───adminclient
+  │       AdminClient.java
+  │       Keycloak.java
+  │       TokenFetchSchedule.java
+  │
+  ├───model
+  │   ├───api
+  │   │   └───v1
+  │   │           POSTUserPayload.java
+  │   │
+  │   └───keycloak
+  │           CompositeRole.java
+  │           Credential.java
+  │           Token.java
+  │           UserInfo.java
+  │           UserInfoAccess.java
+  │           UserKeyCloakPayload.java
+  │
+  ├───ultis
+  │       Constant.java
+  │
+  └───usercontext
+  UserContext.java
+  UserContextFilter.java
+
+    ```
+  * `@Component` is the bean that using in more services
+
+2. `Lombok` rule
+* `@RequiredArgsConstructor` for make code clean. 
+* The filed inject `must` be final: `private final LoginServices services;`
+* `No` using new keyword for model, pojo,... `just lombok`. EX: 
+  ```
+    LoginPOSTResponse
+      .builder()
+      .userID(userInfo.getId())
+      .access_token(token.getAccess_token())
+      .role(role.get())
+      .build();
+  ```
+* POJO, Model, DTO,... `must follow`  based on template
+  ```
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public class LoginPOSTResponse {
+        private String userID;
+        private String access_token;
+        private String role;
+    }
+  ```
+3. Call API between services
+* `Must` using bean `RestTemplate` created with `@LoadBalanced`, `don’t` create new: 
+  ```
+    @Bean
+    @LoadBalanced
+    public RestTemplate getRestTemplate(){
+      return new RestTemplate();
+    }
+  ```
+* `Must` add `cir-breakpoint` top to `protect` the call
+  ```
+    @CircuitBreaker(name = "services-b", fallbackMethod = "bullFallbackServiceB")
+    @RateLimiter(name = "services-b", fallbackMethod = "bullFallbackServiceB")
+    @Retry(name = "retryServices-b", fallbackMethod = "bullFallbackServiceB")
+    @Bulkhead(name = "bulkheadServices-b", type= Bulkhead.Type.THREADPOOL, fallbackMethod = "bullFallbackServiceB")
+  ```
+* If two services are in `different zones`, call throughout `gateway`. If in a zone, call it `directly`
+4. Logger
+* Create a logger like this: ``` private final Logger logger = LoggerFactory.getLogger(LoginServices.class); ```
+* Logger `level info`, when request come into services with `CorrelationID`. EX:
+  ```
+    logger.info("CorrelationID - "
+                    +  UserContext.getCorrelationId()
+                    + " Failed To Login");
+  ```
+* Log some event, failed, success, etc...
+5. With gateway:
+* Filter package will track request:
+* With `private zone`, must `valid` token, if not successfully, `reject`
 
 
 
