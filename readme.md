@@ -465,7 +465,7 @@ _Thank you for watching_
 
 ---
 
-Hope you and enjoy. If you like, give my team starts
+Hope you and enjoy. If you like, please give my team stars
 
 
 
