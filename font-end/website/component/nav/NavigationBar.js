@@ -43,26 +43,16 @@ const NavigationBar = () => {
 							className={
 								'flex flex-wrap content-center div-NavigationBar-searchBar'
 							}>
-							<select
-								id={'type'}
-								className={'mr-2 border-r-2 font-poppins'}>
-								<option
-									value={'product'}
-									className={'font-poppins'}>
+							<select id={'type'} className={'mr-2 border-r-2 font-poppins'}>
+								<option value={'product'} className={'font-poppins'}>
 									Sản phẩm
 								</option>
-								<option value={'user font-poppins'}>
-									Người dùng
-								</option>
+								<option value={'user font-poppins'}>Người dùng</option>
 							</select>
 							<input
 								type={'search'}
-								className={
-									'mr-2 focus:outline-none input-NavigationBar'
-								}
-								placeholder={
-									'Find your product that you want !'
-								}
+								className={'mr-2 focus:outline-none input-NavigationBar'}
+								placeholder={'Find your product that you want !'}
 							/>
 							<Image
 								src={'/svg/search.svg'}

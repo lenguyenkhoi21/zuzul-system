@@ -18,21 +18,14 @@ const CookieValidation = props => {
 		const user = JSON.parse(localStorage.getItem('data'))
 		const userID = userCTX.state.userID
 		// Cookie has been existed
-		if (
-			user !== undefined &&
-			user !== null &&
-			user !== '' &&
-			userID === null
-		) {
+		if (user !== undefined && user !== null && user !== '' && userID === null) {
 			/*
 			 * TODO: Validated the Token
 			 * Solution 1: Send the Token to the services authentication
 			 * Solution 2: Logout. I'm lazy to fetch API
 			 * */
 			userCTX.addUser(USER_ACTION.ADD_USER, user)
-			console.log(
-				`${timeNow()} --- [useEffect()-CookieValidation] --- update`
-			)
+			console.log(`${timeNow()} --- [useEffect()-CookieValidation] --- update`)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userCTX.state.userID])

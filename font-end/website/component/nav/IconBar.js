@@ -27,9 +27,7 @@ const IconBar = () => {
 										height={25}
 										alt={'Notify'}
 									/>
-									<p className={'ml-0.5 font-poppins'}>
-										Thông báo
-									</p>
+									<p className={'ml-0.5 font-poppins'}>Thông báo</p>
 								</div>
 							</a>
 						</Link>
@@ -44,9 +42,7 @@ const IconBar = () => {
 										height={25}
 										alt={'Community'}
 									/>
-									<p className={'ml-0.5 font-poppins'}>
-										Cộng đồng
-									</p>
+									<p className={'ml-0.5 font-poppins'}>Cộng đồng</p>
 								</div>
 							</a>
 						</Link>
@@ -71,34 +67,20 @@ const IconBar = () => {
 					</div>
 					{userCTX.state.userID === null ? (
 						<>
-							<div
-								className={'flex mr-3.5 div-IconBar-container'}>
+							<div className={'flex mr-3.5 div-IconBar-container'}>
 								<Link href={'/'}>
 									<a>
 										<div className={'flex'}>
-											<p
-												className={
-													'ml-0.5 font-poppins'
-												}>
-												{' '}
-												Đăng ký{' '}
-											</p>
+											<p className={'ml-0.5 font-poppins'}> Đăng ký </p>
 										</div>
 									</a>
 								</Link>
 							</div>
-							<div
-								className={'flex mr-3.5 div-IconBar-container'}>
+							<div className={'flex mr-3.5 div-IconBar-container'}>
 								<Link href={'/'}>
 									<a>
 										<div className={'flex'}>
-											<p
-												className={
-													'ml-0.5 font-poppins'
-												}>
-												{' '}
-												Đăng nhập{' '}
-											</p>
+											<p className={'ml-0.5 font-poppins'}> Đăng nhập </p>
 										</div>
 									</a>
 								</Link>

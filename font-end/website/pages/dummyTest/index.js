@@ -37,8 +37,7 @@ const DummyTestPage = () => {
 	return (
 		<div>
 			<p>Message</p>
-			{chatCTX.state.message === null ||
-			chatCTX.state.message === undefined ? (
+			{chatCTX.state.message === null || chatCTX.state.message === undefined ? (
 				<> </>
 			) : (
 				chatCTX.state.message.map((value, key) => (

@@ -13,9 +13,7 @@ import ChatReducer from '../reducer/Chat.Reducer'
 import CartReducer from '../reducer/Cart.Reducer'
 
 const MyApp = ({ Component, pageProps }) => {
-	console.log(
-		`${timeNow()} --- [Component MyApp] --- Render at pages/_app.js`
-	)
+	console.log(`${timeNow()} --- [Component MyApp] --- Render at pages/_app.js`)
 
 	return (
 		<>

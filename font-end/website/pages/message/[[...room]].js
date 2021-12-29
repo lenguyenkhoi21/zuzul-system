@@ -120,8 +120,7 @@ const RoomChatPage = () => {
 										<React.Fragment key={key}>
 											<p>
 												{' '}
-												{value.senderID} -{' '}
-												{value.message} -{value.status}
+												{value.senderID} - {value.message} -{value.status}
 											</p>
 										</React.Fragment>
 									))}
@@ -131,9 +130,7 @@ const RoomChatPage = () => {
 								<input
 									name={'message'}
 									onChange={onChangeText}
-									onFocus={event =>
-										onReadMessage(event, roomID)
-									}
+									onFocus={event => onReadMessage(event, roomID)}
 								/>
 								<button> Gửi tin nhắn </button>
 							</form>

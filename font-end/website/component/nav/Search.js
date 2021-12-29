@@ -2,9 +2,7 @@ import React from 'react'
 import { timeNow } from '../../utils/Utils'
 
 const Search = () => {
-	console.log(
-		`${timeNow()} --- [Search] --- Render at component/nav/Search.js`
-	)
+	console.log(`${timeNow()} --- [Search] --- Render at component/nav/Search.js`)
 	return (
 		<>
 			<div className={'mr-6'}>

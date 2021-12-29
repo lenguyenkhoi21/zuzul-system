@@ -21,10 +21,7 @@ const HomePage = ({ bestProduct, newProduct, saleProduct, category }) => {
 					type={'Sản phẩm được cồng dồng đánh giá cao'}
 					products={bestProduct}
 				/>
-				<ProductFilter
-					type={'Sản phẩm đang hạ giá'}
-					products={saleProduct}
-				/>
+				<ProductFilter type={'Sản phẩm đang hạ giá'} products={saleProduct} />
 				<ProductFilter type={'Sản phẩm mới'} products={newProduct} />
 			</div>
 			<style jsx>{``}</style>

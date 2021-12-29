@@ -41,27 +41,19 @@ const ProductShort = ({ product }) => {
 							alt={'image'}
 						/>
 						<p className={'font-poppins'}> {product.name} </p>
-						<p
-							className={
-								'font-poppins p-ProductShort-med p-ProductShort-des'
-							}>
+						<p className={'font-poppins p-ProductShort-med p-ProductShort-des'}>
 							{' '}
 							{product.des_short}{' '}
 						</p>
 						<div className={''}>
-							<p
-								className={
-									'float-left font-poppins p-ProductShort-price'
-								}>
+							<p className={'float-left font-poppins p-ProductShort-price'}>
 								{' '}
 								{product.price}{' '}
 							</p>
 							{/* eslint-disable-next-line tailwindcss/no-custom-classname */}
 							<button
 								onClick={e => onClickHandle(e)}
-								className={
-									'float-right font-poppins btn-ProductShort'
-								}>
+								className={'float-right font-poppins btn-ProductShort'}>
 								{' '}
 								Mua ngay{' '}
 							</button>

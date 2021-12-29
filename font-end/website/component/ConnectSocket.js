@@ -44,9 +44,7 @@ const ConnectSocket = props => {
 			})
 
 			socket.on('receive-message', content => {
-				console.log(
-					`${timeNow()} --- [Socket.io-receive-message] --- message`
-				)
+				console.log(`${timeNow()} --- [Socket.io-receive-message] --- message`)
 				console.log(content)
 				chatCTX.receivedMSG(CHAT_ACTION.RECEIVED_MESSAGE, content)
 			})
@@ -60,9 +58,7 @@ const ConnectSocket = props => {
 					`${API_MOCK_DATABASE_CHAT}/box-status/${userCTX.state.userID}`
 				).then(response => {
 					let inComeMessage = 0
-					response.box.forEach(
-						box => (inComeMessage += box.inComeMessage)
-					)
+					response.box.forEach(box => (inComeMessage += box.inComeMessage))
 					chatCTX.synchronizeBOX(
 						CHAT_ACTION.SYNCHRONIZE_BOX,
 						response.box,
@@ -76,15 +72,11 @@ const ConnectSocket = props => {
 					`${timeNow()} --- [Socket.io-receive-fetch-message-of-a-room] --- message`
 				)
 
-				fetchAPI(
-					`${API_MOCK_DATABASE_CHAT}/message/${room.roomID}`
-				).then(data => {
-					chatCTX.fetchOneRoom(
-						CHAT_ACTION.FETCH_ONE_ROOM,
-						room.roomID,
-						data
-					)
-				})
+				fetchAPI(`${API_MOCK_DATABASE_CHAT}/message/${room.roomID}`).then(
+					data => {
+						chatCTX.fetchOneRoom(CHAT_ACTION.FETCH_ONE_ROOM, room.roomID, data)
+					}
+				)
 			})
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -148,15 +140,15 @@ const ConnectSocket = props => {
 			})
 
 			socket.on('synchronization-cart', () => {
-				fetchAPI(
-					`${API_MOCK_DATABASE_CHAT}/cart/${userCTX.state.userID}`
-				).then(data => {
-					let total = 0
-					data.cart.forEach(product => {
-						total += product.count
-					})
-					cartCTX.fetchCart(CART_ACTION.FETCH_CART, data.cart, total)
-				})
+				fetchAPI(`${API_MOCK_DATABASE_CHAT}/cart/${userCTX.state.userID}`).then(
+					data => {
+						let total = 0
+						data.cart.forEach(product => {
+							total += product.count
+						})
+						cartCTX.fetchCart(CART_ACTION.FETCH_CART, data.cart, total)
+					}
+				)
 			})
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -186,8 +178,7 @@ const ConnectSocket = props => {
 							`${API_MOCK_DATABASE_CHAT}/message/${RoomList.box[i].roomID}`
 						)
 						message.set(RoomList.box[i].roomID, MessageList)
-						inComeMessage =
-							inComeMessage + RoomList.box[i].inComeMessage
+						inComeMessage = inComeMessage + RoomList.box[i].inComeMessage
 					}
 
 					chatCTX.fetchMSG(
@@ -215,17 +206,17 @@ const ConnectSocket = props => {
 			chatCTX.state.message === null &&
 			cartCTX.state.cart === null
 		) {
-			fetchAPI(
-				`${API_MOCK_DATABASE_CHAT}/cart/${userCTX.state.userID}`
-			).then(data => {
-				if (data !== undefined) {
-					let total = 0
-					data.cart.forEach(product => {
-						total += product.count
-					})
-					cartCTX.fetchCart(CART_ACTION.FETCH_CART, data.cart, total)
+			fetchAPI(`${API_MOCK_DATABASE_CHAT}/cart/${userCTX.state.userID}`).then(
+				data => {
+					if (data !== undefined) {
+						let total = 0
+						data.cart.forEach(product => {
+							total += product.count
+						})
+						cartCTX.fetchCart(CART_ACTION.FETCH_CART, data.cart, total)
+					}
 				}
-			})
+			)
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps

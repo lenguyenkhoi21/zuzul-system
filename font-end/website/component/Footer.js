@@ -4,9 +4,7 @@ import React from 'react'
 import { timeNow } from '../utils/Utils'
 
 const Footer = () => {
-	console.log(
-		`${timeNow()} --- [Footer] --- Render at './component/Footer.js'`
-	)
+	console.log(`${timeNow()} --- [Footer] --- Render at './component/Footer.js'`)
 	return (
 		<>
 			<footer className={'px-330 footer-Footer'}>
@@ -14,21 +12,13 @@ const Footer = () => {
 					<div>
 						<Link href={'/'}>
 							<a className={'float-left p-Footer-sr'}>
-								<p
-									className={
-										'p-Footer-text p-Footer-text-small'
-									}>
-									Danh mục
-								</p>
+								<p className={'p-Footer-text p-Footer-text-small'}>Danh mục</p>
 							</a>
 						</Link>
 
 						<Link href={'/'}>
 							<a className={'float-left p-Footer-sr'}>
-								<p
-									className={
-										'p-Footer-text p-Footer-text-small'
-									}>
+								<p className={'p-Footer-text p-Footer-text-small'}>
 									{' '}
 									Điều khoản sử dụng
 								</p>
@@ -37,10 +27,7 @@ const Footer = () => {
 
 						<Link href={'/'}>
 							<a className={'float-left'}>
-								<p
-									className={
-										'p-Footer-text p-Footer-text-small'
-									}>
+								<p className={'p-Footer-text p-Footer-text-small'}>
 									{' '}
 									Hướng dẫn sử dụng
 								</p>
@@ -67,10 +54,7 @@ const Footer = () => {
 					<div>
 						<Link href={'/'}>
 							<a className={'float-right'}>
-								<p
-									className={
-										'p-Footer-text p-Footer-text-small'
-									}>
+								<p className={'p-Footer-text p-Footer-text-small'}>
 									Chính sách bảo mật
 								</p>
 							</a>
@@ -78,10 +62,7 @@ const Footer = () => {
 
 						<Link href={'/'}>
 							<a className={'float-right p-Footer-sr'}>
-								<p
-									className={
-										'p-Footer-text p-Footer-text-small'
-									}>
+								<p className={'p-Footer-text p-Footer-text-small'}>
 									{' '}
 									Về chúng tôi
 								</p>
@@ -90,13 +71,7 @@ const Footer = () => {
 
 						<Link href={'/'}>
 							<a className={'float-right p-Footer-sr'}>
-								<p
-									className={
-										'p-Footer-text p-Footer-text-small'
-									}>
-									{' '}
-									Hỗ trợ
-								</p>
+								<p className={'p-Footer-text p-Footer-text-small'}> Hỗ trợ</p>
 							</a>
 						</Link>
 						<div className={'clear-both'} />
