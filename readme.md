@@ -233,30 +233,31 @@ Service
 
 * A `common package` is the config app, model used in `2 or more routes`, config app, constant, etc...
   ```
-  ├───adminclient
-  │       AdminClient.java
-  │       Keycloak.java
-  │       TokenFetchSchedule.java
-  │
-  ├───model
-  │   ├───api
-  │   │   └───v1
-  │   │           POSTUserPayload.java
-  │   │
-  │   └───keycloak
-  │           CompositeRole.java
-  │           Credential.java
-  │           Token.java
-  │           UserInfo.java
-  │           UserInfoAccess.java
-  │           UserKeyCloakPayload.java
-  │
-  ├───ultis
-  │       Constant.java
-  │
-  └───usercontext
-  UserContext.java
-  UserContextFilter.java
+  └───common
+    ├───adminclient
+    │       AdminClient.java
+    │       Keycloak.java
+    │       TokenFetchSchedule.java
+    │
+    ├───model
+    │   ├───api
+    │   │   └───v1
+    │   │           POSTUserPayload.java
+    │   │
+    │   └───keycloak
+    │           CompositeRole.java
+    │           Credential.java
+    │           Token.java
+    │           UserInfo.java
+    │           UserInfoAccess.java
+    │           UserKeyCloakPayload.java
+    │
+    ├───ultis
+    │       Constant.java
+    │
+    └───usercontext
+            UserContext.java
+            UserContextFilter.java
 
     ```
   * `@Component` is the bean that using in more services
@@ -294,7 +295,7 @@ Service
       return new RestTemplate();
     }
   ```
-* `Must` add `cir-breakpoint` top to `protect` the call
+* `Must` add `CirBreakpoint` top to `protect` the call
   ```
     @CircuitBreaker(name = "services-b", fallbackMethod = "bullFallbackServiceB")
     @RateLimiter(name = "services-b", fallbackMethod = "bullFallbackServiceB")
@@ -313,8 +314,158 @@ Service
 * Log some event, failed, success, etc...
 5. With gateway:
 * Filter package will track request:
+  ```
+    └───filter
+        FilterUtils.java
+        ResponseFilter.java
+        TrackingFilter.java
+  ```
 * With `private zone`, must `valid` token, if not successfully, `reject`
+---
+### Coding flow: 
+Don’t be waiting for back-end team or front-end team. FE must code the mock-up and dummy-data, when BE finish, FE call API
 
+---
+## Run the system
+### Init setup:
+1. All docker `commandline` must run at `top` folder project, `copy` dockerfile and run:
+    ```
+    +---.idea
+    +---back-end
+    +---docker-comose-template
+    +---font-end
+    +---image
+    +---mock-up-be
+    \---springboot-config-template
+    ```
+2. Create folder `./config` to add config, physical path, etc… and data to persist `./data`:
+    ```
+    +---.idea
+    +---back-end
+    +---config
+    +---data
+    +---docker-comose-template
+    +---font-end
+    +---image
+    +---mock-up-be
+    \---springboot-config-template
+    ```
+### Next Step
+1. Team FE: No need BE real, run BE mock
+2. Structure folder `./mock-up-be`
+    ```
+    +---config-mock
+    +---docker-command
+    +---mock-database-chat
+    +---springboot-mock-image
+    \---websock-mock-data
+    ```
+* Run commandline in  `./docker-command` to start mongodb:
+* Run config-mock `(see in be)`
+* Run springboot-mock-image `(see in be)`
+* Run mock-database-chat: `yarn start`
+* Run websocket-mock-data: `yarn start`
+* Final, run FE:
+  * Web for user in `./front-end/website`: `yarn start`
+  * Web for admin-portal in `./front-end/admin-portal` : `yarn start`
+2. Team BE:
+* Run infrastructure from `./docker-compose-template`
+  ```
+  ├───docker-comose-template
+  │   ├───App
+  │   │       Docker-compose.yaml
+  │   │
+  │   ├───Back-end
+  │   │       Docker-compose.yaml
+  │   │
+  │   ├───Config
+  │   │   └───logstash-server
+  │   │       ├───conf
+  │   │       │       logstash.yaml
+  │   │       │
+  │   │       └───pipeline
+  │   │               logstash.conf
+  │   │
+  │   └───Infrastructure
+  │           Docker-compose.yaml
+  ```
+  * Copy config, etc..
+  * Waiting all service `healthy` and `run app`:
+  ```
+    CONTAINER ID   IMAGE                      COMMAND                  CREATED         STATUS                   PORTS                                            NAMES
+    b3f4c772d7d7   bitnami/keycloak:15        "/opt/bitnami/script…"   3 minutes ago   Up 2 minutes (healthy)   0.0.0.0:8080->8080/tcp                           keycloak
+    ec347410621a   logstash:7.14.2            "/usr/local/bin/dock…"   3 minutes ago   Up 2 minutes (healthy)   5044/tcp, 0.0.0.0:5000->5000/tcp, 9600/tcp       logstash-server
+    168fdff30cc7   kibana:7.14.2              "/bin/tini -- /usr/l…"   3 minutes ago   Up 2 minutes (healthy)   0.0.0.0:5601->5601/tcp                           kibana-server
+    3f9097d5d412   openzipkin/zipkin:latest   "start-zipkin"           3 minutes ago   Up 2 minutes (healthy)   9410/tcp, 0.0.0.0:9411->9411/tcp                 zipkin-server
+    581412113cc1   elasticsearch:7.14.2       "/bin/tini -- /usr/l…"   3 minutes ago   Up 3 minutes (healthy)   0.0.0.0:9200->9200/tcp, 0.0.0.0:9300->9300/tcp   elasticsearch-monitor
+    d02ed701975e   bitnami/postgresql:11      "/opt/bitnami/script…"   3 minutes ago   Up 3 minutes (healthy)   5432/tcp                                         postgresql
+  ```
+* Config for the `first time`:
+  * `Create` a branch in repo config
+    * `Naming` branch  rule: `yourname-profile`. Profile is `localhost` or `docker`. ex: `khoiln-localhost` or `khoiln-docker`
+    * `Create` a branch from main
+  * Config `Keycloak`, `client secret`, etc...
+* Config Spring Boot App `./springboot-config-template`:
+  ```
+  └───springboot-config-template
+      ├───config-repo
+      │       application.yaml
+      │
+      ├───logging
+      │       logback-spring.xml
+      │
+      └───other-service
+              bootstrap.yaml
+  ```
+* `Copy logback.xml` the template config in folder `./logging` to `resources` folder of each `spring boot app`
+* With `config-server-app`:  With config server, file `application`. `[yaml,yml,properties]`
+  * `Copy application.yaml` from the template config in folder `./config-repo` to `resources` folder of project
+  * `Add` your `SSH private key` to clone repo `gitlab`
+  ```
+  server:
+    port: 8077
+  
+  spring:
+    application:
+      name: zuzul-config-server
+    profiles:
+      active: git
+    cloud:
+      config:
+        server:
+          git:
+            uri: <GIT REPO>
+            private-key: <YOUR PRIVATE SSH KEY, NOTE - ONLY RSA KEY, NOT OPEN SSH"
+            passphrase: <YOUR PASSPHRASE SSH>
+            ignore-local-ssh-settings: true
+  ```
+  * `Run` config server first
+* With `services-app`: file `bootstrap`. `[yaml,yml,properties]`
+  * `Copy boostrap.yaml` the template config in folder `./other-service` to `resources` folder of project
+  * Put the name branch of your pc config, branch to clone:
+  ```
+  spring:
+    application:
+      name: <NAME SERVICE, MUST BE SAME WITH NAME .YAML IN CONFIG REPO>
+    profiles:
+      active: <Default - dev,  [qa, prod, test]>
+    cloud:
+      config:
+        uri: <URL CONFIG SERVER TO FETCH CONFIG>
+        label: <NAME OF YOUR BRANCH IN CONFIG REPO>
+  ```
+  * Run `eureka-server` first:
+  * After `eureka-server` start up successfully, run other services
+  * Run App:
+    * Copy the docker-compose.yaml in docker-compose-template folder:
+    * Run at top-level 
+* End
+
+_Thank you for watching_
+
+---
+
+Hope you and enjoy. If you like, give my team starts
 
 
 
