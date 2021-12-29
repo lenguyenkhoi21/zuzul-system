@@ -3,7 +3,6 @@ const { Server } = require('socket.io')
 const { createServer } = require('http')
 const path = require('path')
 const axios = require('axios')
-const {response} = require('express')
 const PORT = 3333
 
 const app = express()
