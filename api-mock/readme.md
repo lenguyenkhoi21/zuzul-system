@@ -19,10 +19,10 @@
   * `cartPost.json`
 
 ### Screen 05 (Mockup-Comunity-v2)
-* Path: [/community/:cmy_id](#)
+* Path: [/community/:post_id](#)
 * Path: [/community](#) loading all friends of user & user post:
   * `post.json`
-* Path: [/community/:cmy_id](#) specify a post
+* Path: [/community/:post_id](#) specify a post
 
 ### Screen 06 (Mockup-User-profile-management)
 * [/user/profile/:user_id](#) profile of a user
@@ -30,7 +30,21 @@
 * [/user/products/:user_id](#) all product of a user
 
 ### Screen 07 (Settings of user)
-* [/user/settings](#) settings
+* [/user/settings](#) Settings
+* [/user/settings/account](#) -> 
+* [/user/settings/address](#) -> 
+* [/user/settings/changepassword](#) -> 
+* [/user/settings/history](#) -> All payment
+* [/user/settings/history/:history_id](#)
+* [/user/settings/product/all](#) -> 
+* [/user/settings/product/edit](#) ->
+* [/user/settings/product/new](#) -> 
+* [/user/settings/orders/all](#)
+* [/user/settings/orders/accepts](#)
+* [/user/settings/orders/waiting](#)
+* [/user/settings/orders/shipping](#)
+* [/user/settings/orders/done](#)
+* [/user/settings/orders/cancel](#)
 
 ### Screen 08 (Chat)
 * [/message/:room_id](#) 

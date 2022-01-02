@@ -1,6 +1,6 @@
 [
   {
-    "cmy_id": "0001",
+    "post_id": "0001",
     "userpost_id" : "user-01",
     "name" : "Shop",
     "like": true,
@@ -12,19 +12,57 @@
       "FEELING GOOD",
       "FEELING EXCELLENT"
     ],
-    "react": [
-      {
-        "shop_id": "user-01",
-        "prd-id": "prd-001",
-        "name": "Ao khoac"
-      }
-    ],
+    "react":  {
+      "shop_id": "user-01",
+      "prd-id": "prd-001",
+      "name": "Ao khoac"
+    },
     "comment": [
       {
         "cmt_id": "cmt_01",
         "user_cmt_id": "user_01",
         "name" : "Le Nguyen Khoi",
-        "content": "Good"
+        "user_cmt_image": "abc",
+        "content": "Good",
+        "reply": [
+          {
+            "reply_id": "reply_01",
+            "user_reply_id": "user_01",
+            "name" : "Le Nguyen Khoi",
+            "user_reply_image": "abc",
+            "content": "OK"
+          },
+          {
+            "reply_id": "reply_01",
+            "user_reply_id": "user_01",
+            "name" : "Le Nguyen Khoi",
+            "user_reply_image": "abc",
+            "content": "OK"
+          }
+        ]
+      },
+      {
+        "cmt_id": "cmt_01",
+        "user_cmt_id": "user_01",
+        "name" : "Le Nguyen Khoi",
+        "user_cmt_image": "abc",
+        "content": "Good",
+        "reply": [
+          {
+            "reply_id": "reply_01",
+            "user_reply_id": "user_01",
+            "name" : "Le Nguyen Khoi",
+            "user_reply_image": "abc",
+            "content": "OK"
+          },
+          {
+            "reply_id": "reply_01",
+            "user_reply_id": "user_01",
+            "name" : "Le Nguyen Khoi",
+            "user_reply_image": "abc",
+            "content": "OK"
+          }
+        ]
       }
     ]
   }

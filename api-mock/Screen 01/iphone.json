@@ -1,0 +1,10 @@
+{
+  "prd_id": "iphone-001",
+  "name": "IphoneX",
+  "price": 15000,
+  "prd_image": "http://image-server/name?w=1&q=75",
+  "react": 123,
+  "des_short": "Sản phẩm này là hàng chất lượng cao",
+  "cate_id": "category-01",
+  "sub_id": "sub-01"
+}

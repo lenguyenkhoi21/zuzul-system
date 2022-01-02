@@ -1,0 +1,23 @@
+{
+  "user_id": "user-01",
+  "user_name": "Le Nguyen Khoi",
+  "address": "Da Nang City",
+  "followers": 324,
+  "friends": 234,
+  "user_image": "image1",
+  "post": [
+    {
+      "post_id": "post-01",
+      "content": "Hello body",
+      "image": "image2",
+      "like": 324,
+      "image_content" : "http://image-server/name?w=1&q=75",
+      "type": [
+        "BAD",
+        "FEELING GOOD",
+        "FEELING EXCELLENT"
+      ],
+
+    }
+  ]
+}
