@@ -1,0 +1,22 @@
+[
+  {
+    "prd_id.": "prd-001",
+    "name": "Áo khoác",
+    "price": 15000,
+    "images": [
+      "http://image-server/name?w=1&q=75",
+      "http://image-server/name?w=1&q=75",
+      "http://image-server/name?w=1&q=75"
+    ],
+    "react": 123,
+    "des_full": "Sản phẩm này là hàng chất lượng cao",
+    "cate_id": "category-01",
+    "sub_id": "sub-01",
+    "user_id": "user-01",
+    "image_user": "http://image-server/name?w=1&q=75",
+    "date_create": "23/07/2000",
+    "date_expiry": "23/07/2000",
+    "warranty": "23/07/2000",
+    "origin": "23/07/2000"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "buyer_id": "user-01",
+  "date_buy": "23/07/2000",
+  "products": [
+    {
+      "prd_id": "prd_01",
+      "seller_id": "user-02",
+      "count": 3,
+      "origin_price": 25000,
+      "sale": 0.2
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "prd_id": "prd-001",
+    "name": "Áo khoác",
+    "price": 15000,
+    "prd_image": "http://image-server/name?w=1&q=75",
+    "react": 123,
+    "des_short": "Sản phẩm này là hàng chất lượng cao",
+    "cate_id": "category-01",
+    "sub_id": "sub-01",
+    "user_id": "user-01",
+    "image_user" : "http://image-server/name?w=1&q=75"
+  }
+]

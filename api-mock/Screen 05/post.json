@@ -1,0 +1,31 @@
+[
+  {
+    "cmy_id": "0001",
+    "userpost_id" : "user-01",
+    "name" : "Shop",
+    "like": true,
+    "image_user" : "http://image-server/name?w=1&q=75",
+    "content" : "Hello, everybody",
+    "image_content" : "http://image-server/name?w=1&q=75",
+    "type": [
+      "BAD",
+      "FEELING GOOD",
+      "FEELING EXCELLENT"
+    ],
+    "react": [
+      {
+        "shop_id": "user-01",
+        "prd-id": "prd-001",
+        "name": "Ao khoac"
+      }
+    ],
+    "comment": [
+      {
+        "cmt_id": "cmt_01",
+        "user_cmt_id": "user_01",
+        "name" : "Le Nguyen Khoi",
+        "content": "Good"
+      }
+    ]
+  }
+]

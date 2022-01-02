@@ -1,0 +1,12 @@
+[
+  {
+    "cate_id": "category-01",
+    "name": "Thời Trang Nam",
+    "sub": [
+      {
+        "sub_id": "sub-01",
+        "name": "Áo khoác"
+      }
+    ]
+  }
+]
