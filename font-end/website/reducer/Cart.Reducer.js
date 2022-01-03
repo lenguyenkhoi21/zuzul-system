@@ -3,7 +3,8 @@ import { timeNow } from '../utils/Utils'
 
 export const CART_ACTION = {
 	FETCH_CART: 'FETCH_CART',
-	CONNECT: 'CONNECT'
+	CONNECT: 'CONNECT',
+	LOGOUT: 'LOGOUT'
 }
 
 export const CartContext = createContext()
@@ -20,6 +21,8 @@ const Reducer = (state, action) => {
 			return { ...state, totalProduct: action.total, cart: action.cart }
 		case CART_ACTION.CONNECT:
 			return { ...state, socket: action.socket }
+		case CART_ACTION.LOGOUT:
+			return { ...CartInitState }
 		default:
 			return state
 	}
@@ -32,7 +35,8 @@ const CartReducer = props => {
 	const CartProps = {
 		state: store,
 		connect: (type, socket) => dispatch({ type, socket }),
-		fetchCart: (type, cart, total) => dispatch({ type, cart, total })
+		fetchCart: (type, cart, total) => dispatch({ type, cart, total }),
+		logout: type => dispatch({ type })
 	}
 
 	return (

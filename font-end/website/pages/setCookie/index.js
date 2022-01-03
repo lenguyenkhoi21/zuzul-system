@@ -3,12 +3,14 @@ import { timeNow } from '../../utils/Utils'
 import { USER_ACTION, UserContext } from '../../reducer/User.Reducer'
 import { CHAT_ACTION, ChatContext } from '../../reducer/Chat.Reducer'
 import { NOTIFY_ACTION, NotifyContext } from '../../reducer/Notify.Reducer'
+import { CART_ACTION, CartContext } from '../../reducer/Cart.Reducer'
 
 const SetCookiePage = () => {
 	console.log(`${timeNow()} --- [SetCookie]--- at pages/setCookie/index.js`)
 	const userCTX = useContext(UserContext)
 	const chatCTX = useContext(ChatContext)
 	const notifyCTX = useContext(NotifyContext)
+	const cartCTX = useContext(CartContext)
 
 	const [cookie, setCookie] = useState({
 		userID: null,
@@ -58,6 +60,7 @@ const SetCookiePage = () => {
 			userCTX.removeUser(USER_ACTION.REMOVE_USER)
 			chatCTX.logout(CHAT_ACTION.LOGOUT, chatCTX.state.socket)
 			notifyCTX.logout(NOTIFY_ACTION.LOGOUT, notifyCTX.state.socket)
+			cartCTX.logout(CART_ACTION.LOGOUT)
 		}
 	}
 
