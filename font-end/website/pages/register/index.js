@@ -17,8 +17,8 @@ const RegisterPage = () => {
 				titleHeader={'Đăng ký'}
 				titleSub={'Đăng nhập'}
 				nameBtn={'Đăng ký'}
-				textDK={'Bằng việc Đăng ký, bạn đã đồng ý với '}
-				textDK2={'Điều khoản sử dụng của Zuzul'}
+				textRegister={'Bằng việc Đăng ký, bạn đã đồng ý với '}
+				textRegisterSub={'Điều khoản sử dụng của Zuzul'}
 			/>
 			<style jsx>{``}</style>
 		</>

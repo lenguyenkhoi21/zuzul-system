@@ -9,10 +9,11 @@ const Authentication = ({
 }) => {
 	return (
 		<>
-			<div className={'flex justify-center px-330 div-LoginPage-container'}>
+			<div
+				className={'flex justify-center px-330 div-Authentication-container'}>
 				<form
 					className={
-						'grid grid-cols-1 gap-4 place-content-start form-LoginPage-size'
+						'grid grid-cols-1 gap-4 place-content-start form-Authentication-size'
 					}>
 					<div className={'row-span-3 '}></div>
 
@@ -20,7 +21,7 @@ const Authentication = ({
 						<div className={'flex justify-center'}>
 							<div className={'flex'}>
 								<div className={'flex-initial w-40'}>
-									<label name={'login'} className={'label-LoginPage-login'}>
+									<label className={'label-Authentication-login'}>
 										{titleHeader}
 									</label>
 								</div>
@@ -30,10 +31,10 @@ const Authentication = ({
 					</div>
 
 					<div className={'flex gap-4 justify-center p-4'}>
-						<label name={'subtitle'} className={'label-LoginPage-subtitle'}>
+						<label className={'label-Authentication-subtitle'}>
 							Bạn chưa có tài khoản?
 						</label>
-						<label name={'subtitle2'} className={'label-LoginPage-subtitle2'}>
+						<label className={'label-Authentication-subtitle2'}>
 							{titleSub}
 						</label>
 					</div>
@@ -45,10 +46,11 @@ const Authentication = ({
 									<div className={'flex-initial w-32'}>
 										<label
 											name={'phoneNumber'}
-											className={'label-LoginPage-phoneNumberAndPass'}>
+											className={'label-Authentication-phoneNumberAndPass'}>
 											Số điện thoại
 										</label>
-										<label className={'label-LoginPage-phoneNumberAndPass2'}>
+										<label
+											className={'label-Authentication-phoneNumberAndPass2'}>
 											*
 										</label>
 									</div>
@@ -60,7 +62,7 @@ const Authentication = ({
 							<input
 								type={'text'}
 								name={'phoneNumberInput'}
-								className={'input-LoginPage-size'}></input>
+								className={'input-Authentication-size'}></input>
 						</div>
 					</div>
 
@@ -71,10 +73,11 @@ const Authentication = ({
 									<div className={'flex-initial w-32'}>
 										<label
 											name={'passWord'}
-											className={'label-LoginPage-phoneNumberAndPass'}>
+											className={'label-Authentication-phoneNumberAndPass'}>
 											Mật khẩu
 										</label>
-										<label className={'label-LoginPage-phoneNumberAndPass2'}>
+										<label
+											className={'label-Authentication-phoneNumberAndPass2'}>
 											*
 										</label>
 									</div>
@@ -85,14 +88,14 @@ const Authentication = ({
 							<input
 								type={'text'}
 								name={'passWordInput'}
-								className={'input-LoginPage-size'}></input>
+								className={'input-Authentication-size'}></input>
 						</div>
 					</div>
 
 					<div className={'grid grid-cols-1 gap-4 content-center h-20'}>
 						<div className={'flex justify-center'}>
-							<button className={' btn-LoginPage-size'}>
-								<p className={'p-LoginPage-btnLogin'}>{nameBtn}</p>
+							<button className={' btn-Authentication-size'}>
+								<p className={'p-Authentication-btnLogin'}>{nameBtn}</p>
 							</button>
 						</div>
 					</div>
@@ -100,9 +103,9 @@ const Authentication = ({
 					<div className={'grid grid-cols-6 content-end h-56'}>
 						<div className={'col-start-2 col-end-6 '}>
 							<div className={'flex justify-center'}>
-								<label className={'text-center label-RegisterPage-text2'}>
+								<label className={'text-center label-Authentication-text2'}>
 									{textRegister}
-									<label className={'label-RegisterPage-text'}>
+									<label className={'label-Authentication-text'}>
 										{textRegisterSub}
 									</label>
 								</label>
@@ -113,16 +116,16 @@ const Authentication = ({
 			</div>
 			<style jsx>
 				{`
-					.div-LoginPage-container {
+					.div-Authentication-container {
 						background: #ebebeb;
 					}
-					.hr-LoginPage-size {
+					.hr-Authentication-size {
 						width: 151px;
 						height: 0px;
 						border: 1px solid #a8a6a7;
 						transform: rotate(-180deg);
 					}
-					.form-LoginPage-size {
+					.form-Authentication-size {
 						width: 568px;
 						height: 721px;
 						box-shadow: 0px 12px 16px rgba(0, 0, 0, 0.04),
@@ -130,7 +133,7 @@ const Authentication = ({
 						border-radius: 10px;
 						background: #ffffff;
 					}
-					.label-LoginPage-login {
+					.label-Authentication-login {
 						font-family: Poppins;
 						font-style: normal;
 						font-weight: 400;
@@ -138,7 +141,7 @@ const Authentication = ({
 						line-height: 43px;
 						color: rgba(0, 0, 0, 0.85);
 					}
-					.label-LoginPage-subtitle {
+					.label-Authentication-subtitle {
 						font-family: Open Sans;
 						font-style: normal;
 						font-weight: normal;
@@ -146,7 +149,7 @@ const Authentication = ({
 						line-height: 26px;
 						color: #444150;
 					}
-					.label-LoginPage-subtitle2 {
+					.label-Authentication-subtitle2 {
 						font-family: Open Sans;
 						font-style: normal;
 						font-weight: normal;
@@ -154,7 +157,7 @@ const Authentication = ({
 						line-height: 26px;
 						color: #6a983c;
 					}
-					.label-LoginPage-phoneNumberAndPass {
+					.label-Authentication-phoneNumberAndPass {
 						font-family: Poppins;
 						font-style: normal;
 						font-weight: normal;
@@ -162,7 +165,7 @@ const Authentication = ({
 						line-height: 24px;
 						color: #444150;
 					}
-					.label-LoginPage-phoneNumberAndPass2 {
+					.label-Authentication-phoneNumberAndPass2 {
 						font-family: Poppins;
 						font-style: normal;
 						font-weight: normal;
@@ -170,7 +173,7 @@ const Authentication = ({
 						line-height: 24px;
 						color: #6a983c;
 					}
-					.input-LoginPage-size {
+					.input-Authentication-size {
 						width: 416px;
 						height: 48px;
 						background: #fbfbfb;
@@ -178,7 +181,7 @@ const Authentication = ({
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
-					.btn-LoginPage-size {
+					.btn-Authentication-size {
 						width: 200px;
 						height: 41px;
 						background: #6a983c;
@@ -186,7 +189,7 @@ const Authentication = ({
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
-					.p-LoginPage-btnLogin {
+					.p-Authentication-btnLogin {
 						font-family: Poppins;
 						font-style: normal;
 						font-weight: bold;
@@ -195,7 +198,7 @@ const Authentication = ({
 						text-align: center;
 						color: #ffffff;
 					}
-					.label-RegisterPage-text {
+					.label-Authentication-text {
 						font-family: Open Sans;
 						font-style: normal;
 						font-weight: normal;
@@ -204,7 +207,7 @@ const Authentication = ({
 						text-align: center;
 						color: #6a983c;
 					}
-					.label-RegisterPage-text2 {
+					.label-Authentication-text2 {
 						font-family: Open Sans;
 						font-style: normal;
 						font-weight: normal;
