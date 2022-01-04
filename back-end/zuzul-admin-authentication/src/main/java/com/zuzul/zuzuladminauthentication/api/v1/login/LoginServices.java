@@ -32,6 +32,37 @@ public class LoginServices {
     private final AdminClient adminClient;
     private final Logger logger = LoggerFactory.getLogger(Logger.class);
 
+    public LoginPOSTResponse login (POSTUserPayload payload) {
+        Token token = getToken(payload);
+        UserInfo userInfo = getUserInfo(payload.getUsername());
+
+        assert userInfo != null;
+        List<CompositeRole> compositeRoles = getRoles(userInfo.getId());
+        if (token != null && !Objects.requireNonNull(compositeRoles).isEmpty()) {
+            AtomicReference<String> role = new AtomicReference<>("");
+            compositeRoles.forEach(compositeRole -> {
+                if (compositeRole.getName().equals("UN_INFO")) {
+                    role.set("UN_INFO");
+                } else if (compositeRole.getName().equals("NORMAL")) {
+                    role.set("NORMAL");
+                }
+            });
+            return LoginPOSTResponse
+                    .builder()
+                    .userID(userInfo.getId())
+                    .access_token(token.getAccess_token())
+                    .role(role.get())
+                    .build();
+        }
+        else {
+            logger.info("CorrelationID - "
+                    +  UserContext.getCorrelationId()
+                    + " Failed To Login");
+
+            return null;
+        }
+    }
+
     private Token getToken (POSTUserPayload payload) {
         //Add header
         HttpHeaders headers = new HttpHeaders();
@@ -180,34 +211,5 @@ public class LoginServices {
         return null;
     }
 
-    public LoginPOSTResponse login (POSTUserPayload payload) {
-        Token token = getToken(payload);
-        UserInfo userInfo = getUserInfo(payload.getUsername());
 
-        assert userInfo != null;
-        List<CompositeRole> compositeRoles = getRoles(userInfo.getId());
-        if (token != null && !Objects.requireNonNull(compositeRoles).isEmpty()) {
-            AtomicReference<String> role = new AtomicReference<>("");
-            compositeRoles.forEach(compositeRole -> {
-                if (compositeRole.getName().equals("UN_INFO")) {
-                    role.set("UN_INFO");
-                } else if (compositeRole.getName().equals("NORMAL")) {
-                    role.set("NORMAL");
-                }
-            });
-            return LoginPOSTResponse
-                    .builder()
-                    .userID(userInfo.getId())
-                    .access_token(token.getAccess_token())
-                    .role(role.get())
-                    .build();
-        }
-        else {
-            logger.info("CorrelationID - "
-                    +  UserContext.getCorrelationId()
-                    + " Failed To Login");
-
-            return null;
-        }
-    }
 }
