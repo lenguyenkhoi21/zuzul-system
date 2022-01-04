@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react'
 import { CHAT_CONSTANT, ChatContext } from '../../reducer/Chat.Reducer'
 import { useRouter } from 'next/router'
 import { UserContext } from '../../reducer/User.Reducer'
-import Login from '../../component/common/Login'
+import Login from '../../component/common/Authentication'
 
 const RoomChatPage = () => {
 	const chatCTX = useContext(ChatContext)
