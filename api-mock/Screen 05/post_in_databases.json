@@ -1,0 +1,55 @@
+{
+  "post_id": "0001",
+  "userpost_id": "user-01",
+  "post_like": true,
+  "post_content" : "Hello, everybody",
+  "post_image": "http://image-server/name?w=1&q=75",
+  "post_create" : "23/07/2000",
+  "post_last_update" : "23/07/2000",
+  "post_type": [
+    "BAD",
+    "FEELING GOOD",
+    "FEELING EXCELLENT"
+  ],
+  "post_react":  {
+    "shop_id": "user-01",
+    "prd-id": "prd-001",
+    "name": "Ao khoac"
+  },
+  "post_comment": [
+    {
+      "cmt_id": "cmt_01",
+      "user_cmt_id": "user_01",
+      "content": "Good",
+      "reply": [
+        {
+          "reply_id": "reply_01",
+          "user_reply_id": "user_01",
+          "content": "OK"
+        },
+        {
+          "reply_id": "reply_01",
+          "user_reply_id": "user_01",
+          "content": "OK"
+        }
+      ]
+    },
+    {
+      "cmt_id": "cmt_01",
+      "user_cmt_id": "user_01",
+      "content": "Good",
+      "reply": [
+        {
+          "reply_id": "reply_01",
+          "user_reply_id": "user_01",
+          "content": "OK"
+        },
+        {
+          "reply_id": "reply_01",
+          "user_reply_id": "user_01",
+          "content": "OK"
+        }
+      ]
+    }
+  ]
+}

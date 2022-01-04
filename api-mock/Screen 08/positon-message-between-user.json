@@ -1,0 +1,20 @@
+{
+  "userID": "user-01",
+  "box": [
+    {
+      "roomID": "room14",
+      "inComeMessage": 4,
+      "status": "OPEN"
+    },
+    {
+      "roomID": "room13",
+      "inComeMessage": 0,
+      "status": "OPEN"
+    },
+    {
+      "roomID": "room12",
+      "inComeMessage": 0,
+      "status": "OPEN"
+    }
+  ]
+}

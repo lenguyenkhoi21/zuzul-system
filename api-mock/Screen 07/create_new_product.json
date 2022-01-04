@@ -1,0 +1,19 @@
+{
+  "prd_id": "Mã sản phẩm",
+  "prd_user_id": "Mã người dùng",
+  "prd_name": "Tên sản phẩm",
+  "cate_id": "Mã Danh Mục Cha",
+  "sub_id": "Mã Danh Mục Con",
+  "prd_price_origin": 34000,
+  "prd_origin": "USA",
+  "prd_date_manufacture": "timestamp",
+  "prd_short_des" : "",
+  "prd_long_des" : "",
+  "prd_sale": 0.3,
+  "prd_images": [
+    "/zuzul/production/prd_id/image_1.png",
+    "/zuzul/production/prd_id/image_2.png",
+    "/zuzul/production/prd_id/image_3.png"
+  ],
+  "prd_react": 123
+}
