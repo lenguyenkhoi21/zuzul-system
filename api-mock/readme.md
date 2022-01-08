@@ -62,3 +62,16 @@
 
 
 # Typo Database
+
+# ASW Folder Images
+
+```
+├───mock-data
+└───production
+    ├───post
+    │   └───post-01
+    └───user
+        └───user-01
+            ├───avatar-image
+            └───cover-image
+```

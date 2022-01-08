@@ -20,6 +20,8 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
+import javax.ws.rs.HttpMethod;
+
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
@@ -30,8 +32,9 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) {
+        SimpleAuthorityMapper grantedAuthorityMapper = new SimpleAuthorityMapper();
         KeycloakAuthenticationProvider keycloakAuthenticationProvider = keycloakAuthenticationProvider();
-        keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
+        keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(grantedAuthorityMapper);
         auth.authenticationProvider(keycloakAuthenticationProvider);
     }
 
@@ -47,8 +50,9 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
-            .anyRequest().authenticated();
-        http.csrf().disable();
+            .antMatchers(HttpMethod.OPTIONS).permitAll()
+            .anyRequest().authenticated()
+            .and().csrf().disable();
     }
 
 

@@ -8,6 +8,9 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+import static com.example.zuzulproductprivate.common.usercontext.UserContext.AUTH_TOKEN;
+import static com.example.zuzulproductprivate.common.usercontext.UserContext.CORRELATION_ID;
+
 @Component
 public class UserContextFilter implements Filter {
     private static final Logger logger = LoggerFactory.getLogger(UserContextFilter.class);
@@ -17,9 +20,11 @@ public class UserContextFilter implements Filter {
                          ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String traceId = httpServletRequest.getHeader("tmx-correlation-id");
+        String traceId = httpServletRequest.getHeader(CORRELATION_ID);
+        String auth_token = httpServletRequest.getHeader(AUTH_TOKEN);
         UserContext.setCorrelationId(traceId);
-        logger.debug("UserContextFilter Correlation id: {}", UserContext.getCorrelationId());
+        logger.info("UserContextFilter Correlation id: {}", UserContext.getCorrelationId());
+        logger.info("UserContextFilter auth_token: {}", auth_token);
         chain.doFilter(httpServletRequest, response);
     }
 }

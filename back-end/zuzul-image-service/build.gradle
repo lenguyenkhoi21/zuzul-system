@@ -4,7 +4,7 @@ plugins {
     id 'java'
 }
 
-group = 'com.example'
+group = 'com.zuzul'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
@@ -20,37 +20,30 @@ repositories {
 
 ext {
     set('springCloudVersion', "2021.0.0")
-    set('keyCloakVersion', "15.1.1")
 }
 
 dependencies {
-    // Lombok
-    annotationProcessor 'org.projectlombok:lombok'
-    compileOnly 'org.projectlombok:lombok'
+    // Web based on Netty
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
     // Config properties
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-    // AWS
+    // Lombok
+    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+
+    //AWS
     implementation platform('software.amazon.awssdk:bom:2.17.102')
     implementation 'software.amazon.awssdk:s3'
-
-    // Ops
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-
-    // Web-Servlet Stack
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-
-    // MongoDB
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-
-    // Security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // Cloud Config
     implementation 'org.springframework.cloud:spring-cloud-starter'
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+
+    // Ops
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // Logging
     implementation 'net.logstash.logback:logstash-logback-encoder:6.0'
@@ -59,12 +52,8 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
     implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
 
-    // Service Registration
+    // Services Registration
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-
-
-    // Keycloak
-    implementation 'org.keycloak:keycloak-spring-boot-starter'
 
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -73,11 +62,10 @@ dependencies {
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-        mavenBom "org.keycloak.bom:keycloak-adapter-bom:${keyCloakVersion}"
     }
 }
 
-jar {
+bootJar {
     archiveFileName = 'app.jar'
 }
 
