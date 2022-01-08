@@ -95,3 +95,46 @@ services:
       retries: 3
     ports:
       - "8080:8080"
+
+  # Database For Services
+  mongodb-product:
+    image: mongo:latest
+    container_name: mongodb-product
+    volumes:
+      - <Your folder>:/data/db
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+
+  mongodb-user:
+    image: mongo:latest
+    container_name: mongodb-user
+    volumes:
+      - <Your folder>:/data/db
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+
+  neo4j-relationship:
+    image: neo4j:latest
+    container_name: neo4j-relationship
+    volumes:
+      - <Your folder>:/data
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider localhost:7474 || exit 1" ]
+
+  redis-pub-sub:
+    image: redis:latest
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
+  cassandra-message:
+    image: cassandra:latest
+    volumes:
+      - <Your folder>:/var/lib/cassandra
+    healthcheck:
+      test: [ "CMD-SHELL", "[ $$(nodetool statusgossip) = running ]" ]
+      interval: 5s
+      timeout: 10s
+      retries: 6

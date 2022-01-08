@@ -5,11 +5,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import reactor.core.publisher.Mono;
 
 @Configuration
 public class ResponseFilter {
     private static final Logger logger = LoggerFactory.getLogger(ResponseFilter.class);
+
+    private final FilterUtils filterUtils;
+
+    public ResponseFilter(FilterUtils filterUtils) {
+        this.filterUtils = filterUtils;
+    }
 
     @Bean
     public GlobalFilter postGlobalFilter() {
@@ -23,11 +31,24 @@ public class ResponseFilter {
                                  .stream()
                                  .findFirst()
                                  .get();
+                         HttpHeaders requestHeaders = exchange.getRequest().getHeaders();
+                         String authenticationBearer = filterUtils.getAuthorization(requestHeaders);
 
-                         exchange
-                                 .getResponse()
-                                 .getHeaders()
-                                 .add(FilterUtils.CORRELATION_ID, CORRELATION_ID);
+                         if (authenticationBearer == null) {
+                             exchange
+                                     .getResponse()
+                                     .getHeaders()
+                                     .add(FilterUtils.CORRELATION_ID, CORRELATION_ID);
+
+                             exchange
+                                     .getResponse()
+                                     .setStatusCode(HttpStatus.FORBIDDEN);
+                         } else {
+                             exchange
+                                     .getResponse()
+                                     .getHeaders()
+                                     .add(FilterUtils.CORRELATION_ID, CORRELATION_ID);
+                         }
 
                          logger.info("Completing outgoing request for {}.", exchange.getRequest().getURI());
                      }));

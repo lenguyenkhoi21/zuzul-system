@@ -1,0 +1,49 @@
+{
+    "editor.fontSize": 20,
+    "workbench.iconTheme": "material-icon-theme",
+    "redhat.telemetry.enabled": false,
+    "liveServer.settings.donotVerifyTags": true,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "editor.autoClosingBrackets": "never",
+    "restoreTerminals.terminals": [
+      {
+        "splitTerminals": [
+          {
+            "name": "Docker-compose",
+            "commands": ["cd ."]
+          }
+        ]
+      },
+      {
+        "splitTerminals": [
+          {
+            "name": "Config-Server",
+            "commands": ["cd ./back-end/zuzul-config-server/build/libs"]
+          }
+        ]
+      },
+      {
+        "splitTerminals": [
+          {
+            "name": "Eureka-Server",
+            "commands": ["cd ./back-end/zuzul-eureka-server/build/libs"]
+          }
+        ]
+      },
+      {
+        "splitTerminals": [
+          {
+            "name": "Mockup-FE",
+            "commands": ["cd ./mock-up-fe"]
+          }
+        ]
+      }
+    ]
+}

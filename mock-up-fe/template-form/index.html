@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Mockup Test</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+    <form id='myForm' enctype="multipart/form-data" >
+        prd_user_id: <input type="text" name="prd_user_id" />
+        <br/>
+        prd_name: <input type="text" name="prd_name" />
+        <br/>
+        cate_id: <input type="text" name="cate_id" />
+        <br/>
+        sub_id: <input type="text" name="sub_id" />
+        <br/>
+        prd_price_origin: <input type="number" name="prd_price_origin" />
+        <br/>
+        prd_date_manufacture: <input type="datetime" name="prd_date_manufacture" />
+        <br/>
+        prd_short_des: <input type="text" name="prd_short_des" />
+        <br/>
+        prd_long_des: <input type="text" name="prd_long_des" />
+        <br/>
+        prd_sale: <input type="number" name="prd_sale" />
+        <br/>
+        image1: <input id='aassdd' type="file" name="image1" />
+        <br />
+        image2: <input type="file" name="image2" />
+        <br />
+        image3: <input type="file" name="image3" />
+        <br />
+        <input type="submit" />
+    </form>
+
+    <script>
+
+        const formData = new FormData()
+        formData.set('prd_user_id', 'Le Nguyen Khoi')
+        const image1 = document.getElementById('aassdd').files
+        formData.set('image1', image1)
+        const url = 'http://localhost:7940/zuzul-product-private/v1/product'
+        const url3 = 'http://localhost:7940/zuzul-product-private/v1/service_info'
+        const url4 = 'http://localhost:8991/zuzul-product-private-api/v1/service-info'
+        document.getElementById('myForm').addEventListener('submit', event => {
+            event.preventDefault()
+            const jwt = 'Add Bearer Token Here !'
+            fetch(url4, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Change content type if need
+                    'Authorization': `Bearer ${jwt}`
+                },
+                mode: 'cors',
+                body: JSON.stringify({
+                    // Body JSON
+                }),
+                credentials: 'include'
+            })
+                .then(response => response.json())
+                .then(data => console.log(data));
+        })
+    </script>
+</body>
+</html>

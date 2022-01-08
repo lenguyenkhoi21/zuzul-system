@@ -7,3 +7,6 @@ data/**
 # Config for each teamate
 config/**
 /Docker-compose.yaml
+
+
+.code
