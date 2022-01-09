@@ -18,42 +18,45 @@ public class Payload {
 
     // User Post
     @NotEmpty
-    private String prd_user_id;
+    private String prdUserId;
 
     // Product Name
     @NotEmpty
-    private String prd_name;
+    private String prdName;
 
     // Category
     @NotEmpty
-    private String prd_cate_id;
+    private String prdCateId;
 
     // Sub Category
     @NotEmpty
-    private String prd_sub_id;
+    private String prdSubId;
 
     // Origin_price
     @Min(1)
-    private int prd_price_origin;
+    private int prdPriceOrigin;
 
     // From ? USA, CHINA, ??
     @NotEmpty
-    private String prd_origin;
+    private String prdOrigin;
 
     // Date manufacture
-    private long prd_date_manufacture;
+    private long prdDateManufacture;
 
     // Month warranty
-    private int prd_month_warranty;
+    private int prdMonthWarranty;
 
     // Date that expiry
-    private long prd_date_expiry;
+    private long prdDateExpiry;
 
     @NotEmpty
-    private String prd_short_des;
+    private String prdShortDes;
 
     @NotEmpty
-    private String prd_long_des;
+    private String prdLongDes;
 
-    private float prd_sale;
+    private float prdSale;
+
+    @Min(1)
+    private int prdNumberInStorage;
 }
