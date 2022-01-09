@@ -8,5 +8,6 @@ data/**
 config/**
 /Docker-compose.yaml
 
+node_modules
 
 .code
