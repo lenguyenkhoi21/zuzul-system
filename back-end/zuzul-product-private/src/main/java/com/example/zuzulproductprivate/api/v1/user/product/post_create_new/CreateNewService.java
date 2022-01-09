@@ -72,26 +72,12 @@ public class CreateNewService {
                     imageUtils.UploadToAWSS3(prd_id, nameImg3, prd_image3.getBytes());
 
 
-            Response response = Response.builder()
-                                        .status("Success")
-                                        .image1(isSuccessImg1)
-                                        .image2(isSuccessImg2)
-                                        .image3(isSuccessImg3)
-                                        .build();
-
-            if (nameImg1 != null) {
-                response.setImage1(true);
-            }
-
-            if (nameImg2 != null) {
-                response.setImage2(true);
-            }
-
-            if (nameImg3 != null) {
-                response.setImage3(true);
-            }
-
-            return response;
+            return Response.builder()
+                           .status("Success")
+                           .image1(isSuccessImg1)
+                           .image2(isSuccessImg2)
+                           .image3(isSuccessImg3)
+                           .build();
         }
 
         return Response.builder().status("Failed")
