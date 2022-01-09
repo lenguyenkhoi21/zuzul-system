@@ -15,13 +15,13 @@ import java.io.IOException;
 import java.security.Principal;
 
 @RestController
-@RequestMapping(Constant.rootPath + "/user")
+@RequestMapping(Constant.rootPathv1)
 @RequiredArgsConstructor
 public class ProductController {
     private final CreateNewService createNewService;
 
     @RolesAllowed("TEST_ROLE")
-    @PostMapping(value = "/product",
+    @PostMapping(value = "/user/product",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Response addNew(@ModelAttribute @Valid Payload payload,

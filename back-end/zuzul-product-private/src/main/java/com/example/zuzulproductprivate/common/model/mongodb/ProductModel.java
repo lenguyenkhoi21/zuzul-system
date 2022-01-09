@@ -22,21 +22,22 @@ public class ProductModel {
     @Id
     private String id;
     @Indexed(unique=true)
-    private String prd_id;
-    private String prd_user_id;
-    private String prd_name;
-    private String prd_cate_id;
-    private String prd_sub_id;
-    private int prd_price_origin;
-    private String prd_origin;
-    private Date prd_date_manufacture;
-    private String prd_short_des;
-    private String prd_long_des;
-    private float prd_sale;
-    private List<String> prd_images;
-    private int prd_react;
-    private String prd_status;
-    private Date prd_date_create;
-    private Date prd_date_expiry;
-    private int prd_month_warranty;
+    private String prdId;
+    private String prdUserId;
+    private String prdName;
+    private String prdCateId;
+    private String prdSubId;
+    private int prdPriceOrigin;
+    private String prdOrigin;
+    private Date prdDateManufacture;
+    private String prdShortDes;
+    private String prdLongDes;
+    private float prdSale;
+    private List<String> prdImages;
+    private int prdReact;
+    private String prdStatus;
+    private Date prdDateCreate;
+    private Date prdDateExpiry;
+    private int prdMonthWarranty;
+    private int prdNumberInStorage;
 }
