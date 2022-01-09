@@ -1,0 +1,23 @@
+{
+    "prd_id": "prd_001",
+    "prd_user_id": "user_001",
+    "prd_name": "Áo khoác",
+    "prd_cate_id": "prd_001",
+    "prd_sub_id": "prd_001",
+    "prd_price_origin": 55000,
+    "prd_origin": "USA",
+    "prd_date_manufacture" : "23/07/2000 - Ngay san xuat",
+    "prd_date_create": "23/07/2000 - Ngay Dang",
+    "prd_date_expiry": "23/07/2000 - Ngay Het Han",
+    "prd_month_warranty": "24 Thoi gian bao hanh",
+    "prd_short_des": "Mo ta ngan",
+    "prd_long_des": "Mo ta dai",
+    "prd_sale": 0,
+    "prd_images": [
+        "image1",
+        "image2",
+        "image3"
+    ],
+    "prd_react" : 0,
+    "prd_status" : "WAITING-FOR_ADMIN | AVAIABLE | OUT OF STOCK | STOP"
+}

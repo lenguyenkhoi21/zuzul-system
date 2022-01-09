@@ -9,14 +9,17 @@ public class AWS {
     public static class Credentials {
         private String accessKeyId;
         private String secretKeyId;
-        private String rootPath;
+        private String storage;
+        private String path;
 
         public Credentials() {
         }
 
-        public Credentials(String accessKeyId, String secretKeyId) {
+        public Credentials(String accessKeyId, String secretKeyId, String storage, String path) {
             this.accessKeyId = accessKeyId;
             this.secretKeyId = secretKeyId;
+            this.storage = storage;
+            this.path = path;
         }
 
         public String getAccessKeyId() {
@@ -33,6 +36,22 @@ public class AWS {
 
         public void setSecretKeyId(String secretKeyId) {
             this.secretKeyId = secretKeyId;
+        }
+
+        public String getStorage() {
+            return storage;
+        }
+
+        public void setStorage(String storage) {
+            this.storage = storage;
+        }
+
+        public String getPath() {
+            return path;
+        }
+
+        public void setPath(String path) {
+            this.path = path;
         }
     }
 
