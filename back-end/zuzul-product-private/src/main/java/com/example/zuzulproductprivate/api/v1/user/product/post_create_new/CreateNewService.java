@@ -27,7 +27,7 @@ public class CreateNewService {
                                    MultipartFile prd_image3,
                                    Principal principal) throws IOException {
 
-        if (principal.getName().equals(payload.getPrd_user_id())) {
+        if (principal.getName().equals(payload.getPrdUserId())) {
             String nameImg1 = FunctionalUtil.renameFile(Objects.requireNonNull(prd_image1.getOriginalFilename()));
             String nameImg2 = FunctionalUtil.renameFile(Objects.requireNonNull(prd_image2.getOriginalFilename()));
             String nameImg3 = FunctionalUtil.renameFile(Objects.requireNonNull(prd_image3.getOriginalFilename()));
@@ -41,23 +41,24 @@ public class CreateNewService {
 
             ProductModel newProduct = ProductModel
                     .builder()
-                    .prd_id(prd_id)
-                    .prd_user_id(payload.getPrd_user_id())
-                    .prd_name(payload.getPrd_name())
-                    .prd_cate_id(payload.getPrd_cate_id())
-                    .prd_sub_id(payload.getPrd_sub_id())
-                    .prd_price_origin(payload.getPrd_price_origin())
-                    .prd_origin(payload.getPrd_origin())
-                    .prd_date_manufacture(new Date(payload.getPrd_date_manufacture()))
-                    .prd_date_expiry(new Date(payload.getPrd_date_expiry()))
-                    .prd_month_warranty(payload.getPrd_month_warranty())
-                    .prd_date_create(new Date())
-                    .prd_long_des(payload.getPrd_long_des())
-                    .prd_short_des(payload.getPrd_short_des())
-                    .prd_images(images)
-                    .prd_sale(0)
-                    .prd_react(0)
-                    .prd_status("WAITING_FOR_ACCEPT")
+                    .prdId(prd_id)
+                    .prdUserId(payload.getPrdUserId())
+                    .prdName(payload.getPrdName())
+                    .prdCateId(payload.getPrdCateId())
+                    .prdSubId(payload.getPrdSubId())
+                    .prdPriceOrigin(payload.getPrdPriceOrigin())
+                    .prdOrigin(payload.getPrdOrigin())
+                    .prdDateManufacture(new Date(payload.getPrdDateManufacture()))
+                    .prdDateExpiry(new Date(payload.getPrdDateExpiry()))
+                    .prdMonthWarranty(payload.getPrdMonthWarranty())
+                    .prdDateCreate(new Date())
+                    .prdLongDes(payload.getPrdLongDes())
+                    .prdShortDes(payload.getPrdShortDes())
+                    .prdImages(images)
+                    .prdSale(0)
+                    .prdReact(0)
+                    .prdNumberInStorage(payload.getPrdNumberInStorage())
+                    .prdStatus("WAITING_FOR_ACCEPT")
                     .build();
 
             productRepository.save(newProduct);

@@ -10,7 +10,7 @@ import javax.annotation.security.RolesAllowed;
 
 
 @RestController
-@RequestMapping(Constant.rootPath)
+@RequestMapping(Constant.rootPathv1)
 public class ServiceInfoControllers {
     private final Logger logger = LoggerFactory.getLogger(ServiceInfoControllers.class);
 
@@ -22,7 +22,7 @@ public class ServiceInfoControllers {
         logger.info("CorrelationID - " +
                 UserContext.getCorrelationId() +
                 " into path - " +
-                Constant.rootPath +
+                Constant.rootPathv1 +
                 "/service-info");
 
         return ServiceInfo.builder()
@@ -38,7 +38,7 @@ public class ServiceInfoControllers {
         logger.info("CorrelationID - " +
                 UserContext.getCorrelationId() +
                 " into path - " +
-                Constant.rootPath +
+                Constant.rootPathv1 +
                 "/service-info");
 
         return ServiceInfo.builder()
