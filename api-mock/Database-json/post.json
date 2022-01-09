@@ -1,0 +1,56 @@
+{
+    "postId": "0001",
+    "userPostId": "user-01",
+    "postLike": true,
+    "postContent" : "Hello, everybody",
+    "postImage": "http://image-server/name?w=1&q=75",
+    "postCreate" : "23/07/2000",
+    "postLastUpdate" : "23/07/2000",
+    "postType": [
+      "BAD",
+      "FEELING GOOD",
+      "FEELING EXCELLENT"
+    ],
+    "postReact":  {
+      "shopId": "user-01",
+      "prdId": "prd-001",
+      "name": "Ao khoac"
+    },
+    "postComment": [
+      {
+        "cmtId": "cmt_01",
+        "userCmtId": "user_01",
+        "content": "Good",
+        "reply": [
+          {
+            "replyId": "reply_01",
+            "userReplyId": "user_01",
+            "content": "OK"
+          },
+          {
+            "replyId": "reply_01",
+            "userReplyId": "user_01",
+            "content": "OK"
+          }
+        ]
+      },
+      {
+        "cmtId": "cmt_01",
+        "userCmtId": "user_01",
+        "content": "Good",
+        "reply": [
+          {
+            "replyId": "reply_01",
+            "userReplyId": "user_01",
+            "content": "OK"
+          },
+          {
+            "replyId": "reply_01",
+            "userReplyId": "user_01",
+            "content": "OK"
+          }
+        ]
+      }
+    ]
+  }
+  

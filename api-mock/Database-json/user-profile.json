@@ -1,0 +1,31 @@
+{
+    "userId": "user-01",
+    "userName": "Le Nguyen Khoi",
+    "userAddress": [
+        {
+            "userHomeAddress" : "",
+            "userWard" : "",
+            "userDistinct" : "",
+            "userCity" : "",
+            "userNationality" : ""
+        }
+    ],
+    "userFollowers": 324,
+    "userFriends": 234,
+    "userImage": "image1",
+    "userPost": [
+      {
+        "postId": "post-01",
+        "postContent": "Hello body",
+        "postImage": "image2",
+        "postLike": 324,
+        "postImageContent" : "http://image-server/name?w=1&q=75",
+        "postType": [
+          "BAD",
+          "FEELING GOOD",
+          "FEELING EXCELLENT"
+        ]
+  
+      }
+    ]
+  }

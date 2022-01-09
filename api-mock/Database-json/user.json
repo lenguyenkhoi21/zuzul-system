@@ -1,0 +1,32 @@
+{
+    "userFirstName": "Khoi",
+    "userLastName": "Le Nguyen",
+    "userPhone": "0777701956",
+    "userBirthDay": "timestamp",
+    "userSex": [
+      "MALE",
+      "FEMALE",
+      "OTHER"
+    ],
+    "userCoverPhoto": [
+      "/zuzul/production/user_id/cover_image/image_1.png",
+      "/zuzul/production/prd_id/cover_image/image_2.png",
+      "/zuzul/production/prd_id/cover_image/image_3.png"
+    ],
+    "useAvatarPhoto": [
+      "/zuzul/production/user_id/avatar_image/image_1.png",
+      "/zuzul/production/prd_id/avatar_image/image_2.png",
+      "/zuzul/production/prd_id/avatar_image/image_3.png"
+    ],
+    "userShopName" : "Shop ABC",
+    "userCart": [
+      {
+        "prđI": "prd_01",
+        "sellerId": "user-02",
+        "count": 3,
+        "originPrice": 25000,
+        "sale": 0.2
+      }
+    ]
+  }
+  
