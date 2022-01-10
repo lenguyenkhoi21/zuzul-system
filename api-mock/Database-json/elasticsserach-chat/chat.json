@@ -1,4 +1,5 @@
 {
+    "messageId" : "message-01",
     "senderId": "user-01",
     "roomId": "room-01",
     "message": "Chao cau",

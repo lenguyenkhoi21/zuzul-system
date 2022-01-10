@@ -1,17 +1,10 @@
 {
     "cmtId": "cmt_01",
+    "cmtTime" : "20122021",
+    "postId": "post-01",
     "userCmtId": "user_01",
     "content": "Good",
-    "reply": [
-      {
-        "replyId": "reply_01",
-        "userReplyId": "user_01",
-        "content": "OK"
-      },
-      {
-        "replyId": "reply_01",
-        "userReplyId": "user_01",
-        "content": "OK"
-      }
+    "replyId": [
+      "user-02", "user-01", "user-03"
     ]
   }

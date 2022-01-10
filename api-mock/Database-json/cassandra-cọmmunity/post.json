@@ -15,42 +15,6 @@
       "shopId": "user-01",
       "prdId": "prd-001",
       "name": "Ao khoac"
-    },
-    "postComment": [
-      {
-        "cmtId": "cmt_01",
-        "userCmtId": "user_01",
-        "content": "Good",
-        "reply": [
-          {
-            "replyId": "reply_01",
-            "userReplyId": "user_01",
-            "content": "OK"
-          },
-          {
-            "replyId": "reply_01",
-            "userReplyId": "user_01",
-            "content": "OK"
-          }
-        ]
-      },
-      {
-        "cmtId": "cmt_01",
-        "userCmtId": "user_01",
-        "content": "Good",
-        "reply": [
-          {
-            "replyId": "reply_01",
-            "userReplyId": "user_01",
-            "content": "OK"
-          },
-          {
-            "replyId": "reply_01",
-            "userReplyId": "user_01",
-            "content": "OK"
-          }
-        ]
-      }
-    ]
+    }
   }
   
