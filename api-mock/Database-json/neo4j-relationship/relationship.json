@@ -1,11 +1,7 @@
 {
-    "userId" : "user-01",
-    "userFriends" : {
-        "userId" : [
-            "user-02",
-            "user-03",
-            "user-04",
-            "user-05"
-        ]
-    }
+    "relationshipId" : "rel-01",
+    "roomId" : "room-01",
+    "requestFriend" : "true",
+    "beFriend" : "false",
+    "status" : "OPEN"
 }

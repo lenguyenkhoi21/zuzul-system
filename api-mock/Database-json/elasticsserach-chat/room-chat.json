@@ -2,9 +2,26 @@
     "roomId" : "room-01",
     "roomMember" : ["user-01", "user-02"],
     "roomContent" : [
-        "message-01",
-        "message-05",
-        "message-07",
-        "message-09"
+        {
+            "messageId" : "message-01",
+            "message": "Chao cau",
+            "dateSend": "23/07/2000",
+            "dateRead": null,
+            "status": "RECEIVED"
+        },
+        {
+            "messageId" : "message-02",
+            "message": "Chao cau",
+            "dateSend": "23/07/2000",
+            "dateRead": null,
+            "status": "RECEIVED"
+        }
+        ,{
+            "messageId" : "message-03",
+            "message": "Chao cau",
+            "dateSend": "23/07/2000",
+            "dateRead": null,
+            "status": "RECEIVED"
+        }
     ]
 }

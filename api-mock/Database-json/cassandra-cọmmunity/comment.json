@@ -5,6 +5,6 @@
     "userCmtId": "user_01",
     "content": "Good",
     "replyId": [
-      "user-02", "user-01", "user-03"
+      "cmt-02", "cmt-03", "cmt-04"
     ]
   }
