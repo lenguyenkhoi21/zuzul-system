@@ -1,0 +1,9 @@
+{
+    "notificationId" : "notification-01",
+    "notificationContent" : "ABCXYZ",
+    "notificationPublishDate" : "10/01/2022",
+    "notificationType" : [
+        "REQUESTS" , "COMMENTS", "REPLYS", "GREETINGS", "SHOP_POSTS", "FRIEND_POSTS", "CENSORSHIP", "REACTS"  
+    ],
+    "notificationStatus" : "UNREAD"
+}

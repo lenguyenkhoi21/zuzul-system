@@ -1,0 +1,21 @@
+{
+    "roomId" : "room-01",
+    "roomMember" : ["user-01", "user-02"],
+    "roomContent" : [
+        {
+            "senderId": "user-01",
+            "roomId": "room-01",
+            "message": "Chao cau",
+            "dateSend": "23/07/2000",
+            "dateRead": null,                
+            "status": "RECEIVED"
+        },
+        {
+            "senderId": "user-02",
+            "message": "Chao cau",
+            "dateSend": "23/07/2000",
+            "dateRead": null,
+            "status": "RECEIVED"
+        }
+    ]
+}

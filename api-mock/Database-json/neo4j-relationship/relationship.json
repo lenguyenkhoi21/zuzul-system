@@ -1,0 +1,11 @@
+{
+    "userId" : "user-01",
+    "userFriends" : {
+        "userId" : [
+            "user-02",
+            "user-03",
+            "user-04",
+            "user-05"
+        ]
+    }
+}
