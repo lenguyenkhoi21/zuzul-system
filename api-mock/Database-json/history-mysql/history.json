@@ -1,9 +1,9 @@
 {
-    "userId" : "user-01",
+    "purchaserId" : "user-01",
     "time" : "20102020",
     "prdId" : "product-01",
     "count" : "5",
     "priceOrigin" : "5000",
     "sales" : "0.1",
-    "shopId" : "shop-06"
+    "sellerId" : "shop-06"
 }

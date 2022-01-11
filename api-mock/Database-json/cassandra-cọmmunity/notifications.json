@@ -5,5 +5,6 @@
     "notificationType" : [
         "REQUESTS" , "COMMENTS", "REPLYS", "GREETINGS", "SHOP_POSTS", "FRIEND_POSTS", "CENSORSHIP", "REACTS"  
     ],
-    "notificationStatus" : "UNREAD"
+    "notificationStatus" : [ "UNREAD", "READ" ],
+    "notificationTo" : ["user-01", "user-02"]
 }

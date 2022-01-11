@@ -1,25 +1,6 @@
 {
     "userId": "user-01",
     "userName": "Le Nguyen Khoi",
-    "userAddress": [
-        {
-            "userHomeAddress" : "",
-            "userWard" : "",
-            "userDistinct" : "",
-            "userCity" : "",
-            "userNationality" : ""
-        }
-    ],
-    "userImage": "image1",
-    "userFirstName": "Khoi",
-    "userLastName": "Le Nguyen",
-    "userPhone": "0777701956",
-    "userBirthDay": "timestamp",
-    "userSex": [
-      "MALE",
-      "FEMALE",
-      "OTHER"
-    ],
     "userCoverPhoto": [
       "/zuzul/production/user_id/cover_image/image_1.png",
       "/zuzul/production/prd_id/cover_image/image_2.png",

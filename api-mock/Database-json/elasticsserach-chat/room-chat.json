@@ -1,9 +1,8 @@
 {
-    "roomId" : "room-01",
-    "roomMember" : ["user-01", "user-02"],
     "roomContent" : [
         {
             "messageId" : "message-01",
+            "userId" : "user-01",
             "message": "Chao cau",
             "dateSend": "23/07/2000",
             "dateRead": null,
@@ -11,6 +10,7 @@
         },
         {
             "messageId" : "message-02",
+            "userId" : "user-02",
             "message": "Chao cau",
             "dateSend": "23/07/2000",
             "dateRead": null,
@@ -18,6 +18,7 @@
         }
         ,{
             "messageId" : "message-03",
+            "userId" : "user-02",
             "message": "Chao cau",
             "dateSend": "23/07/2000",
             "dateRead": null,
