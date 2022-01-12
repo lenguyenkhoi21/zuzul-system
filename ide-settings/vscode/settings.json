@@ -44,6 +44,22 @@
             "commands": ["cd ./mock-up-fe"]
           }
         ]
+      },
+      {
+        "splitTerminals": [
+          {
+            "name": "Private-API",
+            "commands": ["cd ./back-end/zuzul-private-api/build/libs"]
+          }
+        ]
+      },
+      {
+        "splitTerminals": [
+          {
+            "name": "Git",
+            "commands": ["cd ."]
+          }
+        ]
       }
     ]
 }

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.security.Principal;
 
 @RestController
-@RequestMapping(Constant.rootPathv1)
+@RequestMapping(Constant.rootPathV1)
 @RequiredArgsConstructor
 public class ProductController {
     private final CreateNewService createNewService;

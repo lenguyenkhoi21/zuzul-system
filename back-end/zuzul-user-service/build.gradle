@@ -46,7 +46,7 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
 
     // Logging
-    implementation 'net.logstash.logback:logstash-logback-encoder:6.0'
+    // implementation 'net.logstash.logback:logstash-logback-encoder:6.0'
 
     // Service Registration
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'

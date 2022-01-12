@@ -55,12 +55,19 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
 
+    // Load - Balancing
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+
+    // Resilience4j
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+
     // Logging
-    implementation 'net.logstash.logback:logstash-logback-encoder:6.0'
+//    implementation 'net.logstash.logback:logstash-logback-encoder:6.0'
 
     // Tracing
-    implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
-    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+//    implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
 
     // Service Registration
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
@@ -69,8 +76,15 @@ dependencies {
     // Keycloak
     implementation 'org.keycloak:keycloak-spring-boot-starter'
 
+    // Kafka
+    implementation 'org.springframework.cloud:spring-cloud-stream'
+    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
+    implementation 'org.springframework.kafka:spring-kafka'
+
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
 }
 
 dependencyManagement {
