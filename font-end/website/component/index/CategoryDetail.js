@@ -10,7 +10,7 @@ const CategoryDetail = ({ category, key }) => {
 	return (
 		<>
 			<div key={key} className={'mr-2'}>
-				<Link href={'/'}>
+				<Link href={`/category/${category.id}`}>
 					<a>
 						<div className={'flex flex-col items-center'}>
 							<Image

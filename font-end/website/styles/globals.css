@@ -48,6 +48,10 @@
     padding-right: 330px;
   }
 
+  .page-body {
+    min-height: 80vh;
+  }
+
   .font-poppins {
     font-family: 'Poppins', sans-serif;
     font-weight: 700;

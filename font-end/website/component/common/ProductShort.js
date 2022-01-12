@@ -53,7 +53,9 @@ const ProductShort = ({ product }) => {
 							{/* eslint-disable-next-line tailwindcss/no-custom-classname */}
 							<button
 								onClick={e => onClickHandle(e)}
-								className={'float-right font-poppins btn-ProductShort'}>
+								className={
+									'float-right bg-navbar font-poppins btn-ProductShort'
+								}>
 								{' '}
 								Mua ngay{' '}
 							</button>
@@ -89,10 +91,9 @@ const ProductShort = ({ product }) => {
 					}
 
 					.btn-ProductShort {
-						background: #6a983c;
 						padding-top: 6.5px;
 						padding-bottom: 6.5px;
-						border: 2px solid #46760a;
+						border: 2px solid #2aa71a;
 						padding-right: 12px;
 						padding-left: 12px;
 						box-sizing: border-box;

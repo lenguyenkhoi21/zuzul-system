@@ -4,7 +4,7 @@ module.exports = {
 	darkMode: false, // or 'media' or 'class'
 	theme: {
 		colors: {
-			navbar: '#6A983C'
+			navbar: '#46D362'
 		},
 		extend: {}
 	},

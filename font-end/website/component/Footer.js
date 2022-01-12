@@ -7,7 +7,7 @@ const Footer = () => {
 	console.log(`${timeNow()} --- [Footer] --- Render at './component/Footer.js'`)
 	return (
 		<>
-			<footer className={'px-330 footer-Footer'}>
+			<footer className={'bg-navbar px-330 footer-Footer'}>
 				<div className={'grid grid-cols-3 items-center'}>
 					<div>
 						<Link href={'/'}>
@@ -134,7 +134,6 @@ const Footer = () => {
 			<style jsx>
 				{`
 					.footer-Footer {
-						background-color: #6a983c;
 						height: 410px;
 						padding-top: 105px;
 					}
