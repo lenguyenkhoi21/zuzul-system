@@ -264,7 +264,7 @@ services:
       - broker
       - schema-registry
     ports:
-      - 8082:8082
+      - "8082:8082"
     hostname: rest-proxy
     container_name: rest-proxy
     environment:
@@ -316,9 +316,34 @@ services:
       timeout: 3s
       retries: 30
 
+  elasticsearch-chat:
+    image: elasticsearch:7.14.2
+    container_name: elasticsearch-chat
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    volumes:
+      - <Your folder>:/usr/share/elasticsearch/data
+    environment:
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1" ]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+  mysql-history:
+    image: mysql:latest
+
   cassandra-community:
     image: cassandra:latest
     container_name: cassandra-community
+    ports:
+      - 9042:9042 
     volumes:
       - <Your folder>:/var/lib/cassandra
     healthcheck:

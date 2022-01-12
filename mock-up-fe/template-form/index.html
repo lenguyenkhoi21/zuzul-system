@@ -8,55 +8,63 @@
 </head>
 <body>
     <form id='myForm' enctype="multipart/form-data" >
-        prd_user_id: <input type="text" name="prd_user_id" />
+        prdUserId: <input type="text" name="prdUserId" />
         <br/>
-        prd_name: <input type="text" name="prd_name" />
+        prdName: <input type="text" name="prdName" />
         <br/>
-        cate_id: <input type="text" name="cate_id" />
+        prdCateId: <input type="text" name="prdCateId" />
         <br/>
-        sub_id: <input type="text" name="sub_id" />
+        prdSubId: <input type="text" name="prdSubId" />
         <br/>
-        prd_price_origin: <input type="number" name="prd_price_origin" />
+        prdPriceOrigin: <input type="number" name="prdPriceOrigin" />
         <br/>
-        prd_date_manufacture: <input type="datetime" name="prd_date_manufacture" />
+        prdOrigin: <input type="text" name="prdOrigin" />
         <br/>
-        prd_short_des: <input type="text" name="prd_short_des" />
+        prdDateManufacture: <input type="number" name="prdDateManufacture" />
         <br/>
-        prd_long_des: <input type="text" name="prd_long_des" />
+        prdMonthWarranty: <input type="number" name="prdMonthWarranty" />
         <br/>
-        prd_sale: <input type="number" name="prd_sale" />
+        prdDateExpiry: <input type="number" name="prdDateExpiry" />
         <br/>
-        image1: <input id='aassdd' type="file" name="image1" />
+        prdShortDes: <input type="text" name="prdShortDes" />
+        <br/>
+        prdLongDes: <input type="text" name="prdLongDes" />
+        <br/>
+        prdSale: <input type="number" name="prdSale" />
+        <br/>
+        prdNumberInStorage: <input type="number" name="prdNumberInStorage" />
+        <br/>
+        image1: <input type="file" name="prd_image1" />
         <br />
-        image2: <input type="file" name="image2" />
+        image2: <input type="file" name="prd_image2" />
         <br />
-        image3: <input type="file" name="image3" />
+        image3: <input type="file" name="prd_image3" />
         <br />
         <input type="submit" />
     </form>
 
     <script>
-
-        const formData = new FormData()
-        formData.set('prd_user_id', 'Le Nguyen Khoi')
-        const image1 = document.getElementById('aassdd').files
-        formData.set('image1', image1)
         const url = 'http://localhost:7940/zuzul-product-private/v1/product'
         const url3 = 'http://localhost:7940/zuzul-product-private/v1/service_info'
         const url4 = 'http://localhost:8991/zuzul-product-private-api/v1/service-info'
         document.getElementById('myForm').addEventListener('submit', event => {
             event.preventDefault()
+            const thisForm = document.getElementById('myForm')
+            const formData = new FormData(thisForm)
+            const image1 = document.getElementById('image1')
+            const image2 = document.getElementById('image2')
+            const image3 = document.getElementById('image3')
+            formData.append('prd_image1', image1.files[0])
+            formData.append('prd_image2', image2.files[0])
+            formData.append('prd_image3', image3.files[0])
             const jwt = 'Add Bearer Token Here !'
             fetch(url4, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json', // Change content type if need
                     'Authorization': `Bearer ${jwt}`
                 },
                 mode: 'cors',
-                body: JSON.stringify({
-                    // Body JSON
-                }),
+                body: formData,
                 credentials: 'include'
             })
                 .then(response => response.json())

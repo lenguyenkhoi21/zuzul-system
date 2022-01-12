@@ -37,6 +37,9 @@ dependencies {
     // Web-Servlet Stack
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    // Casandra
+    implementation 'org.springframework.boot:spring-boot-starter-data-cassandra'
+
     // Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
@@ -54,8 +57,15 @@ dependencies {
     // Keycloak
     implementation 'org.keycloak:keycloak-spring-boot-starter'
 
+    // Kafka
+    implementation 'org.springframework.cloud:spring-cloud-stream'
+    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
+    implementation 'org.springframework.kafka:spring-kafka'
+
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
 }
 
 dependencyManagement {
