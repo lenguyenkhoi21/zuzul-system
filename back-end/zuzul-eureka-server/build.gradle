@@ -21,7 +21,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // Logging
-    implementation 'net.logstash.logback:logstash-logback-encoder:6.0'
+    //implementation 'net.logstash.logback:logstash-logback-encoder:6.0'
 
     // Web Servlet Stack
     implementation 'org.springframework.boot:spring-boot-starter-web'

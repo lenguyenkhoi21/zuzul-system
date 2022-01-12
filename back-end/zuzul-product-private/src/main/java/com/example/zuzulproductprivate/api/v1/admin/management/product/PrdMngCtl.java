@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(Constant.rootPathv1)
+@RequestMapping(Constant.rootPathV1)
 @RequiredArgsConstructor
 public class PrdMngCtl {
     private final UpdatePrd updatePrd;

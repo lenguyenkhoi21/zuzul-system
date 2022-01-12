@@ -48,7 +48,7 @@ dependencyManagement {
     }
 }
 
-jar {
+bootJar {
     archiveFileName = 'app.jar'
 }
 
