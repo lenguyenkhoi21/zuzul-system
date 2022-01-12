@@ -1,0 +1,7 @@
+{
+    "relationshipId" : "rel-01",
+    "roomId" : "room-01",
+    "requestFriend" : "true",
+    "beFriend" : "false",
+    "status" : "OPEN"
+}

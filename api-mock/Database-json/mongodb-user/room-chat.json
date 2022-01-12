@@ -1,0 +1,28 @@
+{
+    "roomContent" : [
+        {
+            "messageId" : "message-01",
+            "userId" : "user-01",
+            "message": "Chao cau",
+            "dateSend": "23/07/2000",
+            "dateRead": null,
+            "status": "RECEIVED"
+        },
+        {
+            "messageId" : "message-02",
+            "userId" : "user-02",
+            "message": "Chao cau",
+            "dateSend": "23/07/2000",
+            "dateRead": null,
+            "status": "RECEIVED"
+        }
+        ,{
+            "messageId" : "message-03",
+            "userId" : "user-02",
+            "message": "Chao cau",
+            "dateSend": "23/07/2000",
+            "dateRead": null,
+            "status": "RECEIVED"
+        }
+    ]
+}
