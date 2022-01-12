@@ -1,0 +1,22 @@
+{
+    "userId" : "user-01",
+    "userAddress": [
+        {
+            "userHomeAddress" : "",
+            "userWard" : "",
+            "userDistinct" : "",
+            "userCity" : "",
+            "userNationality" : ""
+        }
+    ],
+    "userImage": "image1",
+    "userFirstName": "Khoi",
+    "userLastName": "Le Nguyen",
+    "userPhone": "0777701956",
+    "userBirthDay": "timestamp",
+    "userSex": [
+      "MALE",
+      "FEMALE",
+      "OTHER"
+    ]
+}

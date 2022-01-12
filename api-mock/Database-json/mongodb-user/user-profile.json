@@ -1,0 +1,16 @@
+{
+    "userId": "user-01",
+    "userName": "Le Nguyen Khoi",
+    "userCoverPhoto": [
+      "/zuzul/production/user_id/cover_image/image_1.png",
+      "/zuzul/production/prd_id/cover_image/image_2.png",
+      "/zuzul/production/prd_id/cover_image/image_3.png"
+    ],
+    "useAvatarPhoto": [
+      "/zuzul/production/user_id/avatar_image/image_1.png",
+      "/zuzul/production/prd_id/avatar_image/image_2.png",
+      "/zuzul/production/prd_id/avatar_image/image_3.png"
+    ],
+    "userActivated" : "TRUE",
+    "userShopName" : "Shop ABC"
+  }
