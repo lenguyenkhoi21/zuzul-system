@@ -15,7 +15,7 @@ const HomePage = ({ bestProduct, newProduct, saleProduct, category }) => {
 
 	return (
 		<>
-			<div className={`px-330`}>
+			<div className={`px-330 page-body`}>
 				<CategoryScroll categoryList={category} />
 				<ProductFilter
 					type={'Sản phẩm được cồng dồng đánh giá cao'}
