@@ -10,7 +10,9 @@ export const UserContext = createContext()
 
 const UserInitState = {
 	userID: null,
+	name: null,
 	access_token: null,
+	isActiveShop: false,
 	role: null
 }
 
