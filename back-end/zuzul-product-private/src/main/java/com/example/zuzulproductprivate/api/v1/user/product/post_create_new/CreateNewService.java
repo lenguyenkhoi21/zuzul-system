@@ -1,6 +1,6 @@
 package com.example.zuzulproductprivate.api.v1.user.product.post_create_new;
 
-import com.example.zuzulproductprivate.common.model.mongodb.ProductModel;
+import com.example.zuzulproductprivate.common.model.mongodb.Product;
 import com.example.zuzulproductprivate.common.repo.mongodb.ProductRepository;
 import com.example.zuzulproductprivate.common.ultis.FunctionalUtil;
 import com.example.zuzulproductprivate.common.ultis.ImageUtils;
@@ -39,7 +39,7 @@ public class CreateNewService {
             images.add(nameImg2);
             images.add(nameImg3);
 
-            ProductModel newProduct = ProductModel
+            Product newProduct = Product
                     .builder()
                     .prdId(prd_id)
                     .prdUserId(payload.getPrdUserId())
