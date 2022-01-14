@@ -14,7 +14,7 @@ const CategoryPage = () => {
 	)
 
 	const [product, setProduct] = useState([])
-  // eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line no-unused-vars
 	const [category, setCategory] = useState([
 		{
 			id: 'category-01',
@@ -83,13 +83,13 @@ const CategoryPage = () => {
 	const pathname = path.split('/')[2]
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Danh mục sản phẩm')
-    // TODO: Fetch api to get all catecory
+		// TODO: Fetch api to get all catecory
 	}, [path])
 	return (
 		<>
 			<div className={'px-330 page-body'}>
 				<SubMenu setProduct={setProduct} />
-        <hr />
+				<hr />
 				<Menu category={category} pathname={pathname} />
 				<ProductDisplay product={product} />
 			</div>

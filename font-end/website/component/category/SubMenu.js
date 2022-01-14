@@ -38,7 +38,7 @@ const SubMenu = ({ setProduct }) => {
 			}
 		})
 
-    // TODO: Call api to get product
+		// TODO: Call api to get product
 		setProduct([{ name: 'dcad' }, { name: 'fsd' }])
 		setSubmenu(arr)
 	}

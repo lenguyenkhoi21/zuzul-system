@@ -11,6 +11,7 @@ import NavigationBar from '../component/nav/NavigationBar'
 import NotifyReducer from '../reducer/Notify.Reducer'
 import ChatReducer from '../reducer/Chat.Reducer'
 import CartReducer from '../reducer/Cart.Reducer'
+import LeftMenuUserReducer from '../reducer/LeftMenuUser.Reducer'
 
 const MyApp = ({ Component, pageProps }) => {
 	console.log(`${timeNow()} --- [Component MyApp] --- Render at pages/_app.js`)
@@ -22,13 +23,15 @@ const MyApp = ({ Component, pageProps }) => {
 					<NotifyReducer>
 						<ChatReducer>
 							<CartReducer>
-								<CookieValidation>
-									<ConnectSocket />
-								</CookieValidation>
-								<Metadata />
-								<NavigationBar />
-								<Component {...pageProps} />
-								<Footer />
+								<LeftMenuUserReducer>
+									<CookieValidation>
+										<ConnectSocket />
+									</CookieValidation>
+									<Metadata />
+									<NavigationBar />
+									<Component {...pageProps} />
+									<Footer />
+								</LeftMenuUserReducer>
 							</CartReducer>
 						</ChatReducer>
 					</NotifyReducer>

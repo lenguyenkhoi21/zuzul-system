@@ -14,7 +14,9 @@ const SetCookiePage = () => {
 
 	const [cookie, setCookie] = useState({
 		userID: null,
+		name: null,
 		access_token: null,
+		isActiveShop: false,
 		role: null
 	})
 
@@ -36,13 +38,21 @@ const SetCookiePage = () => {
 
 	const onChange = e => {
 		const value = e.target.value
-		setCookie({ ...cookie, [e.target.name]: value })
+		const name = e.target.name
+		if (name === 'isActiveShop') {
+			const isActiveShop = cookie.isActiveShop
+			setCookie({ ...cookie, [name]: !isActiveShop })
+		} else {
+			setCookie({ ...cookie, [name]: value })
+		}
 	}
 
 	const setCookieDefault = () => {
 		const data = {
 			userID: 'user-01',
+			name: 'Khoi Le Nguyen',
 			access_token: 'token-01',
+			isActiveShop: true,
 			role: 'NORMAL'
 		}
 		userCTX.addUser(USER_ACTION.ADD_USER, data)
@@ -75,6 +85,13 @@ const SetCookiePage = () => {
 						className={'input-SetCookiePage-border'}
 					/>{' '}
 					<br />
+					Name:{' '}
+					<input
+						name={'name'}
+						onChange={onChange}
+						className={'input-SetCookiePage-border'}
+					/>{' '}
+					<br />
 					Access_Token:{' '}
 					<input
 						name={'access_token'}
@@ -83,6 +100,29 @@ const SetCookiePage = () => {
 					/>{' '}
 					<br />
 					Role: <input name={'role'} onChange={onChange} /> <br />
+					{cookie.isActiveShop === false ? (
+						<>
+							{' '}
+							là người bán hàng
+							<input
+								type={'checkbox'}
+								onChange={onChange}
+								name={'isActiveShop'}
+							/>{' '}
+							<br />{' '}
+						</>
+					) : (
+						<>
+							là người bán hàng{' '}
+							<input
+								type={'checkbox'}
+								onChange={onChange}
+								name={'isActiveShop'}
+								className={'button-SetCookiePage-shop'}
+							/>
+							<br />{' '}
+						</>
+					)}
 					<button type={'submit'}> Đặt Cookie </button>
 				</form>
 				<button onClick={setCookieDefault}>
@@ -96,6 +136,10 @@ const SetCookiePage = () => {
 				{`
 					.input-SetCookiePage-border {
 						border: 1px solid black;
+					}
+
+					.button-SetCookiePage-shop {
+						background-color: crimson;
 					}
 				`}
 			</style>

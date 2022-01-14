@@ -98,7 +98,9 @@ const IconBar = () => {
 											alt={'Shopping Cart'}
 										/>
 										<p className={'ml-0.5 font-poppins'}>
-											{userCTX.state.userID}
+											{userCTX.state.name === null
+												? userCTX.state.userID
+												: userCTX.state.name}
 										</p>
 									</div>
 								</a>

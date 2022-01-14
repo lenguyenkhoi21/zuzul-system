@@ -15,7 +15,7 @@ const Authentication = ({
 					className={
 						'grid grid-cols-1 gap-4 place-content-start form-Authentication-size'
 					}>
-					<div className={'row-span-3 '}></div>
+					<div className={'row-span-3 '} />
 
 					<div className={'grid grid-cols-2 grid-flow-col'}>
 						<div className={'flex justify-center'}>
@@ -27,7 +27,7 @@ const Authentication = ({
 								</div>
 							</div>
 						</div>
-						<div className={''}></div>
+						<div className={''} />
 					</div>
 
 					<div className={'flex gap-4 justify-center p-4'}>
@@ -62,7 +62,8 @@ const Authentication = ({
 							<input
 								type={'text'}
 								name={'phoneNumberInput'}
-								className={'input-Authentication-size'}></input>
+								className={'input-Authentication-size'}
+							/>
 						</div>
 					</div>
 
@@ -88,7 +89,8 @@ const Authentication = ({
 							<input
 								type={'text'}
 								name={'passWordInput'}
-								className={'input-Authentication-size'}></input>
+								className={'input-Authentication-size'}
+							/>
 						</div>
 					</div>
 
