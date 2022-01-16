@@ -1,6 +1,6 @@
 {
-    "categoryId" : "category-01",
     "subCategoryId": "subcategory-01",
     "subCategoryName": "Áo Khoác",
-    "subcategoryDescription" : "Áo khoác giữ ấm"
+    "subcategoryDescription" : "Áo khoác giữ ấm",
+    "status" : "AVAILABLE"
 }

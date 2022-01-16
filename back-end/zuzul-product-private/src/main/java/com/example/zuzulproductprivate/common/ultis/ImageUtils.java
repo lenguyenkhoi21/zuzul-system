@@ -8,7 +8,6 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.*;
-import java.nio.ByteBuffer;
 
 @Component
 @RequiredArgsConstructor
@@ -43,5 +42,25 @@ public class ImageUtils {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public boolean uploadToCategoryAWSS3 (String categoryId, String categoryImageName, byte [] dataImage) {
+        String key = aws.getCredentials().getPath() +
+                "/category/" +
+                categoryId +
+                "/" +
+                categoryImageName;
+
+        PutObjectRequest putObjectRequest = PutObjectRequest
+                .builder()
+                .bucket(aws.getCredentials().getStorage())
+                .key(key)
+                .build();
+
+        awss3.s3Client()
+                .putObject(putObjectRequest,
+                        RequestBody.fromBytes(dataImage));
+
+        return true;
     }
 }

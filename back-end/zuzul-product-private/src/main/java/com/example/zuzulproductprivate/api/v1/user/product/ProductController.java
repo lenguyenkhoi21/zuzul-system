@@ -19,7 +19,6 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class ProductController {
     private final CreateNewService createNewService;
-
     @RolesAllowed("TEST_ROLE")
     @PostMapping(value = "/user/product",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,

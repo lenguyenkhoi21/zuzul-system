@@ -1,7 +1,7 @@
 package com.example.zuzulproductprivate.api.v1.admin.management.product.prd_mng;
 
 import com.example.zuzulproductprivate.common.model.kafka.Notify;
-import com.example.zuzulproductprivate.common.model.mongodb.ProductModel;
+import com.example.zuzulproductprivate.common.model.mongodb.Product;
 import com.example.zuzulproductprivate.common.repo.mongodb.ProductRepository;
 import com.example.zuzulproductprivate.common.ultis.Constant;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class UpdatePrd {
     private final ProductRepository productRepository;
 
     public Response updateProduct(Payload payload) {
-        ProductModel productAccept = productRepository.findByPrdId(payload.getPrdId());
+        Product productAccept = productRepository.findByPrdId(payload.getPrdId());
         productAccept.setPrdStatus("AVAILABLE");
         productRepository.save(productAccept);
         // TODO: Call to Relationship-Service to get who follow this person
