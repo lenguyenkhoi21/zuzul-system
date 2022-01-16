@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: zuzul-product-private
+  description: API for services product-private
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:7940'
+paths:
+  #TODO
+  /zuzul-product-private/v1/pub/image/{prd-id}/{img-id}:
+    get:
+      description: 'Get image of a product'
+      responses:
+        404:
+          description: Not found
+        200:
+          content:
+            image/*: # Media type
+              schema:
+                type: string
+                format: binary
+          description: Found
+  #TODO
+  /zuzul-product-private/v1/pub/product/{prd-id}:
+    get:
+      description: 'Get detail of product'
+      responses:
+        404:
+          description: Not found
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  prdId:
+                    type: string
+                  prdUserId:
+                    type: string
+                  prdName:
+                    type: string
+                  prdCateId:
+                    type: string
+                  prdSubId:
+                    type: string
+                  prdPriceOrigin:
+                    type: integer
+                  prdLongDes:
+                    type: string
+                  prdImages:
+                    type: array
+                    items:
+                      type: string
+                  prdDateExpiry:
+                    type: integer
+                  prdMonthWarranty:
+                    type: integer
+                  prdReact:
+                    type: integer
+                  prdDateCreate:
+                    type: integer
+                  imageUser:
+                    type: string
+                  userId:
+                    type: string
+                  userName:
+                    type: string
+          description: Found
+  #TODO:
+  /zuzul-product-private/v1/pub/product/type?filter:
+    get:
+      description: 'Get detail of product'
+      responses:
+        200:
+          description: Get list product filter by
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    prdId:
+                      type: string
+                    prdName:
+                      type: string
+                    prdPriceOrigin:
+                      type: string
+                    prdImage:
+                      type: string
+                    prdShortDes:
+                      type: string

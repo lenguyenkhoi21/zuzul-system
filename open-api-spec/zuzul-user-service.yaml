@@ -1,0 +1,9 @@
+openapi: 3.0.3
+info:
+  title: zuzul-user-service
+  description: zuzul-user-service
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:7990'
+paths:
+
