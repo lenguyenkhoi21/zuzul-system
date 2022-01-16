@@ -1,0 +1,9 @@
+openapi: 3.0.3
+info:
+  title: zuzul-relationship-service
+  description: zuzul-relationship-service
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:7930'
+paths:
+
