@@ -9,6 +9,8 @@ paths:
   #TODO
   /zuzul-product-private/v1/pub/image/{prd-id}/{img-id}:
     get:
+      tags:
+        - A image of a product
       description: 'Get image of a product'
       responses:
         404:
@@ -23,6 +25,8 @@ paths:
   #TODO
   /zuzul-product-private/v1/pub/product/{prd-id}:
     get:
+      tags:
+        - Get product by id
       description: 'Get detail of product'
       responses:
         404:
@@ -69,6 +73,8 @@ paths:
   #TODO:
   /zuzul-product-private/v1/pub/product/type?filter:
     get:
+      tags:
+        - Get a lot of products by filter
       description: 'Get detail of product'
       responses:
         200:

@@ -6,4 +6,189 @@ info:
 servers:
   - url: 'http://localhost:7990'
 paths:
+  #TODO
+  /zuzul-user-service/v1/pub/image/user/avatar/{img-id}:
+    get:
+      tags:
+        - Avatar of user
+      description: 'Get image of a product'
+      responses:
+        404:
+          description: Not found
+        200:
+          content:
+            image/*: # Media type
+              schema:
+                type: string
+                format: binary
+          description: Found
+  #TODO
+  /zuzul-user-service/v1/pub/image/user/cover/{img-id}:
+    get:
+      tags:
+        - Cover Image of user
+      description: 'Get image of a product'
+      responses:
+        404:
+          description: Not found
+        200:
+          content:
+            image/*: # Media type
+              schema:
+                type: string
+                format: binary
+          description: Found
+  #TODO
+  /zuzul-user-service/v1/user/profile:
+    put:
+      tags:
+        - Update user profile
+      description: 'Update user profile'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                userFullName:
+                  type: string
+                userEmail:
+                  type: string
+                userPhone:
+                  type: string
+                userBirthday:
+                  type: integer
+                userSex:
+                  type: string
+      responses:
+        200:
+          description: Update successfully
+        500:
+          description: Failed
+  #TODO:
+  /zuzul-user-service/v1/user/cart:
+    get:
+      tags:
+        - List all item in cart
+      description:  List all item in cart
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    prdId:
+                      type: string
+                    sellerId:
+                      type: string
+                    count:
+                      type: integer
+                    originPrice:
+                      type: integer
+                    prdSale:
+                      type: integer
+                    status:
+                      type: string
+    post:
+      tags:
+        - Add new Item to cart
+      description: 'Add new Item to cart'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prdId:
+                  type: string
+                sellerId:
+                  type: string
+                count:
+                  type: integer
+                originPrice:
+                  type: integer
+                prdSale:
+                  type: integer
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+    put:
+      tags:
+        - Change number of Item in Cart
+      description: 'Change number of Item in Cart'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prdId:
+                  type: string
+                sellerId:
+                  type: string
+                count:
+                  type: integer
+                originPrice:
+                  type: integer
+                prdSale:
+                  type: integer
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+    delete:
+      tags:
+        - Remove an item in cart
+      description: 'Remove an item in cart'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prdId:
+                  type: string
+                sellerId:
+                  type: string
+                count:
+                  type: integer
+                originPrice:
+                  type: integer
+                prdSale:
+                  type: integer
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+
+
+
+
+
+
 
