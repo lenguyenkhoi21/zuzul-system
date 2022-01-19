@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.security.RolesAllowed;
 
 @RestController
-@RequestMapping(Constant.rootPath)
+@RequestMapping(Constant.rootPathV1)
 public class ServiceInfoControllers {
     private final Logger logger = LoggerFactory.getLogger(ServiceInfoControllers.class);
 
@@ -32,7 +32,7 @@ public class ServiceInfoControllers {
         logger.info("CorrelationID - " +
                 UserContext.getCorrelationId() +
                 " into path - " +
-                Constant.rootPath +
+                Constant.rootPathV1 +
                 "/service-info");
 
         return ServiceInfo.builder()
