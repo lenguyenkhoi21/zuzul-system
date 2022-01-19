@@ -1,5 +1,6 @@
 package com.zuzul.zuzuluserservice.common.config;
 
+import com.zuzul.zuzuluserservice.common.ultis.Constant;
 import org.keycloak.adapters.springsecurity.KeycloakSecurityComponents;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.client.KeycloakClientRequestFactory;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -45,6 +47,9 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
+            .antMatchers(Constant.rootPathV1 + "/pub/**").permitAll()
+            .antMatchers(Constant.rootPathV1 + "/admin/login").permitAll()
+            .antMatchers(HttpMethod.OPTIONS).permitAll()
             .anyRequest().authenticated();
         http.csrf().disable();
     }
