@@ -1,27 +1,18 @@
-package com.example.zuzulproductprivate.common.model.mongodb;
+package com.example.zuzulproductprivate.api.v1.pub.get_product_by_id;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 import java.util.List;
 
-
 @Data
 @Builder
-@Document
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductModel {
-    // 14 field
-    @Id
-    private String id;
-    @Indexed(unique=true)
+public class GETProductByIDResponse {
     private String prdId;
     private String prdUserId;
     private String prdName;
@@ -40,4 +31,5 @@ public class ProductModel {
     private Date prdDateExpiry;
     private int prdMonthWarranty;
     private int prdNumberInStorage;
+    private String status;
 }

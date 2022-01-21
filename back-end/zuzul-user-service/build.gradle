@@ -31,14 +31,31 @@ dependencies {
     // Config properties
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
+    // AWS
+    implementation platform('software.amazon.awssdk:bom:2.17.102')
+    implementation 'software.amazon.awssdk:s3'
+
+    // Hibernate Validator
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
     // Ops
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // Web-Servlet Stack
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    // MongoDB
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
     // Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Load - Balancing
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+
+    // Resilience4j
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
 
     // Cloud Config
     implementation 'org.springframework.cloud:spring-cloud-starter'
@@ -54,8 +71,15 @@ dependencies {
     // Keycloak
     implementation 'org.keycloak:keycloak-spring-boot-starter'
 
+    // Kafka
+    implementation 'org.springframework.cloud:spring-cloud-stream'
+    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
+    implementation 'org.springframework.kafka:spring-kafka'
+
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
 }
 
 dependencyManagement {

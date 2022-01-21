@@ -1,6 +1,6 @@
 package com.zuzul.zuzuluserservice;
 
-import com.zuzul.zuzuluserservice.common.adminclient.Keycloak;
+import com.zuzul.zuzuluserservice.common.adminClient.Keycloak;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

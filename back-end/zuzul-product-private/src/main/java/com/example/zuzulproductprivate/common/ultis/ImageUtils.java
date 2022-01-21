@@ -4,7 +4,10 @@ import com.example.zuzulproductprivate.common.aws.AWS;
 import com.example.zuzulproductprivate.common.aws.AWSS3;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import software.amazon.awssdk.core.ResponseBytes;
 import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.*;
@@ -62,5 +65,22 @@ public class ImageUtils {
                         RequestBody.fromBytes(dataImage));
 
         return true;
+    }
+
+    public ResponseBytes<GetObjectResponse> getImage (String imageName, String productId) {
+        String key = aws.getCredentials().getPath() +
+                "/product/" +
+                productId +
+                "/" +
+                imageName;
+
+        GetObjectRequest getObjectRequest = GetObjectRequest
+                .builder()
+                .bucket(aws.getCredentials().getStorage())
+                .key(key)
+                .build();
+
+        return awss3.s3Client()
+                .getObjectAsBytes(getObjectRequest);
     }
 }

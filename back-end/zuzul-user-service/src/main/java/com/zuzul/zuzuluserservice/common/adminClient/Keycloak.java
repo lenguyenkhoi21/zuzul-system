@@ -1,4 +1,4 @@
-package com.zuzul.zuzuluserservice.common.adminclient;
+package com.zuzul.zuzuluserservice.common.adminClient;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
