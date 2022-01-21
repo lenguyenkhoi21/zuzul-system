@@ -1,7 +1,7 @@
 package com.zuzul.zuzuluserservice.api.v1.pub.register;
 
-import com.zuzul.zuzuluserservice.common.adminclient.AdminClient;
-import com.zuzul.zuzuluserservice.common.adminclient.Keycloak;
+import com.zuzul.zuzuluserservice.common.adminClient.AdminClient;
+import com.zuzul.zuzuluserservice.common.adminClient.Keycloak;
 import com.zuzul.zuzuluserservice.common.model.api.v1.POSTUserPayload;
 import com.zuzul.zuzuluserservice.common.model.keycloak.Credential;
 import com.zuzul.zuzuluserservice.common.model.keycloak.UserKeyCloakPayload;

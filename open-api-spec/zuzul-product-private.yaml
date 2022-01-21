@@ -6,7 +6,7 @@ info:
 servers:
   - url: 'http://localhost:7940'
 paths:
-  #TODO
+  #FINISHED
   /zuzul-product-private/v1/pub/image/{prd-id}/{img-id}:
     get:
       tags:
@@ -22,7 +22,7 @@ paths:
                 type: string
                 format: binary
           description: Found
-  #TODO
+  #FINISHED
   /zuzul-product-private/v1/pub/product/{prd-id}:
     get:
       tags:

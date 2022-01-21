@@ -6,12 +6,12 @@ info:
 servers:
   - url: 'http://localhost:7990'
 paths:
-  #TODO
-  /zuzul-user-service/v1/pub/image/user/avatar/{img-id}:
+  #FINISHED
+  /zuzul-user-service/v1/pub/image/user/{user-id}/avatar/{img-id}:
     get:
       tags:
         - Avatar of user
-      description: 'Get image of a product'
+      description: 'Get avatar image of a user'
       responses:
         404:
           description: Not found
@@ -22,12 +22,12 @@ paths:
                 type: string
                 format: binary
           description: Found
-  #TODO
-  /zuzul-user-service/v1/pub/image/user/cover/{img-id}:
+  #FINISHED
+  /zuzul-user-service/v1/pub/image/user/{user-id}/cover/{img-id}:
     get:
       tags:
         - Cover Image of user
-      description: 'Get image of a product'
+      description: 'Get cover image of a user'
       responses:
         404:
           description: Not found
@@ -38,7 +38,7 @@ paths:
                 type: string
                 format: binary
           description: Found
-  #TODO
+  #FINISHED
   /zuzul-user-service/v1/user/profile:
     put:
       tags:
@@ -85,6 +85,8 @@ paths:
                   properties:
                     prdId:
                       type: string
+                    purchaserId:
+                      type: string
                     sellerId:
                       type: string
                     count:
@@ -106,6 +108,8 @@ paths:
               type: object
               properties:
                 prdId:
+                  type: string
+                purchaserId:
                   type: string
                 sellerId:
                   type: string
@@ -137,6 +141,8 @@ paths:
               properties:
                 prdId:
                   type: string
+                purchaserId:
+                  type: string
                 sellerId:
                   type: string
                 count:
@@ -166,6 +172,8 @@ paths:
               type: object
               properties:
                 prdId:
+                  type: string
+                purchaserId:
                   type: string
                 sellerId:
                   type: string
