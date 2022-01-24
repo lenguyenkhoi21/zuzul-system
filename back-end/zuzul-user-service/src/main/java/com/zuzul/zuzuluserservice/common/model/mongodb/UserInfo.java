@@ -24,6 +24,7 @@ public class UserInfo {
     private String userPhone;
     private long userBirthDay;
     private String userSex;
+    private String userEmail;
     private List<String> userCoverPhotos;
     private List<String> userAvatarPhotos;
     private String currentAvatar;

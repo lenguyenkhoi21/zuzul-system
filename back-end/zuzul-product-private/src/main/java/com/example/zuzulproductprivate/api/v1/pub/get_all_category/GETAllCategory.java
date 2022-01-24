@@ -18,17 +18,14 @@ public class GETAllCategory {
 
         List<CategoryModel> categoryModels = new ArrayList<>();
 
-        categories.forEach(category -> {
-            categoryModels.add(CategoryModel
-                    .builder()
-                    .categoryId(category.getCategoryId())
-                    .categoryName(category.getCategoryName())
-                    .categoryDescription(category.getCategoryDescription())
-                    .categoryImage(category.getCategoryImage())
-                    .subCategoryList(category.getSubCategoryList())
-                    .status(category.getStatus())
-                    .build());
-        });
+        categories.forEach(category-> categoryModels.add(CategoryModel
+                .builder()
+                .categoryId(category.getCategoryId())
+                .categoryName(category.getCategoryName())
+                .categoryDescription(category.getCategoryDescription())
+                .categoryImage(category.getCategoryImage())
+                .status(category.getStatus())
+                .build()));
 
         return GETAllCategoryResponse
                 .builder()

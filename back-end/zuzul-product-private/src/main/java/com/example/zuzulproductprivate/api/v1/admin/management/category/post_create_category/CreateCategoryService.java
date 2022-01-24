@@ -41,7 +41,6 @@ public class CreateCategoryService {
                         .categoryName(payload.getCategoryName())
                         .categoryImage(categoryImageName)
                         .categoryDescription(payload.getCategoryDescription())
-                        .subCategoryList(payload.getSubCategoryList())
                         .status("AVAILABLE")
                         .build();
 
@@ -54,7 +53,7 @@ public class CreateCategoryService {
                 return  Response
                         .builder()
                         .status("SUCCESS")
-                        .categoryImage(true)
+                        .categoryImage(isSuccessCategoryImage)
                         .build();
             }
 

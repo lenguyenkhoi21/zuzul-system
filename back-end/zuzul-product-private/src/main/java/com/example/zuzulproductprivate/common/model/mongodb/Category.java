@@ -8,8 +8,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
 @Builder
 @Data
 @AllArgsConstructor
@@ -24,6 +22,5 @@ public class Category {
     private String categoryName;
     private String categoryImage;
     private String categoryDescription;
-    private List<SubCategory> subCategoryList;
     private String status;
 }

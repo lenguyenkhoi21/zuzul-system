@@ -16,5 +16,4 @@ public class Payload {
     private String userId;
     private String categoryName;
     private String categoryDescription;
-    private List<SubCategory> subCategoryList;
 }
