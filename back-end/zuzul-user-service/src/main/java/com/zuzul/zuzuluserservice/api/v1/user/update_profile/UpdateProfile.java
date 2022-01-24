@@ -31,6 +31,7 @@ public class UpdateProfile {
                         .userCoverPhotos(userInfo.getUserCoverPhotos())
                         .userActivated(userInfo.isUserActivated())
                         .userShopName(userInfo.getUserShopName())
+                        .userEmail(payload.getUserEmail())
                         .currentAvatar("")
                         .currentCover("")
                         .build();
@@ -57,6 +58,7 @@ public class UpdateProfile {
                         .userShopName("")
                         .currentAvatar("")
                         .currentCover("")
+                        .userEmail(payload.getUserEmail())
                         .build();
 
                 userInfoRepository.save(newUserInfo);

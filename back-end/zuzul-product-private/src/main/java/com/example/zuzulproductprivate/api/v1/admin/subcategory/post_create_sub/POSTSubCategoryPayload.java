@@ -10,4 +10,5 @@ public class POSTSubCategoryPayload {
     private String userId;
     private String subCategoryName;
     private String subCategoryDescription;
+    private String categoryId;
 }

@@ -23,6 +23,7 @@ public class CreateSubCategoryService {
                     .subCategoryId(subCategoryId)
                     .subCategoryName(payload.getSubCategoryName())
                     .subCategoryDescription(payload.getSubCategoryDescription())
+                    .categoryId(payload.getCategoryId())
                     .status("AVAILABLE")
                     .build();
 

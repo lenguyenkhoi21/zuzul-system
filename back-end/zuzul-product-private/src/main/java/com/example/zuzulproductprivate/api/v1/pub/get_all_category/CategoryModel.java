@@ -17,6 +17,5 @@ public class CategoryModel {
     private String categoryName;
     private String categoryImage;
     private String categoryDescription;
-    private List<SubCategory> subCategoryList;
     private String status;
 }

@@ -21,5 +21,6 @@ public class SubCategory {
     private String subCategoryId;
     private String subCategoryName;
     private String subCategoryDescription;
+    private String categoryId;
     private String status;
 }

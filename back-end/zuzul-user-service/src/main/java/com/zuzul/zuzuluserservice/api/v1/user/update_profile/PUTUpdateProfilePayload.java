@@ -19,4 +19,5 @@ public class PUTUpdateProfilePayload {
     private String userPhone;
     private long userBirthDay;
     private String userSex;
+    private String userEmail;
 }
