@@ -1,0 +1,63 @@
+.table-ProductCensorShipContent {
+  width: 100%;
+}
+
+.th-ProductCensorShipContent-title {
+  padding-left: 32px;
+  padding-top: 32px;
+  padding-bottom: 48px;
+  text-align: left;
+}
+
+.th-ProductCensorShipContent-title2 {
+  padding-right: 32px;
+  text-align: right;
+}
+
+.span-ProductCensorShipContent-title {
+  font-family: Mushin-Bold;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 19px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: #252733;
+}
+
+.button-ProductCensorShipContent-Filter {
+  margin-left: 32px;
+  background-color: transparent;
+  border: none;
+}
+
+.span-ProductCensorShipContent-Filter {
+  margin-left: 8px;
+  font-family: Mushin-Light;
+}
+
+.tr-ProductCensorShipContent-header {
+  border-bottom: 2px solid #DFE0EB;
+}
+
+.th-ProductCensorShipContent-header {
+  font-family: Mushin-Light;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0;
+  color: #9FA2B4;
+  padding-left: 32px;
+  padding-bottom: 12px;
+}
+
+.th-ProductCensorShipContent-header2 {
+  font-family: Mushin-Light;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0;
+  color: #9FA2B4;
+  text-align: center;
+}

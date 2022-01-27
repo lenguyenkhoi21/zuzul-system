@@ -1,0 +1,37 @@
+.div-Item-optCtn {
+  max-height: 56px;
+  height: 56px;
+  padding-left: 32px;
+  width: 100%;
+}
+
+.img-Item-space2 {
+  margin-right: 24px;
+}
+
+.span-Item-ActiveOption {
+  font-family: Mushin-Light;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #2AA71A;
+}
+
+.span-Item-Option {
+  font-family: Mushin-Light;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #DDE2FF;
+}
+
+.div-Item-Active {
+  border-left-color: #DDE2FF;
+  border-left-width: 3px;
+  border-left-style: solid;
+  background-color: rgba(159, 162, 180, 0.08);
+}

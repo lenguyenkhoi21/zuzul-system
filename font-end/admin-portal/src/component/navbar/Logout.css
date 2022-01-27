@@ -1,0 +1,47 @@
+.div-Logout-optCtn {
+  max-height: 56px;
+  height: 56px;
+  padding-left: 32px;
+  width: 100%;
+}
+
+.img-Logout-space2 {
+  margin-right: 24px;
+}
+
+.span-Logout-ActiveOption {
+  font-family: Mushin-Light;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #2AA71A;
+}
+
+.span-Logout-Option {
+  font-family: Mushin-Light;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #DDE2FF;
+}
+
+.div-Logout-Active {
+  border-left-color: #DDE2FF;
+  border-left-width: 3px;
+  border-left-style: solid;
+  background-color: rgba(159, 162, 180, 0.08);
+}
+
+.button-Logout-bg {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.div-Logout-space {
+  margin-top: 60px;
+}

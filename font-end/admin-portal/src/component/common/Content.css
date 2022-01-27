@@ -1,0 +1,9 @@
+.div-Content-container {
+  margin-left: 32px;
+  margin-right: 32px;
+  min-height: 100vh;
+  background-color: #FFFFFF;
+  border: 1px solid #DFE0EB;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
