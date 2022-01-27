@@ -1,0 +1,71 @@
+.div-LoginPage-bg {
+  background-color: #363740;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.div-LoginPage-Login {
+  width: 570px;
+  height: 520px;
+  background-color: #FFFFFF;
+  box-shadow: 0 12px 16px rgba(0, 0, 0, 0.04), 0 4px 56px rgba(0, 0, 0, 0.04);
+  border-radius: 10px;
+}
+
+.div-LoginPage-LgC {
+  padding: 50px 60px;
+}
+
+.p-LoginPage-title {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 29px;
+  line-height: 43px;
+  color: rgba(0, 0, 0, 0.85);
+  margin-bottom: 35px;
+}
+
+.label-LoginPage-title {
+  font-family: Mushin-Light;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: #444150;
+}
+
+.input-LoginPage-input {
+  background: #FBFBFB;
+  border: 1px solid #D9D9D9;
+  box-sizing: border-box;
+  border-radius: 12px;
+  width: 416px;
+  height: 48px;
+}
+
+.button-LoginPage {
+  width: 416px;
+  height: 48px;
+  background: #46D362;
+  border: 2px solid #2AA71A;
+  box-sizing: border-box;
+  border-radius: 12px;
+  color: #FFFFFF;
+  font-family: Mushin-Bold;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.div-LoginPage-form {
+  padding-left: 20px;
+}
+
+.div-LoginPage-ctnInput {
+  margin-bottom: 19px;
+}
+
+.div-LoginPage-ctnInput2 {
+  margin-bottom: 48px;
+}

@@ -1,0 +1,90 @@
+.div-SubForm {
+  padding-left: 32px;
+  padding-top: 32px;
+  padding-right: 32px;
+}
+
+.p-SubForm-title {
+  font-family: Mushin-Bold;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 19px;
+  line-height: 28px;
+  letter-spacing: 0;
+  color: #252733;
+}
+
+.div-SubForm-sp {
+  margin-bottom: 100px;
+}
+
+.span-SubForm-imgsp {
+  margin-right: 12px;
+}
+
+.label-SubForm-text {
+  font-family: Mushin-Heavy;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 23px;
+  color: #000000;
+}
+
+.input-SubForm-text {
+  background: #FFFFFF;
+  border: 1px solid #D9D9D9;
+  box-sizing: border-box;
+  border-radius: 12px;
+  width: 416px;
+  padding: 10px;
+}
+
+.div-SubForm-margin {
+  margin-left: 100px;
+}
+
+.form-SubForm-size {
+  width: 650px;
+}
+
+.div-SubForm-label {
+  margin-bottom: 30px;
+}
+
+.input-SubForm-img {
+  width: 125px;
+  height: 125px;
+}
+
+.div-SubForm-label2 {
+  margin-bottom: 100px;
+}
+
+.span-SubForm-spaceBtn {
+  margin-right: 17px;
+}
+
+.button-SubForm-accept {
+  font-family: Mushin-Bold;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 22px;
+  background-color: #2AA71A;
+  border-radius: 12px;
+  padding: 12px;
+  border: none;
+}
+
+.button-SubForm-cancel {
+  font-family: Mushin-Bold;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 22px;
+  background-color: #FD2828;
+  border-radius: 12px;
+  padding: 12px;
+  border: none;
+}

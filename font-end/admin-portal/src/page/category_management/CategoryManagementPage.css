@@ -1,0 +1,30 @@
+.div-CategoryManagementPage-container {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.button-CategoryManagement {
+  width: 464px;
+  height: 56px;
+  background: #FDFDFE;
+  border: 2px solid #2AA71A;
+  box-sizing: border-box;
+  border-radius: 12px;
+}
+
+.img-CategoryManagement-space {
+  margin-right: 24px;
+}
+
+.span-CategoryManagement-add {
+  font-family: Mushin-Bold;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 22px;
+  color: #151515;
+}
+
+.div-CategoryManagementPage-add {
+  padding-bottom: 50px;
+}

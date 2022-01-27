@@ -1,0 +1,32 @@
+.div-CategoryItem {
+  margin-bottom: 10px;
+}
+
+.button-CategoryItem {
+  font-family: Mushin-Bold;
+  background: #777777;
+  border: 1px solid #C4C4C4;
+  box-sizing: border-box;
+  border-radius: 15px;
+  padding: 20px 20px;
+  color: #FFFFFF;
+  width: 100%;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0;
+  text-align: left;
+}
+
+.button-CategoryItem-Active {
+  background: #2AA71A;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.button-CategoryItem-edit {
+  background-color: transparent;
+  border: none;
+  z-index: 99;
+  cursor: pointer;
+}

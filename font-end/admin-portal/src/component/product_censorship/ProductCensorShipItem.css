@@ -1,0 +1,43 @@
+.tr-ProductCensorShipItem-header {
+  border-bottom: 2px solid #DFE0EB;
+}
+
+.td-ProductCensorShipItem-content {
+  padding-bottom: 24px;
+  padding-top: 24px;
+  padding-left: 32px;
+}
+
+.td-ProductCensorShipItem-content2 {
+  padding-bottom: 24px;
+  padding-top: 24px;
+  text-align: center;
+}
+
+.span-ProductCensorShipItem-spaceBtn {
+  margin-right: 17px;
+}
+
+.button-ProductCensorShipItem-accept {
+  font-family: Mushin-Bold;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 22px;
+  background-color: #2AA71A;
+  border-radius: 12px;
+  padding: 12px;
+  border: none;
+}
+
+.button-ProductCensorShipItem-cancel {
+  font-family: Mushin-Bold;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 22px;
+  background-color: #FD2828;
+  border-radius: 12px;
+  padding: 12px;
+  border: none;
+}

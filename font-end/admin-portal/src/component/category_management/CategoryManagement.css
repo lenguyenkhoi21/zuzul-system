@@ -1,0 +1,17 @@
+.div-CategoryManagement {
+  padding-left: 32px;
+  padding-top: 32px;
+  padding-right: 32px;
+  margin-bottom: 170px;
+}
+
+.p-div-CategoryManagement-title {
+  font-family: Mushin-Bold;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 19px;
+  line-height: 28px;
+  letter-spacing: 0px;
+  color: #252733;
+  margin-bottom: 12px;
+}
