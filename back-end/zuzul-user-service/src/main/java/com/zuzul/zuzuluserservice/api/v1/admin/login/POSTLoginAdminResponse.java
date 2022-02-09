@@ -1,17 +1,16 @@
-package com.zuzul.zuzuluserservice.api.v1.pub.login;
+package com.zuzul.zuzuluserservice.api.v1.admin.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginPOSTResponse {
+@Builder
+@Data
+public class POSTLoginAdminResponse {
     private String userID;
     private String access_token;
     private String role;
-    private boolean isNewUser;
 }
