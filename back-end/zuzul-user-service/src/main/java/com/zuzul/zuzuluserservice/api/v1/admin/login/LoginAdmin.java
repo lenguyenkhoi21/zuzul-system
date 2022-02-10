@@ -35,20 +35,12 @@ public class LoginAdmin {
         assert userInfo != null;
         List<CompositeRole> compositeRoles = getRole(userInfo.getId());
         if (token != null && !Objects.requireNonNull(compositeRoles).isEmpty()) {
-            AtomicReference<String> role = new AtomicReference<>("");
-            compositeRoles.forEach(compositeRole -> {
-                if (compositeRole.getName().equals("USER")) {
-                    role.set("USER");
-                } else if (compositeRole.getName().equals("ADMIN")) {
-                    role.set("ADMIN");
-                }
-            });
 
             return POSTLoginAdminResponse
                     .builder()
                     .userID(userInfo.getId())
                     .access_token(token.getAccess_token())
-                    .role(role.get())
+                    .role("ADMIN")
                     .build();
 
         } else {
