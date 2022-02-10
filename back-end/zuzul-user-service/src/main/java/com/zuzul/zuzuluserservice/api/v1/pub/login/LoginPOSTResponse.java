@@ -13,5 +13,6 @@ public class LoginPOSTResponse {
     private String userID;
     private String access_token;
     private String role;
-    private boolean isNewUser;
+    private String name;
+    private boolean isActivatedShop;
 }
