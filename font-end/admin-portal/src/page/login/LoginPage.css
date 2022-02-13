@@ -1,6 +1,6 @@
 .div-LoginPage-bg {
   background-color: #363740;
-  min-height: 100vh;
+  min-height: calc(100vh + 50px);
   min-width: 100vw;
 }
 
@@ -10,6 +10,7 @@
   background-color: #FFFFFF;
   box-shadow: 0 12px 16px rgba(0, 0, 0, 0.04), 0 4px 56px rgba(0, 0, 0, 0.04);
   border-radius: 10px;
+  padding-bottom: 50px;
 }
 
 .div-LoginPage-LgC {
@@ -40,7 +41,9 @@
   box-sizing: border-box;
   border-radius: 12px;
   width: 416px;
+  max-width: 416px;
   height: 48px;
+  padding: 10px;
 }
 
 .button-LoginPage {

@@ -31,26 +31,14 @@ public class ResponseFilter {
                                  .stream()
                                  .findFirst()
                                  .get();
-                         HttpHeaders requestHeaders = exchange.getRequest().getHeaders();
-                         String authenticationBearer = filterUtils.getAuthorization(requestHeaders);
 
-                         if (authenticationBearer == null) {
-                             exchange
-                                     .getResponse()
-                                     .getHeaders()
-                                     .add(FilterUtils.CORRELATION_ID, CORRELATION_ID);
-
-                             exchange
-                                     .getResponse()
-                                     .setStatusCode(HttpStatus.FORBIDDEN);
-                         } else {
-                             exchange
-                                     .getResponse()
-                                     .getHeaders()
-                                     .add(FilterUtils.CORRELATION_ID, CORRELATION_ID);
-                         }
+                         exchange
+                                 .getResponse()
+                                 .getHeaders()
+                                 .add(FilterUtils.CORRELATION_ID, CORRELATION_ID);
 
                          logger.info("Completing outgoing request for {}.", exchange.getRequest().getURI());
                      }));
+
     }
 }

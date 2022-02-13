@@ -1,30 +1,21 @@
-package com.zuzul.zuzuluserservice.common.adminclient;
+package com.zuzul.zuzuluserservice.api.v2.login;
 
+import com.zuzul.zuzuluserservice.common.adminclient.AdminClient;
+import com.zuzul.zuzuluserservice.common.adminclient.Keycloak;
 import com.zuzul.zuzuluserservice.common.model.keycloak.Token;
-import com.zuzul.zuzuluserservice.common.ultis.Constant;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-@Component
+@Service
 @RequiredArgsConstructor
-public class TokenFetchSchedule {
+public class LoginV2Service {
     private final Keycloak keycloak;
-    private final AdminClient adminClient;
 
-    private static final Logger logger = LoggerFactory.getLogger(TokenFetchSchedule.class);
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-    private Token fetchTokenFetch() {
+    public AdminPOSTLoginV2ResponsePOST handleLogin(AdminPOSTLoginV2PayloadPOST payload) {
         // Create header
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED.toString());
@@ -33,8 +24,8 @@ public class TokenFetchSchedule {
         // Add header information admin client
         MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
         requestBody.add("grant_type", keycloak.getGrant_type());
-        requestBody.add("username", keycloak.getAdmin());
-        requestBody.add("password", keycloak.getPassword());
+        requestBody.add("username", payload.getUsername());
+        requestBody.add("password", payload.getPassword());
         requestBody.add("client_id", keycloak.getClientID());
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
 
@@ -51,13 +42,12 @@ public class TokenFetchSchedule {
                 request,
                 Token.class);
 
-        return restExchange.getBody();
-    }
+        Token token = restExchange.getBody();
 
-    @Scheduled(fixedDelay = Constant.fixedDelay)
-    protected void scheduleFetchToken() {
-        logger.info("Fetch token from keycloak :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
-        adminClient.setToken(this.fetchTokenFetch());
+        return AdminPOSTLoginV2ResponsePOST
+                .builder()
+                .userID("69e77a1e-d7b0-4ae5-bf96-6c93af207c4d")
+                .access_token(token.getAccess_token())
+                .build();
     }
-
 }

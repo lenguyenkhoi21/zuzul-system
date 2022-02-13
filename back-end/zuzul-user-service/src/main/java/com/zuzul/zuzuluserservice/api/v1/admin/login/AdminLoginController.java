@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(Constant.rootPathV1)
 @RestController
 @RequiredArgsConstructor
+@Deprecated
 public class AdminLoginController {
     private final LoginAdmin loginAdmin;
     private final Logger logger = LoggerFactory.getLogger(LoginControllers.class);

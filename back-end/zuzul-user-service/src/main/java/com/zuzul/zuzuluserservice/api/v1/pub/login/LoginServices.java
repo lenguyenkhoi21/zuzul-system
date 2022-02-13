@@ -1,7 +1,7 @@
 package com.zuzul.zuzuluserservice.api.v1.pub.login;
 
-import com.zuzul.zuzuluserservice.common.adminClient.AdminClient;
-import com.zuzul.zuzuluserservice.common.adminClient.Keycloak;
+import com.zuzul.zuzuluserservice.common.adminclient.AdminClient;
+import com.zuzul.zuzuluserservice.common.adminclient.Keycloak;
 import com.zuzul.zuzuluserservice.common.model.api.v1.POSTUserPayload;
 import com.zuzul.zuzuluserservice.common.model.keycloak.CompositeRole;
 import com.zuzul.zuzuluserservice.common.model.keycloak.Token;
@@ -9,6 +9,8 @@ import com.zuzul.zuzuluserservice.common.model.keycloak.UserInfo;
 import com.zuzul.zuzuluserservice.common.repo.mongodb.UserInfoRepository;
 import com.zuzul.zuzuluserservice.common.usercontext.UserContext;
 import lombok.RequiredArgsConstructor;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -23,6 +25,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
+@Deprecated
 @RequiredArgsConstructor
 public class LoginServices {
     private final Keycloak keycloak;
@@ -32,7 +35,7 @@ public class LoginServices {
 
     public LoginPOSTResponse login(POSTUserPayload payload) {
         Token token = getToken(payload);
-        UserInfo userInfo = getUserID(payload.getUsername());
+        UserInfo  userInfo= getUserID(payload.getUsername());
         assert userInfo != null;
         List<CompositeRole> compositeRoles = getRole(userInfo.getId());
         if (token != null && !Objects.requireNonNull(compositeRoles).isEmpty()) {

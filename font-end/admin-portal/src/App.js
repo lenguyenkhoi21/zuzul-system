@@ -78,12 +78,12 @@ const App = () => {
 						/>
 						<Route path={'/category_management/new'} element={categoryNew} />
 						<Route
-							path={'/category_management/update'}
+							path={'/category_management/update/:cateId'}
 							element={categoryUpdate}
 						/>
 						<Route path={'/category_management/sub_new'} element={subCateNew} />
 						<Route
-							path={'/category_management/sub_update'}
+							path={'/category_management/sub_update/:subCateId'}
 							element={subCateUpdate}
 						/>
 					</Routes>

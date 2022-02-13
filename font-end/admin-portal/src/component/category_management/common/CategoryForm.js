@@ -1,8 +1,49 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import './CategoryForm.css'
 import { Link } from 'react-router-dom'
+import { UserContext } from '../../../reducer/User.Reducer'
+import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../../utils/Constant'
 
 const CategoryForm = ({ title }) => {
+	const userCTX = useContext(UserContext)
+	const [category, setCategory] = useState({
+		userId: userCTX.state.userID,
+		categoryName: '',
+		categoryDescription: 'Category'
+	})
+
+	const [picture, setPicture] = useState(null)
+
+	const onChange = e => {
+		setCategory({ ...category, categoryName: e.target.value })
+	}
+
+	const insertCategory = e => {
+		e.preventDefault()
+		const formData = new FormData()
+		formData.append('userId', category.userId)
+		formData.append('categoryName', category.categoryName)
+    formData.append('categoryDescription', category.categoryDescription)
+		formData.append('cat_image', picture)
+    console.log(formData)
+		fetch(`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/admin/management/category`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`
+			},
+			mode: 'cors',
+			body: formData
+		})
+			.then(response => response.json())
+			.catch(data => console.log(data))
+	}
+
+	// const resetCategory = e => {
+	// 	e.preventDefault()
+	// 	setCategory({ ...category, categoryName: '' })
+	//   setPicture(null)
+	// }
+
 	return (
 		<>
 			<div className={'div-CategoryForm'}>
@@ -29,7 +70,9 @@ const CategoryForm = ({ title }) => {
 							<div className={'col-md-2'} />
 							<div className={'col-md-6'}>
 								<input
-									name={'categoryname'}
+									name={'categoryName'}
+									value={category.categoryName}
+									onChange={onChange}
 									className={'input-CategoryForm-text'}
 								/>
 							</div>
@@ -44,7 +87,7 @@ const CategoryForm = ({ title }) => {
 							<div className={'col-md-6'}>
 								<input
 									type={'file'}
-									name={'categoryname'}
+									onChange={e => setPicture(e.target.files[0])}
 									className={'input-CategoryForm-img'}
 								/>
 							</div>
@@ -56,17 +99,21 @@ const CategoryForm = ({ title }) => {
 								<div className={'d-flex'}>
 									<div>
 										<span className={'span-CategoryForm-spaceBtn'}>
-											<button className={'button-CategoryForm-accept'}>
+											<button
+												className={'button-CategoryForm-accept'}
+												onClick={insertCategory}>
 												{' '}
 												Chấp nhận{' '}
 											</button>
 										</span>
-										<span>
-											<button className={'button-CategoryForm-cancel'}>
-												{' '}
-												Hủy{' '}
-											</button>
-										</span>
+										{/*<span>*/}
+										{/*	<button*/}
+										{/*		className={'button-CategoryForm-cancel'}*/}
+										{/*		onClick={resetCategory}>*/}
+										{/*		{' '}*/}
+										{/*		Hủy{' '}*/}
+										{/*	</button>*/}
+										{/*</span>*/}
 									</div>
 								</div>
 							</div>
