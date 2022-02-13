@@ -48,23 +48,11 @@ public class TrackingFilter implements GlobalFilter {
                     correlationID);
         }
 
-        String authenticationBearer;
-        try {
-            authenticationBearer = filterUtils.getAuthorization(requestHeaders);
-            if (authenticationBearer == null) {
-                logger.info("No Auth Token, Rejected !");
-                throw new Exception();
-            };
+        filterUtils.setCorrelationIDHeader(exchange,
+                FilterUtils.CORRELATION_ID,
+                correlationID);
 
-            filterUtils.setCorrelationIDHeader(exchange,
-                    FilterUtils.CORRELATION_ID,
-                    correlationID
-            );
-
-            return chain.filter(exchange);
-        } catch (Exception e) {
-           return Mono.empty();
-        }
+        return chain.filter(exchange);
     }
 
     private String generateCorrelationId() {

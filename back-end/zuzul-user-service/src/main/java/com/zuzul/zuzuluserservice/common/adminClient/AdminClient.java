@@ -1,4 +1,4 @@
-package com.zuzul.zuzuluserservice.common.adminClient;
+package com.zuzul.zuzuluserservice.common.adminclient;
 
 import com.zuzul.zuzuluserservice.common.model.keycloak.Token;
 import lombok.Getter;

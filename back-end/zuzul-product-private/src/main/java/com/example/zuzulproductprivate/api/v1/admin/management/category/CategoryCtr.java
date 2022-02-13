@@ -10,17 +10,14 @@ import com.example.zuzulproductprivate.api.v1.admin.management.category.put_upda
 import com.example.zuzulproductprivate.api.v1.admin.management.category.put_update_category.PUTUpdateCategoryResponse;
 import com.example.zuzulproductprivate.api.v1.admin.management.category.put_update_category.UpdateCategoryService;
 import com.example.zuzulproductprivate.common.ultis.Constant;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.security.RolesAllowed;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 
@@ -33,7 +30,7 @@ public class CategoryCtr {
     private final UpdateCategoryService updateCategoryService;
     private final DisableCategory disableCategory;
 
-    @RolesAllowed("TEST_ROLE")
+    @RolesAllowed("ADMIN")
     @PostMapping(value = "/admin/management/category",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,7 +46,7 @@ public class CategoryCtr {
         return Response.builder().build();
     }
 
-    @RolesAllowed("TEST_ROLE")
+    @RolesAllowed("ADMIN")
     @PutMapping(value = "/admin/management/category",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -58,7 +55,7 @@ public class CategoryCtr {
         return updateCategoryService.updateCategory(payload, categoryImage, principal);
     }
 
-    @RolesAllowed("TEST_ROLE")
+    @RolesAllowed("ADMIN")
     @PutMapping(value = "/admin/management/category/disable",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)

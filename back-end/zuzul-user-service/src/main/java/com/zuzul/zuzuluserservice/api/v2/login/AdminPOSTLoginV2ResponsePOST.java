@@ -1,4 +1,4 @@
-package com.zuzul.zuzuluserservice.api.v1.pub.login;
+package com.zuzul.zuzuluserservice.api.v2.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,13 +7,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@Deprecated
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginPOSTResponse {
+public class AdminPOSTLoginV2ResponsePOST {
     private String userID;
     private String access_token;
-    private String role;
-    private String name;
-    private boolean isActivatedShop;
 }

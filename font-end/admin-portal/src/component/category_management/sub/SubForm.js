@@ -21,7 +21,9 @@ const SubForm = ({ title }) => {
 						<div className={'row no-gutters div-SubForm-label'}>
 							<div className={'col-md-4'}>
 								<div className={'d-flex justify-content-end'}>
-									<label className={'label-SubForm-text'}>Tên danh mục</label>
+									<label className={'label-SubForm-text'}>
+										Tên danh mục con
+									</label>
 								</div>
 							</div>
 							<div className={'col-md-2'} />

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './CategoryItem.css'
 import SubCateList from './SubCateList'
+import { Link } from 'react-router-dom'
 
 const CategoryItem = () => {
 	const [on, setOn] = useState(false)
@@ -27,10 +28,11 @@ const CategoryItem = () => {
 								<div>
 									<span style={{ float: 'left' }}> Thời trang nam </span>
 									<div
-										onClick={nestedButton}
 										className={'button-CategoryItem-edit'}
 										style={{ float: 'right' }}>
-										<img src={'/category_mng/edit.png'} alt={'edit'} />
+										<Link to={'/category_management/update/123'}>
+											<img src={'/category_mng/edit.png'} alt={'edit'} />
+										</Link>
 									</div>
 									<div style={{ clear: 'both' }} />
 								</div>

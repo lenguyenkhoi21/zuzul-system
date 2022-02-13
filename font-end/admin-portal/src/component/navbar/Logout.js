@@ -7,12 +7,12 @@ const Logout = () => {
 	const userCTX = useContext(UserContext)
 
 	const onMouseEnter = e => {
-		console.log(e)
+		// console.log(e)
 		setHover(true)
 	}
 
 	const onMouseLeave = e => {
-		console.log(e)
+		// console.log(e)
 		setHover(false)
 	}
 

@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './CategoryManagement.css'
 import CategoryItem from './CategoryItem'
+import { Link } from 'react-router-dom'
 
 const CategoryManagement = () => {
+	useEffect(() => {
+		// Fetch API
+	}, [])
+
 	return (
 		<>
 			<div className={'div-CategoryManagement'}>
@@ -31,17 +36,20 @@ const CategoryManagement = () => {
 					'd-flex align-content-center justify-content-center div-CategoryManagementPage-add'
 				}>
 				<button className={'button-CategoryManagement'}>
-					<div className={'d-flex align-content-center justify-content-center'}>
-						<img
-							src={'/category_mng/plus.png'}
-							alt={'ok'}
-							className={'img-CategoryManagement-space'}
-						/>
-						<span className={'span-CategoryManagement-add'}>
-							{' '}
-							Thêm sản phẩm{' '}
-						</span>
-					</div>
+					<Link to={'/category_management/new'}>
+						<div
+							className={'d-flex align-content-center justify-content-center'}>
+							<img
+								src={'/category_mng/plus.png'}
+								alt={'ok'}
+								className={'img-CategoryManagement-space'}
+							/>
+							<span className={'span-CategoryManagement-add'}>
+								{' '}
+								Thêm sản phẩm{' '}
+							</span>
+						</div>
+					</Link>
 				</button>
 			</div>
 		</>
