@@ -16,7 +16,10 @@ public class DisableCategory {
         if (principal.getName().equals(payload.getUserId())) {
             Category category = categoryRepository.findCategoryByCategoryId(payload.getCategoryId());
 
-            category.setStatus(payload.getStatus());
+            if (category.getStatus().equals("DISABLE"))
+                category.setStatus("AVAILABLE");
+            else
+                category.setStatus("DISABLE");
 
             categoryRepository.save(category);
 

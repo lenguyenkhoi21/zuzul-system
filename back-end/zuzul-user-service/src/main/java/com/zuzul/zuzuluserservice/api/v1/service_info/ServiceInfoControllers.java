@@ -13,6 +13,7 @@ import javax.annotation.security.RolesAllowed;
 @RestController
 @RequestMapping(Constant.rootPathV1)
 public class ServiceInfoControllers {
+    //fixed
     private final Logger logger = LoggerFactory.getLogger(ServiceInfoControllers.class);
 
     @RolesAllowed("TEST_ROLE")

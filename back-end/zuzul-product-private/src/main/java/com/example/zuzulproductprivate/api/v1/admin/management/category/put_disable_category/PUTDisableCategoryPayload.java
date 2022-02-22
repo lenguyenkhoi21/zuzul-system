@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class PUTDisableCategoryPayload {
     private String categoryId;
     private String userId;
-    private String status;
 }

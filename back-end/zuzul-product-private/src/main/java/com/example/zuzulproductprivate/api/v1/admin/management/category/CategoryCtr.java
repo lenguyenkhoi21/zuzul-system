@@ -1,5 +1,8 @@
 package com.example.zuzulproductprivate.api.v1.admin.management.category;
 
+import com.example.zuzulproductprivate.api.v1.admin.management.category.get_all_categories.CategoryModel;
+import com.example.zuzulproductprivate.api.v1.admin.management.category.get_all_categories.GETAllCategoryAdmin;
+import com.example.zuzulproductprivate.api.v1.admin.management.category.get_all_categories.GETAllCategoryPayload;
 import com.example.zuzulproductprivate.api.v1.admin.management.category.post_create_category.CreateCategoryService;
 import com.example.zuzulproductprivate.api.v1.admin.management.category.post_create_category.Payload;
 import com.example.zuzulproductprivate.api.v1.admin.management.category.post_create_category.Response;
@@ -20,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,6 +34,7 @@ public class CategoryCtr {
     private final Logger logger = LoggerFactory.getLogger(CategoryCtr.class);
     private final UpdateCategoryService updateCategoryService;
     private final DisableCategory disableCategory;
+    private final GETAllCategoryAdmin getAllCategory;
 
     @RolesAllowed("ADMIN")
     @PostMapping(value = "/admin/management/category",
@@ -52,15 +58,45 @@ public class CategoryCtr {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public PUTUpdateCategoryResponse updateCategory(@ModelAttribute PUTUpdateCategoryPayload payload,
                                                      @RequestPart("cat_image") MultipartFile categoryImage, Principal principal) {
-        return updateCategoryService.updateCategory(payload, categoryImage, principal);
+        try {
+            return updateCategoryService.updateCategory(payload, categoryImage, principal);
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return PUTUpdateCategoryResponse
+                .builder()
+                .status("FAIL")
+                .build();
     }
 
     @RolesAllowed("ADMIN")
     @PutMapping(value = "/admin/management/category/disable",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public PUTDisableCategoryResponse disableCategory(@ModelAttribute PUTDisableCategoryPayload payload,
+    public PUTDisableCategoryResponse disableCategory(@RequestBody PUTDisableCategoryPayload payload,
                                                       Principal principal) {
-        return disableCategory.disableCategory(payload, principal);
+        try {
+            return disableCategory.disableCategory(payload, principal);
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return PUTDisableCategoryResponse
+                .builder()
+                .status("FAIL")
+                .build();
+    }
+
+    @RolesAllowed("ADMIN")
+    @GetMapping(value = "/admin/management/category/all/{userId}")
+    public List<CategoryModel> getAllCategory (@PathVariable("userId") String userId, Principal principal) {
+        try {
+            return getAllCategory.getAllCategory(userId, principal);
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }
