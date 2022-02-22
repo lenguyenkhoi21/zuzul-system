@@ -17,7 +17,16 @@ const Menu = ({ category, pathname }) => {
 				{`
 					.p-Menu-text {
 						background-color: darkolivegreen;
+						
 					}
+					p{
+					padding-bottom: 12px;
+					cursor: pointer;
+					display: block;
+					}
+					p:hover{
+          color: #46D362;
+          }
 				`}
 			</style>
 		</>
