@@ -5,7 +5,13 @@ import { Link } from 'react-router-dom'
 
 const CategoryManagement = () => {
 	useEffect(() => {
-		// Fetch API
+		// Fetch API list of all category
+    /*
+    * [{
+    *   categoryId:
+    *   categoryName:
+    * }]
+    * */
 	}, [])
 
 	return (

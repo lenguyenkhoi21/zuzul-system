@@ -1,6 +1,6 @@
 package com.example.zuzulproductprivate;
 
-import com.example.zuzulproductprivate.common.adminClient.Keycloak;
+import com.example.zuzulproductprivate.common.adminclient.Keycloak;
 import com.example.zuzulproductprivate.common.kafka.Kafka;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -59,6 +59,7 @@ public class CreateNewService {
                     .prdReact(0)
                     .prdNumberInStorage(payload.getPrdNumberInStorage())
                     .prdStatus("WAITING_FOR_ACCEPT")
+                    .currentImage(nameImg1) //default
                     .build();
 
             productRepository.save(newProduct);

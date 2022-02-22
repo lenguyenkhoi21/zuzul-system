@@ -27,7 +27,6 @@ public class UpdateCategoryService {
                     .categoryName(payload.getCategoryName())
                     .categoryDescription(payload.getCategoryDescription())
                     .categoryImage(category.getCategoryImage()) //Tạm thời để như này vì AWS bị limited
-                    .status(payload.getStatus())
                     .build();
 
             categoryRepository.save(updatedCategory);

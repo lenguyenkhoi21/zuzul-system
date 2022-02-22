@@ -6,6 +6,15 @@ import { Link } from 'react-router-dom'
 const CategoryItem = () => {
 	const [on, setOn] = useState(false)
 
+  /*
+  * [
+  * {
+*     subCategoryId:
+*     subCategoryName:
+  * }
+  * ]
+  * */
+
 	const turnOn = event => {
 		setOn(!on)
 		console.log('1')
