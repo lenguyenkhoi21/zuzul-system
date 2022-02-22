@@ -23,7 +23,7 @@ const ProductFilter = ({ type, products }) => {
 					.div-productFilter {
 						background-color: rgba(255, 255, 255, 1);
 						padding-left: 44px;
-						padding-top: 64px;
+						//padding-top: 64px;
 						padding-bottom: 74px;
 					}
 					.p-productFilter-title {
