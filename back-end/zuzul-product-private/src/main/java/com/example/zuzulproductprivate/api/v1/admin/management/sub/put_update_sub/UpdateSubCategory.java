@@ -21,8 +21,8 @@ public class UpdateSubCategory {
                     .id(subCategory.getId())
                     .subCategoryName(payload.getSubCategoryName())
                     .subCategoryId(subCategory.getSubCategoryId())
-                    .subCategoryDescription(payload.getSubCategoryDescription())
-                    .categoryId(payload.getCategoryId())
+                    .subCategoryDescription(subCategory.getSubCategoryDescription())
+                    .categoryId(subCategory.getCategoryId())
                     .status("AVAILABLE")
                     .build();
 

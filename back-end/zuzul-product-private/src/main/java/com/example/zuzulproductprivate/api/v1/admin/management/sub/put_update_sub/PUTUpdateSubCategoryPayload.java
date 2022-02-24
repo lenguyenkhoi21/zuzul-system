@@ -13,6 +13,4 @@ public class PUTUpdateSubCategoryPayload {
     private String subCategoryId;
     private String userId;
     private String subCategoryName;
-    private String subCategoryDescription;
-    private String categoryId;
 }
