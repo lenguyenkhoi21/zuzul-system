@@ -1,17 +1,35 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './CategoryManagement.css'
 import CategoryItem from './CategoryItem'
 import { Link } from 'react-router-dom'
+import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../utils/Constant'
+import { UserContext } from '../../reducer/User.Reducer'
 
 const CategoryManagement = () => {
+	const userCTX = useContext(UserContext)
+	const [data, setData] = useState([])
+
 	useEffect(() => {
 		// Fetch API list of all category
-    /*
-    * [{
-    *   categoryId:
-    *   categoryName:
-    * }]
-    * */
+		/*
+		 * [{
+		 *   categoryId:
+		 *   categoryName:
+		 * }]
+		 * */
+
+		fetch(
+			`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/admin/management/category/all/${userCTX.state.userID}`,
+			{
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${userCTX.state.accessToken}`
+				},
+				mode: 'cors'
+			}
+		)
+			.then(response => response.json())
+			.then(json => setData(json))
 	}, [])
 
 	return (
@@ -21,18 +39,46 @@ const CategoryManagement = () => {
 				<div className={'container-fluid p-0'}>
 					<div className={'row no-gutters'}>
 						<div className={'col-md-4'}>
-							<CategoryItem />
-							<CategoryItem />
-							<CategoryItem />
-							<CategoryItem />
+							{data.map((value, index) => {
+								if (index % 3 === 0) {
+									return (
+										<React.Fragment key={index}>
+											<CategoryItem
+												categoryId={value.categoryId}
+												categoryName={value.categoryName}
+											/>
+										</React.Fragment>
+									)
+								} else return <React.Fragment key={index} />
+							})}
 						</div>
 						<div className={'col-md-4'}>
-							<CategoryItem />
-							<CategoryItem />
+							{data.map((value, index) => {
+								if (index % 3 === 1) {
+									return (
+										<React.Fragment key={index}>
+											<CategoryItem
+												categoryId={value.categoryId}
+												categoryName={value.categoryName}
+											/>
+										</React.Fragment>
+									)
+								} else return <React.Fragment key={index} />
+							})}
 						</div>
 						<div className={'col-md-4'}>
-							<CategoryItem />
-							<CategoryItem />
+							{data.map((value, index) => {
+								if (index % 3 === 2) {
+									return (
+										<React.Fragment key={index}>
+											<CategoryItem
+												categoryId={value.categoryId}
+												categoryName={value.categoryName}
+											/>
+										</React.Fragment>
+									)
+								} else return <React.Fragment key={index} />
+							})}
 						</div>
 					</div>
 				</div>
@@ -52,7 +98,7 @@ const CategoryManagement = () => {
 							/>
 							<span className={'span-CategoryManagement-add'}>
 								{' '}
-								Thêm sản phẩm{' '}
+								Thêm danh mục mới{' '}
 							</span>
 						</div>
 					</Link>

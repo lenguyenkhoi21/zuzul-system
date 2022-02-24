@@ -16,5 +16,4 @@ public class PUTUpdateCategoryPayload {
     private String categoryId;
     private String userId;
     private String categoryName;
-    private String categoryDescription;
 }

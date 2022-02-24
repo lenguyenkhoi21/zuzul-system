@@ -9,8 +9,11 @@ const CookieValidation = props => {
 		const user = JSON.parse(localStorage.getItem('data'))
 		const userID = userCTX.state.userID
 		if (user !== undefined && user !== null && userID === null) {
-			fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/pub/valid_token`, {
+			fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/admin/valid_token`, {
 				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${user.accessToken}`
+				},
 				mode: 'cors'
 			})
 				.then(response => {

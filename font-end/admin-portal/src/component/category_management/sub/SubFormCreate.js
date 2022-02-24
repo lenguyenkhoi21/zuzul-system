@@ -1,53 +1,48 @@
 import React, { useContext, useState } from 'react'
-import './SubForm.css'
-import { Link } from 'react-router-dom'
 import { UserContext } from '../../../reducer/User.Reducer'
 import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../../utils/Constant'
+import { Link } from 'react-router-dom'
 
-const SubForm = ({ title, subCateId }) => {
+const SubFormCreate = ({ cateId }) => {
 	const userCTX = useContext(UserContext)
 
 	const [subCategory, setSubCategory] = useState({
-		subCategoryId: '',
 		userId: '',
-		subCategoryName: ''
+		subCategoryName: '',
+		subCategoryDescription: '',
+		categoryId: ''
 	})
 
-	const changeState = () => {
-		setSubCategory({
-			subCategoryId: subCateId,
-			userId: userCTX.state.userID,
-			subCategoryName: title
-		})
-	}
+	const [status, setStatus] = useState([])
 
 	const onChangeName = e => {
 		setSubCategory({ ...subCategory, subCategoryName: e.target.value })
 	}
 
-	const updateSubCategory = e => {
+	const insertSubCategory = e => {
 		e.preventDefault()
 
-		changeState()
+		const data = {
+			userId: userCTX.state.userID,
+			subCategoryName: subCategory.subCategoryName,
+			subCategoryDescription: 'Good',
+			categoryId: cateId
+		}
 
 		fetch(`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/admin/management/sub`, {
-			method: 'PUT',
+			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${userCTX.state.accessToken}`,
 				Accept: 'application/json, text/plain',
 				'Content-Type': 'application/json;charset=UTF-8'
 			},
 			mode: 'cors',
-			body: JSON.stringify({
-				subCategoryId: subCategory.subCategoryId,
-				userId: subCategory.userId,
-				subCategoryName: subCategory.subCategoryName
-			})
-		}).then(response => {
-			response.json()
-			console.log(response)
+			body: JSON.stringify(data)
 		})
+			.then(response => response.json())
+			.then(data => setStatus(data))
 	}
+
 	return (
 		<>
 			<div className={'div-SubForm'}>
@@ -58,7 +53,6 @@ const SubForm = ({ title, subCateId }) => {
 								<img src={'/category_mng/back.png'} alt={'back'} />
 							</Link>
 						</span>
-						<p className={'p-SubForm-title'}> {title} </p>
 					</div>
 				</div>
 				<div className={'div-SubForm-margin'}>
@@ -67,16 +61,15 @@ const SubForm = ({ title, subCateId }) => {
 							<div className={'col-md-4'}>
 								<div className={'d-flex justify-content-end'}>
 									<label className={'label-SubForm-text'}>
-										Tên danh mục con
+										Tên danh mục con mới
 									</label>
 								</div>
 							</div>
 							<div className={'col-md-2'} />
 							<div className={'col-md-6'}>
 								<input
-									name={'categoryname'}
+									name={'subCategoryName'}
 									className={'input-SubForm-text'}
-									defaultValue={title}
 									onChange={onChangeName}
 								/>
 							</div>
@@ -90,7 +83,7 @@ const SubForm = ({ title, subCateId }) => {
 										<span className={'span-SubForm-spaceBtn'}>
 											<button
 												className={'button-SubForm-accept'}
-												onClick={updateSubCategory}>
+												onClick={insertSubCategory}>
 												{' '}
 												Chấp nhận{' '}
 											</button>
@@ -109,4 +102,4 @@ const SubForm = ({ title, subCateId }) => {
 	)
 }
 
-export default SubForm
+export default SubFormCreate

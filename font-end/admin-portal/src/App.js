@@ -9,6 +9,8 @@ import ProductCensorshipPage from './page/product_censorship/ProductCensorshipPa
 import NavBar from './component/navbar/NavBar'
 import CategoryNew from './page/category_management/new/CategoryNew'
 import SubManager from './page/category_management/sub/SubManager'
+import SubCreate from './page/category_management/sub/SubCreate'
+import CategoryUpdate from './page/category_management/new/CategoryUpdate'
 
 const App = () => {
 	const userCTX = useContext(UserContext)
@@ -42,14 +44,14 @@ const App = () => {
 		userCTX.state.userID === null ? (
 			<LoginPage />
 		) : (
-			<CategoryNew title={'Cập nhật danh mục'} />
+			<CategoryUpdate title={'Cập nhật danh mục'} />
 		)
 
 	const subCateNew =
 		userCTX.state.userID === null ? (
 			<LoginPage />
 		) : (
-			<SubManager title={'Thêm danh mục con mới'} />
+			<SubCreate title={'Thêm danh mục con mới'} />
 		)
 
 	const subCateUpdate =
@@ -81,7 +83,10 @@ const App = () => {
 							path={'/category_management/update/:cateId'}
 							element={categoryUpdate}
 						/>
-						<Route path={'/category_management/sub_new'} element={subCateNew} />
+						<Route
+							path={'/category_management/sub_new/:cateId'}
+							element={subCateNew}
+						/>
 						<Route
 							path={'/category_management/sub_update/:subCateId'}
 							element={subCateUpdate}

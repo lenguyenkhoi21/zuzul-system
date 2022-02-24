@@ -3,26 +3,24 @@ import './CategoryItem.css'
 import SubCateList from './SubCateList'
 import { Link } from 'react-router-dom'
 
-const CategoryItem = () => {
+const CategoryItem = ({ categoryId, categoryName }) => {
 	const [on, setOn] = useState(false)
 
-  /*
-  * [
-  * {
-*     subCategoryId:
-*     subCategoryName:
-  * }
-  * ]
-  * */
+	/*
+	 * [
+	 * {
+	 *     subCategoryId:
+	 *     subCategoryName:
+	 * }
+	 * ]
+	 * */
 
 	const turnOn = event => {
 		setOn(!on)
-		console.log('1')
 	}
 
 	const nestedButton = event => {
 		event.stopPropagation()
-		console.log('2')
 	}
 
 	return (
@@ -35,24 +33,24 @@ const CategoryItem = () => {
 								onClick={turnOn}
 								className={'button-CategoryItem button-CategoryItem-Active'}>
 								<div>
-									<span style={{ float: 'left' }}> Thời trang nam </span>
+									<span style={{ float: 'left' }}> {categoryName} </span>
 									<div
 										className={'button-CategoryItem-edit'}
 										style={{ float: 'right' }}>
-										<Link to={'/category_management/update/123'}>
+										<Link to={`/category_management/update/${categoryId}`}>
 											<img src={'/category_mng/edit.png'} alt={'edit'} />
 										</Link>
 									</div>
 									<div style={{ clear: 'both' }} />
 								</div>
 							</div>
-							<SubCateList />
+							<SubCateList categoryId={categoryId} />
 						</div>
 					</>
 				) : (
 					<div className={'div-CategoryItem'}>
 						<button onClick={turnOn} className={'button-CategoryItem'}>
-							<span> Thời trang nam </span>
+							<span> {categoryName} </span>
 						</button>
 					</div>
 				)}

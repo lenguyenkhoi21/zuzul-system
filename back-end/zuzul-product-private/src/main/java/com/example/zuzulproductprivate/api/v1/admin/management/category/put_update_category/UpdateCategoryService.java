@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -16,29 +18,32 @@ public class UpdateCategoryService {
     private final CategoryRepository categoryRepository;
     private final ImageUtils imageUtils;
 
-    public PUTUpdateCategoryResponse updateCategory (PUTUpdateCategoryPayload payload, MultipartFile categoryImage, Principal principal){
+    public PUTUpdateCategoryResponse updateCategory (PUTUpdateCategoryPayload payload, MultipartFile categoryImage, Principal principal) throws IOException {
         if (principal.getName().equals(payload.getUserId())) {
             Category category = categoryRepository.findCategoryByCategoryId(payload.getCategoryId());
+
+            String categoryImageName = FunctionalUtil.renameFile(Objects.requireNonNull(categoryImage.getOriginalFilename()));
 
             Category updatedCategory = Category
                     .builder()
                     .id(category.getId())
                     .categoryId(category.getCategoryId())
                     .categoryName(payload.getCategoryName())
-                    .categoryDescription(payload.getCategoryDescription())
+                    .categoryDescription(category.getCategoryDescription())
                     .categoryImage(category.getCategoryImage()) //Tạm thời để như này vì AWS bị limited
+                    .status(category.getStatus())
                     .build();
 
             categoryRepository.save(updatedCategory);
 
-//            boolean isSuccessCategoryImage = categoryImageName != null &&
-//                    imageUtils.uploadToCategoryAWSS3(categoryId, categoryImageName,
-//                            categoryImage.getBytes());
+            boolean isSuccessCategoryImage = categoryImageName != null &&
+                    imageUtils.uploadToCategoryAWSS3(category.getCategoryId(), categoryImageName,
+                            categoryImage.getBytes());
 
             return PUTUpdateCategoryResponse
                     .builder()
                     .status("SUCCESS")
-                    .categoryImage(false)
+                    .categoryImage(isSuccessCategoryImage)
                     .build();
         }
         return PUTUpdateCategoryResponse

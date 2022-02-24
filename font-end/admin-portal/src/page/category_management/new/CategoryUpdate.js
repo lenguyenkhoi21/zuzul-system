@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
-import './SubManager.css'
+import './CategoryNew.css'
 import Header from '../../../component/common/Header'
 import Footer from '../../../component/common/Footer'
 import Content from '../../../component/common/Content'
-import SubForm from '../../../component/category_management/sub/SubForm'
+import { UserContext } from '../../../reducer/User.Reducer'
+import { useParams } from 'react-router-dom'
 import { HEADER_ACTION, HeaderContext } from '../../../reducer/Header.Reducer'
 import { API_DOMAIN, API_PRODUCT_SERVICE, PATH } from '../../../utils/Constant'
-import { useParams } from 'react-router-dom'
-import { UserContext } from '../../../reducer/User.Reducer'
+import CategoryForm from '../../../component/category_management/common/CategoryForm'
+import CategoryFormUpdate from '../../../component/category_management/common/CategoryFormUpdate'
 
-const SubManager = ({ title }) => {
+const CategoryUpdate = ({ title }) => {
 	const userCTX = useContext(UserContext)
-	const { subCateId } = useParams()
+	const { cateId } = useParams()
 	const headerCTX = useContext(HeaderContext)
 	const [data, setData] = useState([])
 
@@ -19,7 +20,7 @@ const SubManager = ({ title }) => {
 		headerCTX.changeTitle(HEADER_ACTION.SET_TITLE, PATH.CATEGORY_MANAGEMENT)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		fetch(
-			`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/admin/management/sub/${userCTX.state.userID}/${subCateId}`,
+			`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/admin/management/category/${userCTX.state.userID}/${cateId}`,
 			{
 				method: 'GET',
 				headers: {
@@ -34,13 +35,10 @@ const SubManager = ({ title }) => {
 
 	return (
 		<>
-			<div className={'col index-bg-color div-SubManager'}>
+			<div className={'col index-bg-color div-New-container'}>
 				<Header />
 				<Content>
-					<SubForm
-						title={data.subCategoryName}
-						subCateId={data.subCategoryId}
-					/>
+					<CategoryFormUpdate title={title} data={data} />
 				</Content>
 				<Footer />
 			</div>
@@ -48,4 +46,4 @@ const SubManager = ({ title }) => {
 	)
 }
 
-export default SubManager
+export default CategoryUpdate

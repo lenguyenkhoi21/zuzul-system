@@ -1,21 +1,40 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './SubCateList.css'
 import { Link } from 'react-router-dom'
+import { UserContext } from '../../reducer/User.Reducer'
+import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../utils/Constant'
 
-const SubCateList = () => {
-	const points = [...Array(5)]
+const SubCateList = ({ categoryId }) => {
+	const userCTX = useContext(UserContext)
+	const [data, setData] = useState([])
+
+	useEffect(() => {
+		fetch(
+			`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/admin/management/sub/all/${userCTX.state.userID}/${categoryId}`,
+			{
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${userCTX.state.accessToken}`
+				},
+				mode: 'cors'
+			}
+		)
+			.then(response => response.json())
+			.then(json => setData(json))
+	}, [])
+
 	return (
 		<>
-			{points.map((value, key) => (
+			{data.map((value, key) => (
 				<React.Fragment key={key}>
 					<div className={'div-SubCateList'}>
 						<span className={'span-SubCateList'} style={{ float: 'left' }}>
-							{' '}
-							Áo khoác{' '}
+							{value.subCategoryName}
 						</span>
 						<div>
 							<span>
-								<Link to={'/category_management/sub_update/123'}>
+								<Link
+									to={`/category_management/sub_update/${value.subCategoryId}`}>
 									<img
 										src={'/category_mng/editSub.png'}
 										alt={'edit sub'}
@@ -33,7 +52,7 @@ const SubCateList = () => {
 					'd-flex align-items-center justify-content-center div-SubCateList-add'
 				}>
 				<div className={'button-SubCateList-add'}>
-					<Link to={'/category_management/sub_new'}>
+					<Link to={`/category_management/sub_new/${categoryId}`}>
 						<img src={'/category_mng/add.png'} alt={'afasdf'} />
 					</Link>
 				</div>

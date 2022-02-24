@@ -2,6 +2,8 @@ package com.example.zuzulproductprivate.api.v1.admin.management.sub;
 
 import com.example.zuzulproductprivate.api.v1.admin.management.sub.get_subcat_by_cat.GETSubCategoryByCate;
 import com.example.zuzulproductprivate.api.v1.admin.management.sub.get_subcat_by_cat.SubCategoryModel;
+import com.example.zuzulproductprivate.api.v1.admin.management.sub.get_subcat_by_id.GETSubCategoryIdResponse;
+import com.example.zuzulproductprivate.api.v1.admin.management.sub.get_subcat_by_id.GetSubCategoryById;
 import com.example.zuzulproductprivate.api.v1.admin.management.sub.post_create_sub.*;
 import com.example.zuzulproductprivate.api.v1.admin.management.sub.put_disable_sub.*;
 import com.example.zuzulproductprivate.api.v1.admin.management.sub.put_update_sub.PUTUpdateSubCategoryPayload;
@@ -9,6 +11,7 @@ import com.example.zuzulproductprivate.api.v1.admin.management.sub.put_update_su
 import com.example.zuzulproductprivate.api.v1.admin.management.sub.put_update_sub.UpdateSubCategory;
 import com.example.zuzulproductprivate.common.ultis.Constant;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
@@ -25,6 +28,7 @@ public class SubCategoryController {
     private final DisableSubCategory disableSubCategory;
     private final UpdateSubCategory updateSubCategory;
     private final GETSubCategoryByCate getSubCategoryByCate;
+    private final GetSubCategoryById getSubCategoryById;
 
     @RolesAllowed("ADMIN")
     @PostMapping("/admin/management/sub")
@@ -86,5 +90,21 @@ public class SubCategoryController {
             exception.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    @RolesAllowed("ADMIN")
+    @GetMapping("/admin/management/sub/{userId}/{subCategoryId}")
+    public GETSubCategoryIdResponse getSubCategoryById(@PathVariable("userId") String userId,
+                                                       @PathVariable("subCategoryId") String subCategoryId,
+                                                       Principal principal) {
+        try {
+            return getSubCategoryById.getSubCategoryId(userId, subCategoryId, principal);
+        }
+        catch (Exception exception) {
+            exception.getStackTrace();
+        }
+        return GETSubCategoryIdResponse
+                .builder()
+                .build();
     }
 }
