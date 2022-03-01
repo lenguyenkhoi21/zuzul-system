@@ -7,14 +7,17 @@ const CategoryDetail = ({ category, key }) => {
 	console.log(
 		`${timeNow()} --- [CategoryDetail] --- Render at component/common/CategoryDetail.js`
 	)
+
+	const categoryId = category.categoryId
+
 	return (
 		<>
 			<div key={key} className={'mr-2'}>
-				<Link href={`/category/${category.id}`}>
+				<Link href={`/category/${categoryId}`}>
 					<a>
 						<div className={'flex flex-col items-center'}>
 							<Image
-								src={category.image}
+								src={category.categoryImage + '|' + categoryId}
 								width={70}
 								height={70}
 								loader={imageLoader}
@@ -23,7 +26,7 @@ const CategoryDetail = ({ category, key }) => {
 							/>
 							<p className={'font-sloway p-CategoryDetail-name'}>
 								{' '}
-								{category.name}
+								{category.categoryName}
 							</p>
 						</div>
 					</a>

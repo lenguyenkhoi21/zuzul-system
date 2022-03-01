@@ -18,6 +18,23 @@ public class GETProductByIDResponse {
     private String prdName;
     private String prdCateId;
     private String prdSubId;
+    private String prdCateName;
+    private int prdPriceOrigin;
+    private int prdReact;
+    private int prdNumberInStorage;
+    private float prdSale;
+    private String prdShortDes;
+    private String prdLongDes;
+    private List<String> prdImages;
+    private Date prdDateCreate;
+    private int discount;
+    private String prdOrigin;
+
+    /*private String prdId;
+    private String prdUserId;
+    private String prdName;
+    private String prdCateId;
+    private String prdSubId;
     private int prdPriceOrigin;
     private String prdOrigin;
     private Date prdDateManufacture;
@@ -31,5 +48,5 @@ public class GETProductByIDResponse {
     private Date prdDateCreate;
     private Date prdDateExpiry;
     private int prdMonthWarranty;
-    private int prdNumberInStorage;
+    private int prdNumberInStorage;*/
 }

@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const ProductDisplay = ({ product }) => {
+	const [prd, setPrd] = useState([])
+
+	useEffect(() => {
+		setPrd(product)
+	})
+
 	return (
 		<>
-			{product.map((value, key) => (
-				<React.Fragment key={key}>{value.name}</React.Fragment>
+			{prd.map((value, key) => (
+				<React.Fragment key={key}>{value.prdName}</React.Fragment>
 			))}
 		</>
 	)

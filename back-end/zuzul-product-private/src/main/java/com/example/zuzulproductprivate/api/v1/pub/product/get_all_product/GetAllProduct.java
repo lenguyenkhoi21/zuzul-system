@@ -15,7 +15,7 @@ public class GetAllProduct {
     private final ProductRepository productRepository;
 
     public List<ProductsModel> getAllProducts () {
-        List<Product> products = productRepository.findAllByPrdStatus("WAITING_FOR_ACCEPT");
+        List<Product> products = productRepository.findAllByPrdStatus("AVAILABLE");
 
         List<ProductsModel> productsModels = new ArrayList<>();
 
@@ -31,6 +31,7 @@ public class GetAllProduct {
                 .prdSale(product.getPrdSale())
                 .prdSubId(product.getPrdSubId())
                 .prdUserId(product.getPrdUserId())
+                .prdShortDes(product.getPrdShortDes())
                 .build()));
 
         return productsModels;

@@ -4,27 +4,28 @@ import { USER_ACTION, UserContext } from '../../reducer/User.Reducer'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-const Authentication = ({
+const AuthenticationRegister = ({
 	titleHeader,
 	titleSub,
 	nameBtn,
 	textRegister,
 	textRegisterSub
 }) => {
-	const userCTX = useContext(UserContext)
-
 	const [account, setAccount] = useState({
 		username: '',
 		password: ''
 	})
 
+	const router = useRouter()
+	const userCTX = useContext(UserContext)
+
 	const onChange = e =>
 		setAccount({ ...account, [e.target.name]: e.target.value })
 
-	const loginAccount = e => {
+	const registerAccount = e => {
 		e.preventDefault()
 
-		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/pub/login`, {
+		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/pub/register`, {
 			headers: {
 				Accept: 'application/json, text/plain',
 				'Content-Type': 'application/json'
@@ -35,14 +36,26 @@ const Authentication = ({
 		})
 			.then(response => response.json())
 			.then(data => {
-				userCTX.addUser(USER_ACTION.ADD_USER, {
-					userID: data.userID,
-					accessToken: data.access_token
-				})
+				if (data.status === 'Success') {
+					fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/pub/login`, {
+						headers: {
+							Accept: 'application/json, text/plain',
+							'Content-Type': 'application/json'
+						},
+						method: 'POST',
+						mode: 'cors',
+						body: JSON.stringify(account)
+					})
+						.then(response => response.json())
+						.then(data => {
+							userCTX.addUser(USER_ACTION.ADD_USER, {
+								userID: data.userID,
+								accessToken: data.access_token
+							})
+						})
+				}
 			})
 	}
-
-	const router = useRouter()
 
 	useEffect(() => {
 		if (userCTX.state.userID !== null) {
@@ -53,11 +66,13 @@ const Authentication = ({
 	return (
 		<>
 			<div
-				className={'flex justify-center px-330 div-Authentication-container'}>
+				className={
+					'flex justify-center px-330 div-AuthenticationRegister-container'
+				}>
 				<form
-					onSubmit={loginAccount}
+					onSubmit={registerAccount}
 					className={
-						'grid grid-cols-1 gap-4 place-content-start form-Authentication-size'
+						'grid grid-cols-1 gap-4 place-content-start form-AuthenticationRegister-size'
 					}>
 					<div className={'row-span-3 '} />
 
@@ -65,7 +80,7 @@ const Authentication = ({
 						<div className={'flex justify-center'}>
 							<div className={'flex'}>
 								<div className={'flex-initial w-40'}>
-									<label className={'label-Authentication-login'}>
+									<label className={'label-AuthenticationRegister-login'}>
 										{titleHeader}
 									</label>
 								</div>
@@ -75,11 +90,11 @@ const Authentication = ({
 					</div>
 
 					<div className={'flex gap-4 justify-center p-4'}>
-						<label className={'label-Authentication-subtitle'}>
-							Bạn chưa có tài khoản?
+						<label className={'label-AuthenticationRegister-subtitle'}>
+							Bạn có tài khoản?
 						</label>
-						<Link href={'/register'}>
-							<label className={'label-Authentication-subtitle2'}>
+						<Link href={'/login'}>
+							<label className={'label-AuthenticationRegister-subtitle2'}>
 								{titleSub}
 							</label>
 						</Link>
@@ -91,11 +106,15 @@ const Authentication = ({
 									<div className={'flex-initial w-32'}>
 										<label
 											name={'phoneNumber'}
-											className={'label-Authentication-phoneNumberAndPass'}>
+											className={
+												'label-AuthenticationRegister-phoneNumberAndPass'
+											}>
 											Số điện thoại
 										</label>
 										<label
-											className={'label-Authentication-phoneNumberAndPass2'}>
+											className={
+												'label-AuthenticationRegister-phoneNumberAndPass2'
+											}>
 											*
 										</label>
 									</div>
@@ -107,7 +126,7 @@ const Authentication = ({
 							<input
 								type={'text'}
 								name={'username'}
-								className={'input-Authentication-size'}
+								className={'input-AuthenticationRegister-size'}
 								onChange={onChange}
 							/>
 						</div>
@@ -120,11 +139,15 @@ const Authentication = ({
 									<div className={'flex-initial w-32'}>
 										<label
 											name={'passWord'}
-											className={'label-Authentication-phoneNumberAndPass'}>
+											className={
+												'label-AuthenticationRegister-phoneNumberAndPass'
+											}>
 											Mật khẩu
 										</label>
 										<label
-											className={'label-Authentication-phoneNumberAndPass2'}>
+											className={
+												'label-AuthenticationRegister-phoneNumberAndPass2'
+											}>
 											*
 										</label>
 									</div>
@@ -135,7 +158,7 @@ const Authentication = ({
 							<input
 								type={'password'}
 								name={'password'}
-								className={'input-Authentication-size'}
+								className={'input-AuthenticationRegister-size'}
 								onChange={onChange}
 							/>
 						</div>
@@ -143,8 +166,8 @@ const Authentication = ({
 
 					<div className={'grid grid-cols-1 gap-4 content-center h-20'}>
 						<div className={'flex justify-center'}>
-							<button className={' btn-Authentication-size'}>
-								<p className={'p-Authentication-btnLogin'}>{nameBtn}</p>
+							<button className={' btn-AuthenticationRegister-size'}>
+								<p className={'p-AuthenticationRegister-btnLogin'}>{nameBtn}</p>
 							</button>
 						</div>
 					</div>
@@ -152,9 +175,10 @@ const Authentication = ({
 					<div className={'grid grid-cols-6 content-end h-56'}>
 						<div className={'col-start-2 col-end-6 '}>
 							<div className={'flex justify-center'}>
-								<label className={'text-center label-Authentication-text2'}>
+								<label
+									className={'text-center label-AuthenticationRegister-text2'}>
 									{textRegister}
-									<label className={'label-Authentication-text'}>
+									<label className={'label-AuthenticationRegister-text'}>
 										{textRegisterSub}
 									</label>
 								</label>
@@ -165,16 +189,16 @@ const Authentication = ({
 			</div>
 			<style jsx>
 				{`
-					.div-Authentication-container {
+					.div-AuthenticationRegister-container {
 						background: #ebebeb;
 					}
-					.hr-Authentication-size {
+					.hr-AuthenticationRegister-size {
 						width: 151px;
 						height: 0px;
 						border: 1px solid #a8a6a7;
 						transform: rotate(-180deg);
 					}
-					.form-Authentication-size {
+					.form-AuthenticationRegister-size {
 						width: 568px;
 						height: 721px;
 						box-shadow: 0px 12px 16px rgba(0, 0, 0, 0.04),
@@ -182,7 +206,7 @@ const Authentication = ({
 						border-radius: 10px;
 						background: #ffffff;
 					}
-					.label-Authentication-login {
+					.label-AuthenticationRegister-login {
 						font-family: Poppins;
 						font-style: normal;
 						font-weight: 400;
@@ -190,7 +214,7 @@ const Authentication = ({
 						line-height: 43px;
 						color: rgba(0, 0, 0, 0.85);
 					}
-					.label-Authentication-subtitle {
+					.label-AuthenticationRegister-subtitle {
 						font-family: Open Sans;
 						font-style: normal;
 						font-weight: normal;
@@ -198,7 +222,7 @@ const Authentication = ({
 						line-height: 26px;
 						color: #444150;
 					}
-					.label-Authentication-subtitle2 {
+					.label-AuthenticationRegister-subtitle2 {
 						font-family: Open Sans;
 						font-style: normal;
 						font-weight: normal;
@@ -206,7 +230,7 @@ const Authentication = ({
 						line-height: 26px;
 						color: #6a983c;
 					}
-					.label-Authentication-phoneNumberAndPass {
+					.label-AuthenticationRegister-phoneNumberAndPass {
 						font-family: Poppins;
 						font-style: normal;
 						font-weight: normal;
@@ -214,7 +238,7 @@ const Authentication = ({
 						line-height: 24px;
 						color: #444150;
 					}
-					.label-Authentication-phoneNumberAndPass2 {
+					.label-AuthenticationRegister-phoneNumberAndPass2 {
 						font-family: Poppins;
 						font-style: normal;
 						font-weight: normal;
@@ -222,7 +246,7 @@ const Authentication = ({
 						line-height: 24px;
 						color: #6a983c;
 					}
-					.input-Authentication-size {
+					.input-AuthenticationRegister-size {
 						width: 416px;
 						height: 48px;
 						background: #fbfbfb;
@@ -230,7 +254,7 @@ const Authentication = ({
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
-					.btn-Authentication-size {
+					.btn-AuthenticationRegister-size {
 						width: 200px;
 						height: 41px;
 						background: #6a983c;
@@ -238,7 +262,7 @@ const Authentication = ({
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
-					.p-Authentication-btnLogin {
+					.p-AuthenticationRegister-btnLogin {
 						font-family: Poppins;
 						font-style: normal;
 						font-weight: bold;
@@ -247,7 +271,7 @@ const Authentication = ({
 						text-align: center;
 						color: #ffffff;
 					}
-					.label-Authentication-text {
+					.label-AuthenticationRegister-text {
 						font-family: Open Sans;
 						font-style: normal;
 						font-weight: normal;
@@ -256,7 +280,7 @@ const Authentication = ({
 						text-align: center;
 						color: #6a983c;
 					}
-					.label-Authentication-text2 {
+					.label-AuthenticationRegister-text2 {
 						font-family: Open Sans;
 						font-style: normal;
 						font-weight: normal;
@@ -271,4 +295,4 @@ const Authentication = ({
 	)
 }
 
-export default React.memo(Authentication)
+export default React.memo(AuthenticationRegister)
