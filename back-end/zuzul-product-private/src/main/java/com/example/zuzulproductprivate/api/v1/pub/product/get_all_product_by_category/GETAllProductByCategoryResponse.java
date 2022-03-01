@@ -14,5 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 public class GETAllProductByCategoryResponse {
     private List<ProductsModel> productsModels;
-    private List<String> subCategoryId;
+    private List<SubCategoryModels> subCategoryModels;
+    private List<CategoryModels> categoryModels;
 }

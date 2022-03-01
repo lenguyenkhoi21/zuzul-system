@@ -1,6 +1,7 @@
 package com.example.zuzulproductprivate.api.v1.pub.product.get_product_by_id;
 
 import com.example.zuzulproductprivate.common.model.mongodb.Product;
+import com.example.zuzulproductprivate.common.repo.mongodb.CategoryRepository;
 import com.example.zuzulproductprivate.common.repo.mongodb.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class GetProductByID {
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
     public GETProductByIDResponse getProductById (String id) {
         Product product = productRepository.findByPrdId(id);
@@ -22,18 +24,24 @@ public class GetProductByID {
                 .prdSubId(product.getPrdSubId())
                 .prdPriceOrigin(product.getPrdPriceOrigin())
                 .prdOrigin(product.getPrdOrigin())
-                .prdDateManufacture(product.getPrdDateManufacture())
+                .prdCateName(categoryRepository
+                        .findCategoryByCategoryId(
+                                product
+                                .getPrdCateId())
+                        .getCategoryName())
+                //.prdDateManufacture(product.getPrdDateManufacture())
                 .prdShortDes(product.getPrdShortDes())
                 .prdLongDes(product.getPrdLongDes())
                 .prdSale(product.getPrdSale())
                 .prdImages(product.getPrdImages())
                 .prdReact(product.getPrdReact())
-                .prdStatus(product.getPrdStatus())
+                //.prdStatus(product.getPrdStatus())
                 .prdDateCreate(product.getPrdDateCreate())
-                .prdDateExpiry(product.getPrdDateExpiry())
-                .prdMonthWarranty(product.getPrdMonthWarranty())
+                //.prdDateExpiry(product.getPrdDateExpiry())
+                //.prdMonthWarranty(product.getPrdMonthWarranty())
                 .prdNumberInStorage(product.getPrdNumberInStorage())
-                .currentImage(product.getCurrentImage())
+                .discount(product.getDiscount())
+                //.currentImage(product.getCurrentImage())
                 .build();
     }
 }

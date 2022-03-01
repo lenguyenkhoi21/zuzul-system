@@ -1,6 +1,7 @@
 package com.example.zuzulproductprivate.api.v1.pub.product.get_all_product_by_category;
 
 import com.example.zuzulproductprivate.api.v1.pub.product.ProductsModel;
+import com.example.zuzulproductprivate.common.model.mongodb.Category;
 import com.example.zuzulproductprivate.common.model.mongodb.Product;
 import com.example.zuzulproductprivate.common.model.mongodb.SubCategory;
 import com.example.zuzulproductprivate.common.repo.mongodb.CategoryRepository;
@@ -17,13 +18,16 @@ import java.util.List;
 public class GetAllProductByCategory {
     private final ProductRepository productRepository;
     private final SubCategoryRepository subCategoryRepository;
+    private final CategoryRepository categoryRepository;
 
     public GETAllProductByCategoryResponse getProductsByCategory (String categoryId) {
         List<Product> products = productRepository.findAllByPrdCateIdAndPrdStatus(categoryId, "AVAILABLE");
         List<SubCategory> subCategories = subCategoryRepository.getAllByCategoryIdAndStatus(categoryId, "AVAILABLE");
+        List<Category> categories = categoryRepository.findAllByStatus("AVAILABLE");
 
         List<ProductsModel> productsModels = new ArrayList<>();
-        List<String> subCategoryIds = new ArrayList<>();
+        List<SubCategoryModels> subCategoryModels = new ArrayList<>();
+        List<CategoryModels> categoryModels = new ArrayList<>();
 
         products.forEach(product -> productsModels.add(
                 ProductsModel
@@ -38,15 +42,27 @@ public class GetAllProductByCategory {
                         .prdSale(product.getPrdSale())
                         .prdSubId(product.getPrdSubId())
                         .prdUserId(product.getPrdUserId())
+                        .prdShortDes(product.getPrdShortDes())
                         .build()
         ));
 
-        subCategories.forEach(subCategory -> subCategoryIds.add(subCategory.getCategoryId()));
+        subCategories.forEach(subCategory -> subCategoryModels.add(SubCategoryModels
+                .builder()
+                .subCategoryId(subCategory.getSubCategoryId())
+                .subCategoryName(subCategory.getSubCategoryName())
+                .build()));
+
+        categories.forEach(category -> categoryModels.add(CategoryModels
+                .builder()
+                .categoryId(category.getCategoryId())
+                .categoryName(category.getCategoryName())
+                .build()));
 
         return GETAllProductByCategoryResponse
                 .builder()
                 .productsModels(productsModels)
-                .subCategoryId(subCategoryIds)
+                .subCategoryModels(subCategoryModels)
+                .categoryModels(categoryModels)
                 .build();
     }
 }

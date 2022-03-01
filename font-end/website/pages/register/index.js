@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
-import Authentication from '../../component/common/Authentication'
 import { timeNow } from '../../utils/Utils'
 import { TITLE_ACTION, TitleContext } from '../../reducer/Title.Reducer'
+import AuthenticationRegister from '../../component/common/AuthenticationRegister'
 
 const RegisterPage = () => {
 	console.log(`${timeNow()} --- [RegisterPage] --- pages/register/index.js`)
@@ -13,7 +13,7 @@ const RegisterPage = () => {
 	}, [])
 	return (
 		<>
-			<Authentication
+			<AuthenticationRegister
 				titleHeader={'Đăng ký'}
 				titleSub={'Đăng nhập'}
 				nameBtn={'Đăng ký'}

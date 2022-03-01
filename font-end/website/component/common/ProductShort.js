@@ -20,7 +20,7 @@ const ProductShort = ({ product }) => {
 			if (socket !== null) {
 				socket.emit('synchronization-cart', {
 					userID: userCTX.state.userID,
-					productID: product.id,
+					productID: product.prdId,
 					number: 1,
 					type: 'INCREMENT'
 				})
@@ -30,25 +30,29 @@ const ProductShort = ({ product }) => {
 	return (
 		<>
 			<div className={'div-ProductShort-container'}>
-				<Link href={'/setCookie'}>
+				<Link
+					href={{
+						pathname: `/product/${product.prdId}`,
+						query: { prdName: product.prdName }
+					}}>
 					<a>
 						<Image
-							src={product.image}
+							src={product.currentImage + '|' + product.prdId}
 							width={237}
 							height={180}
 							loader={imageLoader}
 							className={'img-ProductShort'}
 							alt={'image'}
 						/>
-						<p className={'font-poppins'}> {product.name} </p>
+						<p className={'font-poppins'}> {product.prdName} </p>
 						<p className={'font-poppins p-ProductShort-med p-ProductShort-des'}>
 							{' '}
-							{product.des_short}{' '}
+							{product.prdShortDes}{' '}
 						</p>
 						<div className={''}>
 							<p className={'float-left font-poppins p-ProductShort-price'}>
 								{' '}
-								{product.price}{' '}
+								{product.prdPriceOrigin}{' '}
 							</p>
 							{/* eslint-disable-next-line tailwindcss/no-custom-classname */}
 							<button

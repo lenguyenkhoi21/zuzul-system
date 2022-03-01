@@ -41,4 +41,5 @@ public class Product {
     private Date prdDateExpiry;
     private int prdMonthWarranty;
     private int prdNumberInStorage;
+    private int discount;
 }

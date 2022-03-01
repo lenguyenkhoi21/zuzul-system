@@ -68,7 +68,7 @@ const IconBar = () => {
 					{userCTX.state.userID === null ? (
 						<>
 							<div className={'flex mr-3.5 div-IconBar-container'}>
-								<Link href={'/'}>
+								<Link href={'/register'}>
 									<a>
 										<div className={'flex'}>
 											<p className={'ml-0.5 font-poppins'}> Đăng ký </p>
@@ -77,7 +77,7 @@ const IconBar = () => {
 								</Link>
 							</div>
 							<div className={'flex mr-3.5 div-IconBar-container'}>
-								<Link href={'/'}>
+								<Link href={'/login'}>
 									<a>
 										<div className={'flex'}>
 											<p className={'ml-0.5 font-poppins'}> Đăng nhập </p>

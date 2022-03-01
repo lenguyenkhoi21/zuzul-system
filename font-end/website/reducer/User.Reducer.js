@@ -3,7 +3,8 @@ import { timeNow } from '../utils/Utils'
 
 export const USER_ACTION = {
 	ADD_USER: 'ADD_USER',
-	REMOVE_USER: 'REMOVE_USER'
+	REMOVE_USER: 'REMOVE_USER',
+	LOGIN: 'LOGIN'
 }
 
 export const UserContext = createContext()

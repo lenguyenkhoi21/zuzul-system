@@ -23,4 +23,5 @@ public class ProductsModel {
     private int prdReact;
     private int prdNumberInStorage;
     private float prdSale;
+    private String prdShortDes;
 }

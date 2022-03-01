@@ -1,4 +1,8 @@
-import { STATIC_RESOURCE_MOCK } from './APIUtils'
+import {
+	API_DOMAIN,
+	API_PRODUCT_SERVICE,
+	STATIC_RESOURCE_MOCK
+} from './APIUtils'
 
 export const timeNow = () => {
 	const now = new Date()
@@ -15,5 +19,17 @@ export const fetchAPI = async (url, option) => {
 }
 
 export const imageLoader = ({ src, width, quality }) => {
-	return `${STATIC_RESOURCE_MOCK}/${src}?w=${width}&q=${quality || 75}`
+	const split = src.split('|')
+
+	let storage = ''
+
+	const source = split[0]
+	const id = split[1]
+
+	if (source.substring(0, 4) === 'cate') storage = 'category'
+	else if (source.substring(0, 3) === 'prd') storage = 'product'
+
+	return `${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/${storage}/${id}/${source}?w=${width}&q=${
+		quality || 75
+	}`
 }

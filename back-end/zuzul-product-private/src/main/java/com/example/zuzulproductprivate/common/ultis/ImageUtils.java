@@ -67,6 +67,23 @@ public class ImageUtils {
         return true;
     }
 
+    public ResponseBytes<GetObjectResponse> getCategoryImage (String imageName, String categoryId) {
+        String key = aws.getCredentials().getPath() +
+                "/category/" +
+                categoryId +
+                "/" +
+                imageName;
+
+        GetObjectRequest getObjectRequest = GetObjectRequest
+                .builder()
+                .bucket(aws.getCredentials().getStorage())
+                .key(key)
+                .build();
+
+        return awss3.s3Client()
+                .getObjectAsBytes(getObjectRequest);
+    }
+
     public ResponseBytes<GetObjectResponse> getImage (String imageName, String productId) {
         String key = aws.getCredentials().getPath() +
                 "/product/" +

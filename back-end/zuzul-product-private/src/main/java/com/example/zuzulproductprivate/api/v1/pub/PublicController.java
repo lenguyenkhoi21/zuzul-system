@@ -1,6 +1,7 @@
 package com.example.zuzulproductprivate.api.v1.pub;
 import com.example.zuzulproductprivate.api.v1.pub.category.CategoryModel;
 import com.example.zuzulproductprivate.api.v1.pub.category.GETAllCategory;
+import com.example.zuzulproductprivate.api.v1.pub.category.get_category_image.GetCategoryImage;
 import com.example.zuzulproductprivate.api.v1.pub.product.get_all_product.GetAllProduct;
 import com.example.zuzulproductprivate.api.v1.pub.product.ProductsModel;
 import com.example.zuzulproductprivate.api.v1.pub.product.get_all_product_by_category.GETAllProductByCategoryResponse;
@@ -13,6 +14,7 @@ import com.example.zuzulproductprivate.common.ultis.Constant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class PublicController {
     private final GetAllProduct getAllProduct;
     private final GetAllProductByCategory getAllProductByCategory;
     private final GetAllProductBySub getAllProductBySub;
+    private final GetCategoryImage getCategoryImage;
 
     @GetMapping("/pub")
     public String helloPub() {
@@ -45,6 +48,18 @@ public class PublicController {
         }
         return new ArrayList<>();
     }
+
+//    @GetMapping("/pub/category/{categoryId}/{imageName}")
+//    public ResponseEntity<byte[]> getCateImage (@PathVariable("categoryId") String categoryId,
+//                                                    @PathVariable("imageName") String imageName) {
+//        byte [] imageData = getCategoryImage.getCategoryImage(imageName, categoryId);
+//
+//        return ResponseEntity
+//                .ok()
+//                .contentType(MediaType.IMAGE_JPEG)
+//                .contentType(MediaType.IMAGE_PNG)
+//                .body(imageData);
+//    }
 
     @GetMapping("/pub/product/{productId}")
     public GETProductByIDResponse getAllProductById (@PathVariable("productId") String productId) {
@@ -68,7 +83,7 @@ public class PublicController {
         return new ArrayList<>();
     }
 
-    @PostMapping("/pub/product/{categoryId}")
+    @GetMapping("/pub/product/category/{categoryId}")
     public GETAllProductByCategoryResponse getAllProductByCategory (@PathVariable("categoryId") String categoryId) {
         try {
             return getAllProductByCategory.getProductsByCategory(categoryId);
@@ -79,6 +94,7 @@ public class PublicController {
         return GETAllProductByCategoryResponse.builder().build();
     }
 
+    //TODO Only open when v1 is complete
 //    @GetMapping("/pub/product/category/{subCategoryId}")
 //    public List<ProductsModel> getAllProductBySub (@PathVariable("subCategoryId") String subCategoryId) {
 //        try {
@@ -101,7 +117,8 @@ public class PublicController {
         return new ArrayList<>();
     }
 
-    @GetMapping(value = "/pub/image/{productId}/{imageName}",
+
+/*    @GetMapping(value = "/pub/product/{productId}/{imageName}",
         produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE}
     )
     public ResponseEntity<byte[]> getProductImage (@PathVariable("productId") String productId,
@@ -113,5 +130,5 @@ public class PublicController {
                 .contentType(MediaType.IMAGE_JPEG)
                 .contentType(MediaType.IMAGE_PNG)
                 .body(imageData);
-    }
+    }*/
 }
