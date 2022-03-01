@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { UserContext } from '../../../reducer/User.Reducer'
 import { LeftMenuUserContext } from '../../../reducer/LeftMenuUser.Reducer'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const LeftMenuUser = () => {
 	const userCTX = useContext(UserContext)
@@ -9,24 +10,38 @@ const LeftMenuUser = () => {
 
 	return (
 		<>
-			<div>
+			<div className={'div-LeftMenuUser-size'}>
 				<div>
-					<p> Tài khoản </p>
-					<ul>
+					<div className={'flex items-center ml-4'}>
+						<div>
+							<Image
+								width={18}
+								height={22}
+								src={'/png/icon_User_Account.png'}
+							/>
+						</div>
+						<div>
+							<p className={'ml-2 p-LeftMenuUser-headerAccount'}> Tài khoản </p>
+						</div>
+					</div>
+
+					<ul className={'ml-11'}>
 						<li>
 							{leftMenuUserCTX.state.profile ? (
 								<Link href={'/user/settings/account'}>
 									<a>
-										<span className={'button-LeftMenuUser-active'}>
-											{' '}
-											Hồ sơ{' '}
+										<span
+											className={
+												'button-LeftMenuUser-active div-LeftMenuUser-subHeader'
+											}>
+											Hồ sơ
 										</span>
 									</a>
 								</Link>
 							) : (
 								<Link href={'/user/settings/account'}>
 									<a>
-										<span> Hồ sơ </span>
+										<span className={'div-LeftMenuUser-subHeader'}>Hồ sơ</span>
 									</a>
 								</Link>
 							)}
@@ -35,16 +50,20 @@ const LeftMenuUser = () => {
 							{leftMenuUserCTX.state.address ? (
 								<Link href={'/user/settings/address'}>
 									<a>
-										<span className={'button-LeftMenuUser-active'}>
-											{' '}
-											Địa chỉ{' '}
+										<span
+											className={
+												'button-LeftMenuUser-active div-LeftMenuUser-subHeader'
+											}>
+											Địa chỉ
 										</span>
 									</a>
 								</Link>
 							) : (
 								<Link href={'/user/settings/address'}>
 									<a>
-										<span> Địa chỉ </span>
+										<span className={'div-LeftMenuUser-subHeader'}>
+											Địa chỉ
+										</span>
 									</a>
 								</Link>
 							)}
@@ -53,16 +72,20 @@ const LeftMenuUser = () => {
 							{leftMenuUserCTX.state.changePassword ? (
 								<Link href={'/user/settings/changepassword'}>
 									<a>
-										<span className={'button-LeftMenuUser-active'}>
-											{' '}
-											Thay đổi mật khẩu{' '}
+										<span
+											className={
+												'button-LeftMenuUser-active div-LeftMenuUser-subHeader'
+											}>
+											Thay đổi mật khẩu
 										</span>
 									</a>
 								</Link>
 							) : (
 								<Link href={'/user/settings/changepassword'}>
 									<a>
-										<span> Thay đổi mật khẩu </span>
+										<span className={'div-LeftMenuUser-subHeader'}>
+											Thay đổi mật khẩu
+										</span>
 									</a>
 								</Link>
 							)}
@@ -71,16 +94,20 @@ const LeftMenuUser = () => {
 							{leftMenuUserCTX.state.history ? (
 								<Link href={'/user/settings/history'}>
 									<a>
-										<span className={'button-LeftMenuUser-active'}>
-											{' '}
-											Lịch sử mua hàng{' '}
+										<span
+											className={
+												'button-LeftMenuUser-active div-LeftMenuUser-subHeader'
+											}>
+											Lịch sử mua hàng
 										</span>
 									</a>
 								</Link>
 							) : (
 								<Link href={'/user/settings/history'}>
 									<a>
-										<span> Lịch sử mua hàng </span>
+										<span className={'div-LeftMenuUser-subHeader'}>
+											Lịch sử mua hàng
+										</span>
 									</a>
 								</Link>
 							)}
@@ -92,41 +119,64 @@ const LeftMenuUser = () => {
 				{userCTX.state.isActiveShop ? (
 					<>
 						<div>
-							<p> Quản lý sản phẩm </p>
-							<ul>
+							<div className={'flex items-center ml-4'}>
+								<div>
+									<Image
+										width={18}
+										height={22}
+										src={'/png/icon_request_open_shop.png'}
+									/>
+								</div>
+								<div>
+									<p className={'ml-2 p-LeftMenuUser-headerAccount'}>
+										Quản lý sản phẩm
+									</p>
+								</div>
+							</div>
+							<ul className={'ml-11'}>
 								<li>
-									<button> Tất cả sản phẩm </button>
+									<button className={'div-LeftMenuUser-subHeader'}>
+										Tất cả sản phẩm
+									</button>
 								</li>
 								<li>
-									<button> Thêm sản phẩm </button>
+									<button className={'div-LeftMenuUser-subHeader'}>
+										Thêm sản phẩm
+									</button>
 								</li>
 								<li>
-									<button> Chỉnh sửa sản phẩm </button>
+									<button className={'div-LeftMenuUser-subHeader'}>
+										Chỉnh sửa sản phẩm
+									</button>
 								</li>
 							</ul>
 							<br />
 						</div>
 
 						<div>
-							<p> Quản lý đơn hàng </p>
-							<ul>
+							<div className={'flex items-center ml-4'}>
+								<div>
+									<Image
+										width={18}
+										height={22}
+										src={'/png/icon_request_open_shop.png'}
+									/>
+								</div>
+								<div>
+									<p className={'ml-2 p-LeftMenuUser-headerAccount'}>
+										Quản lý đơn hàng{' '}
+									</p>
+								</div>
+							</div>
+							<ul className={'ml-11'}>
 								<li>
-									<button> Tất cả </button>
-								</li>
-								<li>
-									<button> Chờ xác nhận </button>
-								</li>
-								<li>
-									<button> Chờ lấy hàng </button>
-								</li>
-								<li>
-									<button> Đang giao </button>
-								</li>
-								<li>
-									<button> Đã giao </button>
-								</li>
-								<li>
-									<button> Hủy đơn </button>
+									<Link href={'/user/settings/orderManagement'}>
+										<a>
+											<span className={' div-LeftMenuUser-subHeader'}>
+												Tất cả
+											</span>
+										</a>
+									</Link>
 								</li>
 							</ul>
 							<br />
@@ -134,11 +184,31 @@ const LeftMenuUser = () => {
 					</>
 				) : (
 					<>
-						<div>
-							<p> Yêu cầu trở thành người bán hàng </p>
+						<div className={''}>
+							<div className={'flex grid-flow-col items-center '}>
+								<div className={'ml-4 '}>
+									<Image
+										width={16}
+										height={22}
+										src={'/png/icon_request_open_shop.png'}
+									/>
+								</div>
+								<div>
+									<p className={'ml-2 p-LeftMenuUser-headerAccount'}>
+										Yêu cầu mở gian hàng
+									</p>
+								</div>
+							</div>
+
 							<ul>
 								<li>
-									<button> Gửi yêu cầu </button>
+									<Link href={'/user/settings/sendRequest'}>
+										<a>
+											<button className={'ml-10 div-LeftMenuUser-subHeader'}>
+												Gửi yêu cầu
+											</button>
+										</a>
+									</Link>
 								</li>
 							</ul>
 							<br />
@@ -149,7 +219,28 @@ const LeftMenuUser = () => {
 			<style jsx>
 				{`
 					.button-LeftMenuUser-active {
-						background-color: blueviolet;
+						color: #46d362;
+					}
+					.p-LeftMenuUser-headerAccount {
+						font-family: Poppins;
+						font-style: normal;
+						font-weight: 700;
+						font-size: 18px;
+						line-height: 23px;
+						color: #151515;
+					}
+					.div-LeftMenuUser-size {
+						margin-top: 25px;
+						background: #ffffff;
+						width: 217px;
+						border-radius: 12px;
+					}
+					.div-LeftMenuUser-subHeader {
+						font-family: Open Sans;
+						font-style: normal;
+						font-weight: 400;
+						font-size: 18px;
+						line-height: 23px;
 					}
 				`}
 			</style>
