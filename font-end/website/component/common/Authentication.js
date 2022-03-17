@@ -33,13 +33,20 @@ const Authentication = ({
 			mode: 'cors',
 			body: JSON.stringify(account)
 		})
-			.then(response => response.json())
+			.then(response => {
+				if (response.status === 200) return response.json()
+				else userCTX.removeUser(USER_ACTION.REMOVE_USER)
+			})
 			.then(data => {
 				userCTX.addUser(USER_ACTION.ADD_USER, {
 					userID: data.userID,
-					accessToken: data.access_token
+					accessToken: data.access_token,
+					name: data.name,
+					isActiveShop: data.activatedShop
 				})
+				router.push('/')
 			})
+			.catch(reason => userCTX.removeUser(USER_ACTION.REMOVE_USER))
 	}
 
 	const router = useRouter()
@@ -48,7 +55,7 @@ const Authentication = ({
 		if (userCTX.state.userID !== null) {
 			router.push('/')
 		}
-	})
+	}, [])
 
 	return (
 		<>

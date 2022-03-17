@@ -15,7 +15,6 @@ const ProductPage = () => {
 	console.log(`${timeNow()} --- [ProductPage] --- at ./pages/[[...param]].js`)
 	const router = useRouter()
 	const path = router.asPath
-	const query = router.query
 	const arr = path.split('/')
 	const titleCTX = useContext(TitleContext)
 
@@ -41,7 +40,6 @@ const ProductPage = () => {
 	})
 
 	useEffect(() => {
-		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, query.prdName)
 		// if not render id
 
 		if (arr[2] !== '[[...param]]') {
@@ -69,7 +67,10 @@ const ProductPage = () => {
 						prdNumberInStorage: data.prdNumberInStorage,
 						discount: data.discount
 					})
+					titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, data.prdName)
 				})
+		} else {
+			titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Chi tiết sản phẩm')
 		}
 	}, [path])
 

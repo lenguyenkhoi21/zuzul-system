@@ -1,14 +1,50 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../utils/APIUtils'
 
-const Menu = ({ category, pathname }) => {
+const Menu = ({ pathname, setCategoryName }) => {
+	const [category, setCategory] = useState([])
+
+	useEffect(() => {
+		// fetch all category
+
+		fetch(`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/category/all`, {
+			method: 'GET',
+			mode: 'cors'
+		})
+			.then(response => response.json())
+			.then(data => {
+				setCategory(data)
+				data.forEach(ele =>
+					pathname === ele.categoryId ? setCategoryName(ele.categoryName) : ele
+				)
+			})
+	}, [pathname])
+
 	return (
 		<>
 			{category.map((element, index) => (
 				<React.Fragment key={index}>
-					{pathname === element.id ? (
-						<p className={'p-Menu-text'}> {element.name} </p>
+					{pathname === element.categoryId ? (
+						// link to category/id
+						<Link
+							href={{
+								pathname: `/category/${element.categoryId}`
+							}}>
+							<a>
+								<p className={'p-Menu-text'}> {element.categoryName} </p>
+							</a>
+						</Link>
 					) : (
-						<p> {element.name} </p>
+						// link to category/id
+						<Link
+							href={{
+								pathname: `/category/${element.categoryId}`
+							}}>
+							<a>
+								<p> {element.categoryName} </p>
+							</a>
+						</Link>
 					)}
 				</React.Fragment>
 			))}

@@ -18,21 +18,21 @@ public class PublicController {
     private final GetCover getCover;
     private final GetAvatar getAvatar;
 
-    @GetMapping("/pub/image/user/{userId}/cover/{imageName}")
-    public ResponseEntity<byte[]> getCover (@PathVariable("userId") String userId, @PathVariable("imageName") String imageName) {
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.IMAGE_PNG)
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(getCover.getCover(userId, imageName));
-    }
-
-    @GetMapping("/pub/image/user/{userId}/avatar/{imageName}")
-    public ResponseEntity<byte[]> getAvatar (@PathVariable("userId") String userId, @PathVariable("imageName") String imageName) {
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.IMAGE_PNG)
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(getAvatar.getAvatar(userId, imageName));
-    }
+//    @GetMapping("/pub/image/user/{userId}/cover/{imageName}")
+//    public ResponseEntity<byte[]> getCover (@PathVariable("userId") String userId, @PathVariable("imageName") String imageName) {
+//        return ResponseEntity
+//                .ok()
+//                .contentType(MediaType.IMAGE_PNG)
+//                .contentType(MediaType.IMAGE_JPEG)
+//                .body(getCover.getCover(userId, imageName));
+//    }
+//
+//    @GetMapping("/pub/image/user/{userId}/avatar/{imageName}")
+//    public ResponseEntity<byte[]> getAvatar (@PathVariable("userId") String userId, @PathVariable("imageName") String imageName) {
+//        return ResponseEntity
+//                .ok()
+//                .contentType(MediaType.IMAGE_PNG)
+//                .contentType(MediaType.IMAGE_JPEG)
+//                .body(getAvatar.getAvatar(userId, imageName));
+//    }
 }

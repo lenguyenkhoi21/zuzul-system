@@ -59,4 +59,6 @@ public class Payload {
 
     @Min(1)
     private int prdNumberInStorage;
+
+    private double discount;
 }

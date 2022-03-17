@@ -14,6 +14,8 @@ public class FunctionalUtils {
         return "address-" + java.util.UUID.randomUUID();
     }
 
+    public static String generateHistoryID () { return "history-" + java.util.UUID.randomUUID(); }
+
     public static String renameAvatarImageName(String name) {
         String[] stringsBetweenDots = name.split("\\.");
         String extension = stringsBetweenDots[stringsBetweenDots.length-1];

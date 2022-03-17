@@ -19,7 +19,7 @@ public class GetAllProductBySub {
     private final ProductRepository productRepository;
     private final MongoTemplate mongoTemplate;
 
-    public List<ProductsModel> getAllProductBySub (String subCategoryId) {
+    /*public List<ProductsModel> getAllProductBySub (String subCategoryId) {
         List<Product> products = productRepository.findAllByPrdSubIdAndPrdStatus(subCategoryId, "AVAILABLE");
 
         List<ProductsModel> productsModels = new ArrayList<>();
@@ -40,9 +40,31 @@ public class GetAllProductBySub {
         ));
 
         return productsModels;
-    }
+    }*/
 
-    public List<ProductsModel> getAllProductByMultipleSub (List<String> subCategoryIds) {
+    public List<ProductsModel> getAllProductByMultipleSub (List<String> subCategoryIds, String categoryId) {
+/*        if (subCategoryIds.isEmpty()) {
+            List<Product> products = productRepository.findAllByPrdCateIdAndPrdStatus(categoryId, "AVAILABLE");
+
+            List<ProductsModel> productsModels = new ArrayList<>();
+
+            products.forEach(product -> productsModels.add(
+                    ProductsModel.builder()
+                            .prdCateId(product.getPrdCateId())
+                            .prdId(product.getPrdId())
+                            .currentImage(product.getCurrentImage())
+                            .prdName(product.getPrdName())
+                            .prdNumberInStorage(product.getPrdNumberInStorage())
+                            .prdPriceOrigin(product.getPrdPriceOrigin())
+                            .prdReact(product.getPrdReact())
+                            .prdSale(product.getPrdSale())
+                            .prdSubId(product.getPrdSubId())
+                            .prdUserId(product.getPrdUserId())
+                            .build()));
+
+            return productsModels;
+        }*/
+
         List<Criteria> criteriaList = new ArrayList<>();
         subCategoryIds.forEach(subCategoryId -> {
             Criteria criteria = Criteria

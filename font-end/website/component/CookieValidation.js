@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { timeNow } from '../utils/Utils'
 import { USER_ACTION, UserContext } from '../reducer/User.Reducer'
+import { API_DOMAIN, API_USER_SERVICE } from '../utils/APIUtils'
 
 const CookieValidation = props => {
 	console.log(
@@ -24,7 +25,24 @@ const CookieValidation = props => {
 			 * Solution 1: Send the Token to the services authentication
 			 * Solution 2: Logout. I'm lazy to fetch API
 			 * */
-			userCTX.addUser(USER_ACTION.ADD_USER, user)
+			fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/pub/valid_token`, {
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${user.accessToken}`
+				},
+				mode: 'cors'
+			})
+				.then(response => {
+					if (response.status === 200) {
+						userCTX.addUser(USER_ACTION.ADD_USER_COOKIE, user)
+					} else {
+						userCTX.removeUser(USER_ACTION.REMOVE_USER)
+					}
+				})
+				.catch(reason => {
+					userCTX.removeUser(USER_ACTION.REMOVE_USER)
+				})
+			/*			userCTX.addUser(USER_ACTION.ADD_USER, user)*/
 			console.log(`${timeNow()} --- [useEffect()-CookieValidation] --- update`)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

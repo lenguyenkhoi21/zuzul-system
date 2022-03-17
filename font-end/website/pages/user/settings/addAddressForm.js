@@ -1,21 +1,73 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { TITLE_ACTION, TitleContext } from '../../../reducer/Title.Reducer'
 import { timeNow } from '../../../utils/Utils'
 import Link from 'next/link'
 import Authentication from '../../../component/common/Authentication'
 import { UserContext } from '../../../reducer/User.Reducer'
+import { API_DOMAIN, API_USER_SERVICE } from '../../../utils/APIUtils'
+import { useRouter } from 'next/router'
 const AddAddressFormPage = () => {
 	console.log(
 		`${timeNow()} --- [AddAddressForm] --- /user/settings/AddAddressForm.js`
 	)
 
+	const router = useRouter()
+
 	const titleCTX = useContext(TitleContext)
 	const userCTX = useContext(UserContext)
+
+	const [address, setAddress] = useState({
+		userName: '',
+		userPhone: '',
+		userWard: '',
+		userDistinct: '',
+		userCity: '',
+		detailsAddress: '',
+		userId: userCTX.state.userID,
+		type: []
+	})
+
+	const onChange = e => {
+		if (e.target.name === 'type') {
+			if (e.target.value === 'YES')
+				setAddress({ ...address, [e.target.name]: true })
+
+			if (e.target.value === 'NO')
+				setAddress({ ...address, [e.target.name]: false })
+		} else {
+			setAddress({ ...address, [e.target.name]: e.target.value })
+		}
+	}
+
+	const addAddress = e => {
+		e.preventDefault()
+
+		console.log(address)
+
+		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/address`, {
+			mode: 'cors',
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`,
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(address)
+		})
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				}
+			})
+			.then(data => {
+				router.push('/user/settings/address')
+			})
+	}
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Thêm địa chỉ')
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [userCTX.state.userID])
 	if (userCTX.state.userID === null) {
 		return (
 			<>
@@ -30,7 +82,7 @@ const AddAddressFormPage = () => {
 		return (
 			<>
 				<div className={'flex justify-center px-330'}>
-					<form className={'form-AddAddressForm-size '}>
+					<form className={'form-AddAddressForm-size '} onSubmit={addAddress}>
 						<div>
 							<div>
 								<div className={'div-AddAddressForm-textHeader'}>
@@ -40,55 +92,94 @@ const AddAddressFormPage = () => {
 								<div className={'grid gap-6'}>
 									<div className={'ml-20 '}>
 										<label>Họ Và Tên</label>
-										<input className={'ml-14 input-AddAddressForm-name'} />
+										<input
+											className={'ml-14 input-AddAddressForm-name'}
+											name={'userName'}
+											onChange={onChange}
+										/>
 									</div>
 									<div>
 										<label className={'ml-14'}>Số Điện Thoại</label>
-										<input className={'ml-14 input-AddAddressForm-name'} />
+										<input
+											className={'ml-14 input-AddAddressForm-name'}
+											name={'userPhone'}
+											onChange={onChange}
+										/>
 									</div>
 									<div className={'div-AddAddressForm-marginPhone'}>
 										<label>Tỉnh/Thành Phố</label>
-										<input className={'ml-14 input-AddAddressForm-city'} />
+										<input
+											className={'ml-14 input-AddAddressForm-city'}
+											name={'userCity'}
+											onChange={onChange}
+										/>
 									</div>
 									<div className={'div-AddAddressForm-marginDistrict'}>
 										<label>Quận/Huyện</label>
-										<input className={'ml-14 input-AddAddressForm-district'} />
+										<input
+											className={'ml-14 input-AddAddressForm-district'}
+											name={'userDistinct'}
+											onChange={onChange}
+										/>
 									</div>
 									<div className={'div-AddAddressForm-marginWard'}>
 										<label>Phường/Xã</label>
-										<input className={'ml-14 input-AddAddressForm-district'} />
+										<input
+											className={'ml-14 input-AddAddressForm-district'}
+											name={'userWard'}
+											onChange={onChange}
+										/>
 									</div>
 									<div className={'div-AddAddressForm-marginAddress'}>
 										<label>Địa Chỉ Cụ Thể</label>
-										<input className={'ml-14 input-AddAddressForm-name'} />
+										<input
+											className={'ml-14 input-AddAddressForm-name'}
+											name={'detailsAddress'}
+											onChange={onChange}
+										/>
 									</div>
 								</div>
 
 								<div className={'grid gap-5 justify-center mt-6 mr-9'}>
 									<div className={'flex item-center'}>
-										<input
-											className={'input-AddAddressForm-radioBtn'}
-											name={'tag'}
-											type={'radio'}
-										/>
 										<label className={'ml-2.5'}>Đặt làm địa chỉ mặc định</label>
-									</div>
-									<div className={'flex item-center'}>
 										<input
 											className={'input-AddAddressForm-radioBtn'}
-											name={'tag'}
+											name={'type'}
 											type={'radio'}
+											value={'YES'}
+											onChange={onChange}
+										/>
+										Có
+										<input
+											className={'input-AddAddressForm-radioBtn'}
+											name={'type'}
+											type={'radio'}
+											value={'NO'}
+											onChange={onChange}
+										/>
+										Không
+									</div>
+									{/*									<div className={'flex item-center'}>
+										<input
+											className={'input-AddAddressForm-radioBtn'}
+											name={'type'}
+											type={'checkbox'}
+											value={'STORAGE'}
+											onChange={onChange}
 										/>
 										<label className={'ml-2.5'}>Đặt làm địa chỉ lấy hàng</label>
 									</div>
 									<div className={'flex item-center'}>
 										<input
 											className={'input-AddAddressForm-radioBtn'}
-											name={'tag'}
-											type={'radio'}
+											name={'type'}
+											type={'checkbox'}
+											value={'RECEIVE'}
+											onChange={onChange}
 										/>
 										<label className={'ml-2.5'}>Đặt làm địa chỉ trả hàng</label>
-									</div>
+									</div>*/}
 								</div>
 
 								<div

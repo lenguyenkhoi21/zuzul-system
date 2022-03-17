@@ -20,15 +20,17 @@ public class GetAllProductByCategory {
     private final SubCategoryRepository subCategoryRepository;
     private final CategoryRepository categoryRepository;
 
-    public GETAllProductByCategoryResponse getProductsByCategory (String categoryId) {
-        List<Product> products = productRepository.findAllByPrdCateIdAndPrdStatus(categoryId, "AVAILABLE");
-        List<SubCategory> subCategories = subCategoryRepository.getAllByCategoryIdAndStatus(categoryId, "AVAILABLE");
+    public List<CategoryModels> getProductsByCategory (String categoryId) {
+
+/*        List<Product> products = productRepository.findAllByPrdCateIdAndPrdStatus(categoryId, "AVAILABLE");
+        List<SubCategory> subCategories = subCategoryRepository.getAllByCategoryIdAndStatus(categoryId, "AVAILABLE");*/
         List<Category> categories = categoryRepository.findAllByStatus("AVAILABLE");
 
-        List<ProductsModel> productsModels = new ArrayList<>();
-        List<SubCategoryModels> subCategoryModels = new ArrayList<>();
+/*        List<ProductsModel> productsModels = new ArrayList<>();
+        List<SubCategoryModels> subCategoryModels = new ArrayList<>();*/
         List<CategoryModels> categoryModels = new ArrayList<>();
 
+/*
         products.forEach(product -> productsModels.add(
                 ProductsModel
                         .builder()
@@ -51,6 +53,7 @@ public class GetAllProductByCategory {
                 .subCategoryId(subCategory.getSubCategoryId())
                 .subCategoryName(subCategory.getSubCategoryName())
                 .build()));
+*/
 
         categories.forEach(category -> categoryModels.add(CategoryModels
                 .builder()
@@ -58,11 +61,14 @@ public class GetAllProductByCategory {
                 .categoryName(category.getCategoryName())
                 .build()));
 
+/*
         return GETAllProductByCategoryResponse
                 .builder()
                 .productsModels(productsModels)
                 .subCategoryModels(subCategoryModels)
                 .categoryModels(categoryModels)
                 .build();
+*/
+        return categoryModels;
     }
 }

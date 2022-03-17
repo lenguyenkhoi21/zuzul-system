@@ -1,0 +1,23 @@
+package com.zuzul.zuzuluserservice.api.v1.user.profile.address.create_address;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class POSTCreateAddressPayload {
+    private String userName;
+    private String userPhone;
+    private String userWard;
+    private String userDistinct;
+    private String userCity;
+    private String detailsAddress;
+    private String userId;
+    private boolean type;
+}

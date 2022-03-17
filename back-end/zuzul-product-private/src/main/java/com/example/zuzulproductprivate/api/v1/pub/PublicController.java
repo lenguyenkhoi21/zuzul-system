@@ -4,17 +4,16 @@ import com.example.zuzulproductprivate.api.v1.pub.category.GETAllCategory;
 import com.example.zuzulproductprivate.api.v1.pub.category.get_category_image.GetCategoryImage;
 import com.example.zuzulproductprivate.api.v1.pub.product.get_all_product.GetAllProduct;
 import com.example.zuzulproductprivate.api.v1.pub.product.ProductsModel;
-import com.example.zuzulproductprivate.api.v1.pub.product.get_all_product_by_category.GETAllProductByCategoryResponse;
+import com.example.zuzulproductprivate.api.v1.pub.product.get_all_product_by_category.CategoryModels;
 import com.example.zuzulproductprivate.api.v1.pub.product.get_all_product_by_category.GetAllProductByCategory;
 import com.example.zuzulproductprivate.api.v1.pub.product.get_all_product_by_sub.GetAllProductBySub;
 import com.example.zuzulproductprivate.api.v1.pub.product.get_product_by_id.GETProductByIDResponse;
 import com.example.zuzulproductprivate.api.v1.pub.product.get_product_by_id.GetProductByID;
 import com.example.zuzulproductprivate.api.v1.pub.product.get_product_image.GetProductImage;
+import com.example.zuzulproductprivate.api.v1.pub.subcategory.getAllSubByCate.GETSubCategoryByCatePub;
+import com.example.zuzulproductprivate.api.v1.pub.subcategory.getAllSubByCate.SubCategoryModel;
 import com.example.zuzulproductprivate.common.ultis.Constant;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -32,6 +31,7 @@ public class PublicController {
     private final GetAllProductByCategory getAllProductByCategory;
     private final GetAllProductBySub getAllProductBySub;
     private final GetCategoryImage getCategoryImage;
+    private final GETSubCategoryByCatePub getSubCategoryByCate;
 
     @GetMapping("/pub")
     public String helloPub() {
@@ -84,14 +84,14 @@ public class PublicController {
     }
 
     @GetMapping("/pub/product/category/{categoryId}")
-    public GETAllProductByCategoryResponse getAllProductByCategory (@PathVariable("categoryId") String categoryId) {
+    public List<CategoryModels> getAllProductByCategory (@PathVariable("categoryId") String categoryId) {
         try {
             return getAllProductByCategory.getProductsByCategory(categoryId);
         }
         catch (Exception exception) {
             exception.printStackTrace();
         }
-        return GETAllProductByCategoryResponse.builder().build();
+        return new ArrayList<>();
     }
 
     //TODO Only open when v1 is complete
@@ -106,10 +106,22 @@ public class PublicController {
 //        return new ArrayList<>();
 //    }
 
-    @PostMapping("/pub/product/category/sub/multiple")
-    public List<ProductsModel> getAllProductBySub (@RequestBody List<String> subCategoryIds) {
+    @PostMapping("/pub/product/category/{categoryId}/sub/multiple")
+    public List<ProductsModel> getAllProductBySub (@RequestBody List<String> subCategoryIds,
+                                                   @PathVariable("categoryId") String categoryId) {
         try {
-            return getAllProductBySub.getAllProductByMultipleSub(subCategoryIds);
+            return getAllProductBySub.getAllProductByMultipleSub(subCategoryIds, categoryId);
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    @GetMapping("/pub/{categoryId}/sub/all")
+    public List<SubCategoryModel> getAllSubByCate(@PathVariable("categoryId") String categoryId) {
+        try {
+            return getSubCategoryByCate.getSubCategoryByCate(categoryId);
         }
         catch (Exception exception) {
             exception.printStackTrace();

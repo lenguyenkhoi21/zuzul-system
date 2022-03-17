@@ -88,7 +88,7 @@ const IconBar = () => {
 						</>
 					) : (
 						<div className={'flex mr-3.5 div-IconBar-container'}>
-							<Link href={'/'}>
+							<Link href={'/user/settings/account'}>
 								<a>
 									<div className={'flex'}>
 										<Image

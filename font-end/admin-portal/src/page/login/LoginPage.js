@@ -28,12 +28,21 @@ const LoginPage = () => {
 			mode: 'cors',
 			body: JSON.stringify(account)
 		})
-			.then(response => response.json())
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				} else {
+					userCTX.logout(USER_ACTION.LOGOUT)
+				}
+			})
 			.then(data => {
 				userCTX.addUser(USER_ACTION.LOGIN, {
 					userID: data.userID,
 					accessToken: data.access_token
 				})
+			})
+			.catch(reason => {
+				userCTX.logout(USER_ACTION.LOGOUT)
 			})
 	}
 

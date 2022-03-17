@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { TITLE_ACTION, TitleContext } from '../../../../reducer/Title.Reducer'
 import { UserContext } from '../../../../reducer/User.Reducer'
 import {
@@ -9,6 +9,8 @@ import Authentication from '../../../../component/common/Authentication'
 import LeftMenuUser from '../../../../component/user/settings/LeftMenuUser'
 import UserAccountBackground from '../../../../component/common/UserAccountBackground'
 import { useRouter } from 'next/router'
+import { API_DOMAIN, API_USER_SERVICE } from '../../../../utils/APIUtils'
+import Link from 'next/link'
 
 const HistoryPage = () => {
 	const titleCTX = useContext(TitleContext)
@@ -16,10 +18,90 @@ const HistoryPage = () => {
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
 	const router = useRouter()
 
+	const [history, setHistory] = useState([])
+	const [details, setDetails] = useState({
+		orderDetailsList: [],
+		userName: '',
+		paymentType: '',
+		address: '',
+		phone: ''
+	})
+
+	const formatDate = date => {
+		let timestamp = date * 1000
+		let date_not_formatted = new Date(timestamp)
+
+		let formatted_string = date_not_formatted.getFullYear() + '-'
+
+		if (date_not_formatted.getMonth() < 9) {
+			formatted_string += '0'
+		}
+		formatted_string += date_not_formatted.getMonth() + 1
+		formatted_string += '-'
+
+		if (date_not_formatted.getDate() < 10) {
+			formatted_string += '0'
+		}
+		formatted_string += date_not_formatted.getDate()
+
+		return formatted_string
+	}
+
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Lịch sử mua hàng')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_HISTORY)
-	}, [])
+
+		if (userCTX.state.userID !== null) {
+			fetch(
+				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/${userCTX.state.userID}/history/all`,
+				{
+					method: 'GET',
+					mode: 'cors',
+					headers: {
+						Authorization: `Bearer ${userCTX.state.accessToken}`
+					}
+				}
+			)
+				.then(response => {
+					if (response.status === 200) {
+						return response.json()
+					}
+				})
+				.then(data => {
+					setHistory(data)
+				})
+		}
+	}, [userCTX.state.userID])
+
+	useEffect(() => {
+		if (
+			router.asPath.split('/')[4] !== '[[...history]]' &&
+			router.asPath.split('/')[4] !== undefined &&
+			userCTX.state.userID !== null
+		) {
+			console.log(router.asPath)
+			fetch(
+				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/${
+					userCTX.state.userID
+				}/history/${router.asPath.split('/')[4]}`,
+				{
+					method: 'GET',
+					mode: 'cors',
+					headers: {
+						Authorization: `Bearer ${userCTX.state.accessToken}`
+					}
+				}
+			)
+				.then(response => {
+					if (response.status === 200) {
+						return response.json()
+					}
+				})
+				.then(data => {
+					setDetails(data)
+				})
+		}
+	}, [router.asPath])
 
 	if (userCTX.state.userID === null) {
 		return (
@@ -32,8 +114,8 @@ const HistoryPage = () => {
 			</>
 		)
 	} else {
-		const arr = router.asPath.split('/')
-		if (arr.length === 4) {
+		//const arr = router.asPath.split('/')
+		if (router.asPath.split('/').length === 4) {
 			return (
 				<>
 					<div className={'px-330 div-HistoryPage-container'}>
@@ -62,42 +144,19 @@ const HistoryPage = () => {
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>995230900</td>
-													<td>23/05/2018</td>
-													<td>
-														Ví Nam Da Thật 100% | Bóp Da Nam Tặng Kèm Hộp Cao
-														Cấp | TB...và 01 sản phẩm khác
-													</td>
-													<td>120.000 đ</td>
-												</tr>
-												<tr>
-													<td>773779609</td>
-													<td>12/12/2021</td>
-													<td>
-														Tâm Lý Học - Phác Họa Chân Dung Kẻ Phạm Tội...và 01
-														sản phẩm khác
-													</td>
-													<td>120.000 đ</td>
-												</tr>
-												<tr>
-													<td>773779609</td>
-													<td>12/12/2021</td>
-													<td>
-														Tâm Lý Học - Phác Họa Chân Dung Kẻ Phạm Tội...và 01
-														sản phẩm khác
-													</td>
-													<td>120.000 đ</td>
-												</tr>
-												<tr>
-													<td>773779609</td>
-													<td>12/12/2021</td>
-													<td>
-														Tâm Lý Học - Phác Họa Chân Dung Kẻ Phạm Tội...và 01
-														sản phẩm khác
-													</td>
-													<td>120.000 đ</td>
-												</tr>
+												{history.map((value, key) => (
+													<React.Fragment key={key}>
+														<Link
+															href={`/user/settings/history/${value.historyId}`}>
+															<tr>
+																<td>{value.historyId}</td>
+																<td>{formatDate(value.dateCreated)}</td>
+																<td>{value.productName}</td>
+																<td>{value.totalPrice} đồng</td>
+															</tr>
+														</Link>
+													</React.Fragment>
+												))}
 											</tbody>
 										</table>
 									</div>
@@ -171,7 +230,8 @@ const HistoryPage = () => {
 					`}</style>
 				</>
 			)
-		} else if (arr.length === 5) {
+		} else if (router.asPath.split('/').length === 5) {
+			let total = []
 			return (
 				<>
 					<div>
@@ -186,7 +246,7 @@ const HistoryPage = () => {
 									<div
 										className={'ml-5 col-spans-9 div-HistoryPage-formAccount'}>
 										<p className={'mt-10 ml-10 span-HistoryPage-textTitle'}>
-											Chi tiết đơn hàng #995230900
+											Chi tiết đơn hàng
 										</p>
 										<br />
 										<hr className={'mt-7 mr-10 ml-10 hr-HistoryPage-size'} />
@@ -200,13 +260,9 @@ const HistoryPage = () => {
 													Địa Chỉ Người Nhận
 												</label>
 												<div>
-													<p>NGUYEN QUANG CUONG</p>
-													<p>
-														Địa chỉ: Thôn Lưỡng Kim,xã Triệu Phước,huyện Triệu
-														Phong,tỉnh Quảng Trị, Xã Triệu Phước, Huyện Triệu
-														Phong, Quảng Trị
-													</p>
-													<p>Điện thoại: 0931961345</p>
+													<p>{details.userName}</p>
+													<p>Địa chỉ: {details.address}</p>
+													<p>Điện thoại: {details.phone}</p>
 												</div>
 											</div>
 											<div>
@@ -214,7 +270,7 @@ const HistoryPage = () => {
 													Hình Thức Thanh Toán
 												</label>
 												<div>
-													<p>Thanh toán tiền mặt khi nhận hàng</p>
+													<p>{details.paymentType}</p>
 												</div>
 											</div>
 										</div>
@@ -231,26 +287,22 @@ const HistoryPage = () => {
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
-														<td>
-															Ví Nam Da Thật 100% | Bóp Da Nam Tặng Kèm Hộp Cao
-															Cấp | TB
-														</td>
-														<td>60.000 đ</td>
-														<td>1</td>
-														<td>Đã giao </td>
-														<td>60.000 đ</td>
-													</tr>
-													<tr>
-														<td>
-															Ví Nam Da Thật 99% | Bóp Da Nam Tặng Kèm Hộp Cao
-															Cấp | TB
-														</td>
-														<td>60.000 đ</td>
-														<td>1</td>
-														<td>Đã giao </td>
-														<td>60.000 đ</td>
-													</tr>
+													{details.orderDetailsList.map((value, key) => (
+														<React.Fragment key={key}>
+															<tr>
+																<td>{value.productName}</td>
+																<td>{value.originPrice}</td>
+																<td>{value.count}</td>
+																<td>{value.status} </td>
+																<td>
+																	{value.count *
+																		(value.originPrice -
+																			(value.originPrice * value.discount) /
+																				100)}
+																</td>
+															</tr>
+														</React.Fragment>
+													))}
 												</tbody>
 											</table>
 										</div>
@@ -260,9 +312,25 @@ const HistoryPage = () => {
 												<span className={'label-HistoryPage-subHeader'}>
 													Thành tiền
 												</span>
-												<p>120.000 đ</p>
+												<p>
+													{details.orderDetailsList.map((value, index) => {
+														total.push(
+															value.count *
+																(value.originPrice -
+																	(value.originPrice * value.discount) / 100)
+														)
+
+														console.log(total)
+
+														if (details.orderDetailsList.length - index === 1) {
+															return total.reduce(function (acc, val) {
+																return acc + val
+															}, 0)
+														}
+													})}
+												</p>
 											</div>
-											<div className={'flex gap-4 mb-6'}>
+											{/*											<div className={'flex gap-4 mb-6'}>
 												<span className={'label-HistoryPage-subHeader'}>
 													Phí Vận Chuyển
 												</span>
@@ -273,7 +341,7 @@ const HistoryPage = () => {
 													Tổng Cộng
 												</span>
 												<p>120.000 đ</p>
-											</div>
+											</div>*/}
 										</div>
 									</div>
 								</div>

@@ -1,5 +1,9 @@
 package com.example.zuzulproductprivate.api.v1.user.product;
 
+import com.example.zuzulproductprivate.api.v1.user.product.change_prd_number_after_buying.ChangeNumberInStorage;
+import com.example.zuzulproductprivate.api.v1.user.product.change_prd_number_after_buying.Details;
+import com.example.zuzulproductprivate.api.v1.user.product.change_prd_number_after_buying.PUTChangeNumberInStoragePayload;
+import com.example.zuzulproductprivate.api.v1.user.product.change_prd_number_after_buying.PUTNumberInStorageResponse;
 import com.example.zuzulproductprivate.api.v1.user.product.post_create_new.CreateNewService;
 import com.example.zuzulproductprivate.api.v1.user.product.post_create_new.Payload;
 import com.example.zuzulproductprivate.api.v1.user.product.post_create_new.Response;
@@ -13,13 +17,16 @@ import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping(Constant.rootPathV1)
 @RequiredArgsConstructor
 public class ProductController {
     private final CreateNewService createNewService;
-    @RolesAllowed("TEST_ROLE")
+    private final ChangeNumberInStorage changeNumberInStorage;
+
+    @RolesAllowed("USER")
     @PostMapping(value = "/user/product",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,5 +40,19 @@ public class ProductController {
                 prd_image2,
                 prd_image3,
                 principal);
+    }
+
+    @RolesAllowed("USER")
+    @PutMapping("/user/product/{userId}/changeNumberInStorage")
+    public String changeNumberInStorage (@PathVariable("userId") String userId,
+                                                             @RequestBody List<Details> payload,
+                                                             Principal principal) {
+        try {
+            return changeNumberInStorage.changeNumberInStorage(userId, payload, principal);
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return "FAIL";
     }
 }

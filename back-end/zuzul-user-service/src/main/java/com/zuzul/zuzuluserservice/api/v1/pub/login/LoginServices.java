@@ -22,7 +22,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @Deprecated
@@ -44,14 +43,17 @@ public class LoginServices {
             com.zuzul.zuzuluserservice.common.model.mongodb.UserInfo isUpdatedUser
                     = userInfoRepository.findUserInfoByUserId(userInfo.getId());
 
+            System.out.println(compositeRoles);
             if (isUpdatedUser != null) {
                 return LoginPOSTResponse
                         .builder()
                         .userID(userInfo.getId())
                         .access_token(token.getAccess_token())
                         .role("USER")
-                        .name(isUpdatedUser.getUserFirstName() + isUpdatedUser.getUserLastName())
+                        .name(userInfo.getUsername())
+                        .fullname(isUpdatedUser.getUserFullName())
                         .isActivatedShop(isUpdatedUser.isUserActivated())
+                        .isModifiedProfile(true)
                         .build();
             }
             else {
@@ -60,8 +62,10 @@ public class LoginServices {
                         .userID(userInfo.getId())
                         .access_token(token.getAccess_token())
                         .role("USER")
-                        .name(null)
+                        .name(userInfo.getUsername())
+                        .fullname(null)
                         .isActivatedShop(false)
+                        .isModifiedProfile(false)
                         .build();
             }
         } else {

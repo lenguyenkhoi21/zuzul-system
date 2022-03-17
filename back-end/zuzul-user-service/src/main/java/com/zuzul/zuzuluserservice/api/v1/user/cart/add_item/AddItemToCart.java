@@ -25,8 +25,6 @@ public class AddItemToCart {
                         .purchaserId(payload.getPurchaserId())
                         .sellerId(payload.getSellerId())
                         .count(payload.getCount())
-                        .originPrice(payload.getOriginPrice())
-                        .productSales(payload.getProductSales())
                         .build();
 
 
@@ -46,8 +44,6 @@ public class AddItemToCart {
                         .purchaserId(checkCart.getPurchaserId())
                         .sellerId(checkCart.getSellerId())
                         .count(checkCart.getCount() + payload.getCount())
-                        .originPrice(checkCart.getOriginPrice())
-                        .productSales(checkCart.getProductSales())
                         .build();
 
 

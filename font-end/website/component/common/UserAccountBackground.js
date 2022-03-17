@@ -1,14 +1,25 @@
 import React from 'react'
 import Image from 'next/image'
+import { imageUserLoader } from '../../utils/Utils'
 
-const UserAccountBackground = () => {
+const UserAccountBackground = ({
+	userFullName,
+	coverImage,
+	avatarImage,
+	userId
+}) => {
 	return (
 		<>
 			<div>
 				<div
 					className={'grid grid-cols-1 div-UserAccountBackground-defineUser'}>
 					<div>
-						<Image width={1260} height={330} src={'/png/imageBackground.png'} />
+						<Image
+							width={1260}
+							height={330}
+							src={coverImage + '|' + userId}
+							loader={imageUserLoader}
+						/>
 					</div>
 					<div className={'grid grid-cols-2 grid-flow-col'}>
 						<div className={'grid grid-cols-12 grid-flow-col items-center'}>
@@ -16,11 +27,16 @@ const UserAccountBackground = () => {
 								className={
 									'col-start-2 col-end-4 div-UserAccountBackground-image'
 								}>
-								<Image width={104} height={104} src={'/png/userImage.png'} />
+								<Image
+									width={104}
+									height={104}
+									src={avatarImage + '|' + userId}
+									loader={imageUserLoader}
+								/>
 							</div>
 							<div className={'col-start-4 col-end-10'}>
 								<span className={'span-UserAccountBackground-userName'}>
-									Tên Người Dùng
+									{userFullName}
 								</span>
 								<br />
 								<span className={'span-UserAccountBackground-address'}>

@@ -1,17 +1,110 @@
-import React, { useContext, useEffect } from 'react'
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState
+} from 'react'
 import { TITLE_ACTION, TitleContext } from '../../../reducer/Title.Reducer'
 import { UserContext } from '../../../reducer/User.Reducer'
 import Authentication from '../../../component/common/Authentication'
 import LeftMenuUser from '../../../component/user/settings/LeftMenuUser'
 import UserAccountBackground from '../../../component/common/UserAccountBackground'
+import {
+	API_DOMAIN,
+	API_PRODUCT_SERVICE,
+	API_USER_SERVICE
+} from '../../../utils/APIUtils'
 
 const OrderManagementPage = () => {
 	const titleCTX = useContext(TitleContext)
 	const userCTX = useContext(UserContext)
 
+	const [historyShop, setHistoryShop] = useState([])
+	const [categoryList, setCategoryList] = useState([])
+
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Quản lí đơn hàng')
-	}, [])
+
+		if (userCTX.state.userID !== null)
+			fetch(
+				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/${userCTX.state.userID}/historyShop/ALL/ALL`,
+				{
+					method: 'GET',
+					mode: 'cors',
+					headers: {
+						Authorization: `Bearer ${userCTX.state.accessToken}`
+					}
+				}
+			)
+				.then(response => {
+					if (response.status === 200) {
+						return response.json()
+					}
+				})
+				.then(data => {
+					setHistoryShop(data)
+				})
+
+		fetch(`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/category/all`, {
+			method: 'GET',
+			mode: 'cors'
+		})
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				}
+			})
+			.then(data => {
+				setCategoryList(data)
+			})
+	}, [userCTX.state.userID])
+
+	/*  const objectsEqual = (object_1, object_2) =>
+    typeof object_1 === 'object' && Object.keys(object_1).length > 0
+      ? Object.keys(object_1).length === Object.keys(object_2).length
+      && Object.keys(object_1).every(attribute => objectsEqual(object_1[attribute], object_2[attribute]))
+      : object_1 === object_2
+
+  const arraysEqual = (array_1, array_2) =>
+    array_1.length === array_2.length && array_1.every((object, index) => objectsEqual(object, array_2[index]))*/
+
+	const [key, setKey] = useState({
+		category: 'ALL',
+		status: 'ALL'
+	})
+
+	/*const set = useCallback((e) => {
+    setKey( {...key, [e.target.name]: e.target.value})
+  }, [key])*/
+
+	const filterList = e => {
+		//(e.target.name === 'category') ? key.category = e.target.value : key.status = e.target.value
+
+		e.persist()
+		e.preventDefault()
+
+		// set(e)
+
+		/*		fetch(
+			`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/${userCTX.state.userID}/historyShop/${key.status}/${key.category}`,
+			{
+				method: 'GET',
+				mode: 'cors',
+				headers: {
+					Authorization: `Bearer ${userCTX.state.accessToken}`
+				}
+			}
+		)
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				}
+			})
+			.then(data => {
+				setHistoryShop(data)
+			})*/
+	}
 
 	if (userCTX.state.userID === null) {
 		return (
@@ -43,30 +136,30 @@ const OrderManagementPage = () => {
 								<hr className={'mt-7 mr-10 ml-10 hr-OrderManagement-size'} />
 								<div className={'flex grid-flow-col justify-end mt-6'}>
 									<div className={'div-OrderManagement-marginCategory'}>
-										<select className={'select-OrderManagement-color'}>
-											<option value='0'>Chọn danh mục</option>
-											<option value='1'>Sách</option>
-											<option value='1'>Thời trang nam</option>
-											<option value='2'>Thời trang nữ</option>
-											<option value='3'>Đồng Hồ</option>
-											<option value='4'>Điện thoại & phụ kiện</option>
-											<option value='5'>Mẹ & Bé</option>
-											<option value='6'>Giày dép</option>
-											<option value='7'>Thiết bị điện tử</option>
-											<option value='8'>Nhà cửa & Đời sống</option>
-											<option value='9'>Máy tính & Laptop</option>
-											<option value='10'>Máy ảnh & Máy quay phim</option>
-											<option value='11'>Sắc đẹp</option>
-											<option value='12'>Sức khỏe</option>
+										<select
+											className={'select-OrderManagement-color'}
+											onChange={filterList}
+											name={'category'}>
+											<option value='ALL'>Chọn danh mục</option>
+											{categoryList.map((value, key) => (
+												<React.Fragment key={key}>
+													<option value={value.categoryId}>
+														{value.categoryName}
+													</option>
+												</React.Fragment>
+											))}
 										</select>
 									</div>
 									<div className={'div-OrderManagement-marginStatus'}>
-										<select className={'select-OrderManagement-color '}>
-											<option value='0'>Chọn trạng thái</option>
-											<option value='1'>Chờ xác nhận</option>
-											<option value='2'>Chờ lấy hàng</option>
-											<option value='3'>Đang giao</option>
-											<option value='4'>Đã giao</option>
+										<select
+											className={'select-OrderManagement-color '}
+											name={'status'}
+											onChange={filterList}>
+											<option value='ALL'>Chọn trạng thái</option>
+											<option value='WAIT_FOR_ACCEPTING'>Chờ xác nhận</option>
+											<option value='WAIT_FOR_GETTING'>Chờ lấy hàng</option>
+											<option value='DELIVERING'>Đang giao</option>
+											<option value='DELIVERED'>Đã giao</option>
 										</select>
 									</div>
 								</div>
@@ -75,57 +168,53 @@ const OrderManagementPage = () => {
 										<thead align={'left'}>
 											<tr>
 												<th width={125}>Mã Đơn Hàng</th>
+												<th width={200}>Vị trí</th>
 												<th width={245}>Tên Sản Phẩm</th>
 												<th>Số Lượng</th>
 												<th>Danh Mục</th>
-												<th>Giá</th>
+												<th>Giá (Sau khi trừ khuyến mãi)</th>
 												<th>Trạng Thái</th>
 												<th></th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>995230900</td>
-												<td>Tâm Lý Học - Phác Họa Chân Dung Kẻ Phạm Tội</td>
-												<td>2</td>
-												<td>Sách</td>
-												<td>120.000 đ</td>
-												<td>
-													<select className={'select-OrderManagement-table'}>
-														<option value='0'>Chọn trạng thái</option>
-														<option value='1'>Chờ xác nhận</option>
-														<option value='2'>Chờ lấy hàng</option>
-														<option value='3'>Đang giao</option>
-														<option value='3'>Đã giao</option>
-													</select>
-												</td>
-												<td>
-													<button className={'btn-OrderManagement-size'}>
-														xóa
-													</button>
-												</td>
-											</tr>
-											<tr>
-												<td>995230900</td>
-												<td>Tâm Lý Học - Phác Họa Chân Dung Kẻ Phạm Tội</td>
-												<td>2</td>
-												<td>Sách</td>
-												<td>120.000 đ</td>
-												<td>
-													<select className={'select-OrderManagement-table'}>
-														<option value='0'>Chọn trạng thái</option>
-														<option value='1'>Chờ xác nhận</option>
-														<option value='2'>Chờ lấy hàng</option>
-														<option value='3'>Đang giao</option>
-														<option value='3'>Đã giao</option>
-													</select>
-												</td>
-												<td>
-													<button className={'btn-OrderManagement-size'}>
-														xóa
-													</button>
-												</td>
-											</tr>
+											{historyShop.map((value, key) => (
+												<React.Fragment key={key}>
+													<tr>
+														<td>{value.historyId}</td>
+														<td>{value.address}</td>
+														<td>{value.productName}</td>
+														<td>{value.count}</td>
+														<td>{value.categoryName}</td>
+														<td>
+															{value.count *
+																(value.originPrice -
+																	(value.originPrice * value.discount) /
+																		100)}{' '}
+															đ
+														</td>
+														<td>
+															<select
+																className={'select-OrderManagement-table'}>
+																<option value='ALL'>Chọn trạng thái</option>
+																<option value='WAIT_FOR_ACCEPTING'>
+																	Chờ xác nhận
+																</option>
+																<option value='WAIT_FOR_GETTING'>
+																	Chờ lấy hàng
+																</option>
+																<option value='DELIVERING'>Đang giao</option>
+																<option value='DELIVERED'>Đã giao</option>
+															</select>
+														</td>
+														<td>
+															<button className={'btn-OrderManagement-size'}>
+																xóa
+															</button>
+														</td>
+													</tr>
+												</React.Fragment>
+											))}
 										</tbody>
 									</table>
 								</div>

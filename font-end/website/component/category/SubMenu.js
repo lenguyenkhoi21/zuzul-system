@@ -1,34 +1,84 @@
 import React, { useEffect, useState } from 'react'
+import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../utils/APIUtils'
+import { data } from 'autoprefixer'
 
-const SubMenu = ({ setProduct, subCategoryList }) => {
+const SubMenu = ({ setProduct, pathname, path }) => {
 	const [submenu, setSubmenu] = useState([])
 
-	// const selectAll = () => {
-	// 	const arr = []
-	// 	submenu.map(value => arr.push({ ...value, isActive: true }))
-	// 	setProduct([{ name: 'abc' }, { name: 'xyz' }])
-	// 	setSubmenu(arr)
-	// }
-
 	useEffect(() => {
-		setSubmenu(subCategoryList)
-	})
+		// fetch all to subcategroy by cateogryid
+		// transform data before set
+		// map(x -> {...x, selected: false}
+		// [
+		// {
+		//    suId: me va be
+		//    id:
+		//    selected: false
+		// },..
+		// ]
+
+		if (pathname !== '[cate_id]') {
+			fetch(`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/${pathname}/sub/all`, {
+				method: 'GET',
+				mode: 'cors'
+			})
+				.then(response => response.json())
+				.then(data => {
+					const sub = []
+					data.map(element => sub.push({ ...element, select: false }))
+					setSubmenu(sub)
+				})
+		}
+	}, [pathname, path])
 
 	const selectOne = (e, subId) => {
-		const arr = []
-
-		submenu.forEach(value => {
-			if (value.subCategoryId === subId) {
-				const isActive = !value.isActive
-				arr.push({ ...value, isActive })
-			} else {
-				arr.push(value)
-			}
-		})
+		// Todo: hanlde event on click
+		// check if status -> true thanh false, false true, set nguoc vao cai []
+		//
+		// loop qua, thang nao true thi nem vo arr
 
 		// TODO: Call api to get product
 		//setProduct([{ name: 'dcad' }, { name: 'fsd' }])
-		setSubmenu(arr)
+
+		e.preventDefault()
+
+		if (e.target.checked) {
+			submenu.map(ele => {
+				if (ele.subCategoryId === subId) {
+					let arr = submenu
+					arr[arr.indexOf(ele)] = { ...arr[arr.indexOf(ele)], select: true }
+					setSubmenu(arr)
+				}
+			})
+		} else {
+			submenu.map(ele => {
+				if (ele.subCategoryId === subId) {
+					let arr = submenu
+					arr[arr.indexOf(ele)] = { ...arr[arr.indexOf(ele)], select: false }
+					setSubmenu(arr)
+				}
+			})
+		}
+
+		const payload = []
+		submenu.map(element => {
+			if (element.select === true) payload.push(element.subCategoryId)
+		})
+
+		fetch(
+			`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/product/category/${pathname}/sub/multiple`,
+			{
+				method: 'POST',
+				mode: 'cors',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(payload)
+			}
+		)
+			.then(response => response.json())
+			.then(data => setProduct(data))
 	}
 
 	return (
@@ -38,7 +88,8 @@ const SubMenu = ({ setProduct, subCategoryList }) => {
 					<ol>
 						<li>
 							<div className='filter-group-list '>
-								{value.isActive ? (
+								{/*select = true, render checkbox*/}
+								{value.select ? (
 									<button
 										className={'button-SubMenu-color '}
 										onClick={e => selectOne(e, value.subCategoryId)}>
@@ -46,6 +97,7 @@ const SubMenu = ({ setProduct, subCategoryList }) => {
 											<input
 												className='checkbox geekmark'
 												type='checkbox'
+												checked={true}
 												id={index}
 											/>
 											<span className='geekmark' />
