@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class CartModel {
     private String productId;
     private String purchaserId;
+    private String productName;
     private String sellerId;
     private int count;
     private int originPrice;

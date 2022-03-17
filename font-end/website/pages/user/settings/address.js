@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { TITLE_ACTION, TitleContext } from '../../../reducer/Title.Reducer'
 import { UserContext } from '../../../reducer/User.Reducer'
 import {
@@ -9,16 +9,99 @@ import Authentication from '../../../component/common/Authentication'
 import LeftMenuUser from '../../../component/user/settings/LeftMenuUser'
 import UserAccountBackground from '../../../component/common/UserAccountBackground'
 import Link from 'next/link'
+import { API_DOMAIN, API_USER_SERVICE } from '../../../utils/APIUtils'
+import { useRouter } from 'next/router'
 
 const AddressPage = () => {
 	const titleCTX = useContext(TitleContext)
 	const userCTX = useContext(UserContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
+	const router = useRouter()
+
+	const [address, setAddress] = useState([])
+	const [render, setRender] = useState({})
 
 	useEffect(() => {
-		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Hồ sơ người dùng')
+		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Địa chỉ người dùng')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_ADDRESS)
-	}, [])
+
+		if (userCTX.state.userID !== null) {
+			fetch(
+				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/address/${userCTX.state.userID}`,
+				{
+					method: 'GET',
+					mode: 'cors',
+					headers: {
+						Authorization: `Bearer ${userCTX.state.accessToken}`
+					}
+				}
+			)
+				.then(response => {
+					if (response.status === 200) {
+						return response.json()
+					}
+				})
+				.then(data => {
+					setAddress(data)
+				})
+		}
+	}, [userCTX.state.userID, render])
+
+	const setDefault = e => {
+		e.preventDefault()
+
+		const payload = {
+			userId: userCTX.state.userID,
+			addressId: e.target.value
+		}
+
+		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/address/setDefault`, {
+			method: 'PUT',
+			mode: 'cors',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`,
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(payload)
+		})
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				}
+			})
+			.then(data => {
+				if (data.status === 'SUCCESS') setRender({})
+			})
+	}
+
+	const deleteAddress = e => {
+		e.preventDefault()
+
+		let payload = {
+			addressId: e.target.value,
+			userId: userCTX.state.userID
+		}
+
+		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/address`, {
+			method: 'DELETE',
+			mode: 'cors',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`,
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(payload)
+		})
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				}
+			})
+			.then(data => {
+				if (data.status === 'SUCCESS') setRender({})
+			})
+	}
 
 	if (userCTX.state.userID === null) {
 		return (
@@ -66,50 +149,69 @@ const AddressPage = () => {
 									</div>
 								</div>
 								<hr className={'mt-16 mr-10 ml-10 hr-AddressPage-size'} />
-								<div className={'grid grid-flow-col mt-6 ml-9 w-11/12'}>
-									<div>
-										<label>Họ Và Tên</label>
-										<label>Số Điện Thoại </label>
-										<label>Địa Chỉ </label>
-									</div>
-									<div>
-										<p>Nguyễn Quang Cường</p>
-										<p>0931961345</p>
-										<p>Phường An Hải Bắc Quận Sơn Trà Đà Nẵng</p>
-									</div>
-									<div className={'mt-4'}>
-										<div className={'flex justify-start'}>
-											<button className={'btn-AddressPage-tagContent'}>
-												Lấy Hàng
-											</button>
-											<button className={'ml-4 btn-AddressPage-tagContent'}>
-												Trả Hàng
-											</button>
-										</div>
-										<button className={'mt-4 btn-AddressPage-tagContent'}>
-											Mặc định
-										</button>
-									</div>
-									<div className={'mt-4 ml-12'}>
-										<div className={'flex justify-end'}>
-											<Link href={'/user/settings/editAddressForm'}>
-												<a>
-													<button className={'btn-AddressPage-funcBtn'}>
-														Sửa
-													</button>
-												</a>
-											</Link>
-											<button className={'ml-4 btn-AddressPage-funcBtn'}>
-												Xóa
-											</button>
-										</div>
-										<div className={'flex justify-end'}>
-											<button className={'mt-4 btn-AddressPage-funcSetup'}>
-												Thiết Lập Mặc Định
-											</button>
-										</div>
-									</div>
-								</div>
+								{address.map((value, index) => {
+									return (
+										<React.Fragment key={index}>
+											<div className={'grid grid-flow-col mt-6 ml-9 w-11/12'}>
+												<div>
+													<label>Họ Và Tên</label>
+													<label>Số Điện Thoại </label>
+													<label>Địa Chỉ </label>
+												</div>
+												<div>
+													<p>{value.userName}</p>
+													<p>{value.userPhone}</p>
+													<p>
+														{value.detailsAddress +
+															',' +
+															value.userWard +
+															',' +
+															value.userDistinct +
+															',' +
+															value.userCity}
+													</p>
+												</div>
+
+												<div className={'mt-2'}>
+													<div className={'flex justify-start'}>
+														<button
+															hidden={value.type === false}
+															className={'ml-2 btn-AddressPage-tagContent'}>
+															Mặc Định
+														</button>
+													</div>
+												</div>
+												<div className={'mt-4 ml-12'}>
+													<div className={'flex justify-end'}>
+														<Link
+															href={`/user/settings/editAddressForm/${value.addressId}`}>
+															<a>
+																<button className={'btn-AddressPage-funcBtn'}>
+																	Sửa
+																</button>
+															</a>
+														</Link>
+														<button
+															className={'ml-4 btn-AddressPage-funcBtn'}
+															value={value.addressId}
+															onClick={deleteAddress}>
+															Xóa
+														</button>
+													</div>
+													<div className={'flex justify-end'}>
+														<button
+															hidden={value.type === true}
+															className={'mt-4 btn-AddressPage-funcSetup'}
+															value={value.addressId}
+															onClick={setDefault}>
+															Thiết Lập Mặc Định
+														</button>
+													</div>
+												</div>
+											</div>
+										</React.Fragment>
+									)
+								})}
 							</div>
 						</div>
 					</div>

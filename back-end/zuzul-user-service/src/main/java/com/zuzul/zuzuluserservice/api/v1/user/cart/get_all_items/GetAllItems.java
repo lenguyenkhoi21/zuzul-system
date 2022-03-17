@@ -14,25 +14,26 @@ import java.util.List;
 public class GetAllItems {
     private final CartRepository cartRepository;
 
-    public GETAllItemsResponse getAllItemsInCart (GETAllItemsPayload payload, Principal principal) {
-        if (principal.getName().equals(payload.getPurchaserId())) {
-            List<Cart> items = cartRepository.findAllByPurchaserId(payload.getPurchaserId());
+    public GETAllItemsResponse getAllItemsInCart (String userId, Principal principal) {
+        if (principal.getName().equals(userId)) {
+            List<Cart> items = cartRepository.findAllByPurchaserId(userId);
 
             List<CartModel> cartModels = new ArrayList<>();
 
-            items.forEach(item -> {
-                cartModels.add(
-                  CartModel
-                          .builder()
-                          .count(item.getCount())
-                          .originPrice(item.getOriginPrice())
-                          .productId(item.getProductId())
-                          .productSales(item.getProductSales())
-                          .purchaserId(item.getPurchaserId())
-                          .sellerId(item.getSellerId())
-                          .build()
-                );
-            });
+            items.forEach(item -> cartModels.add(
+              CartModel
+                      .builder()
+                      .count(item.getCount())
+                      .sellerId(item.getSellerId())
+                      .productId(item.getProductId())
+                      .purchaserId(item.getPurchaserId())
+                      //TODO Call product-private to get corresponding data by productId
+
+                      .productName("")
+                      .productSales(0)
+                      .originPrice(0)
+                      .build()
+            ));
 
             return GETAllItemsResponse
                     .builder()

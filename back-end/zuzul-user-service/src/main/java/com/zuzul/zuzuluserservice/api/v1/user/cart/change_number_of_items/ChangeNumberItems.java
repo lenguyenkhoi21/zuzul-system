@@ -20,10 +20,8 @@ public class ChangeNumberItems {
                     .builder()
                     .id(cart.getId())
                     .productId(cart.getProductId())
-                    .productSales(cart.getProductSales())
                     .purchaserId(cart.getPurchaserId())
                     .sellerId(cart.getSellerId())
-                    .originPrice(cart.getOriginPrice())
                     .count(payload.getCount())
                     .build();
 

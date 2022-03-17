@@ -19,8 +19,8 @@ public class UserInfo {
 
     @Indexed(unique = true)
     private String userId;
-    private String userFirstName;
-    private String userLastName;
+    private String userName;
+    private String userFullName;
     private String userPhone;
     private long userBirthDay;
     private String userSex;

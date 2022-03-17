@@ -4,6 +4,9 @@ import { TITLE_ACTION, TitleContext } from '../../../reducer/Title.Reducer'
 import Authentication from '../../../component/common/Authentication'
 import LeftMenuUser from '../../../component/user/settings/LeftMenuUser'
 import UserAccountBackground from '../../../component/common/UserAccountBackground'
+import { API_DOMAIN, API_USER_SERVICE } from '../../../utils/APIUtils'
+import { data } from 'autoprefixer'
+import { router } from 'next/client'
 
 const SendRequestPage = () => {
 	const userCTX = useContext(UserContext)
@@ -12,6 +15,34 @@ const SendRequestPage = () => {
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Gửi yêu cầu')
 	}, [])
+
+	const requestShop = e => {
+		e.preventDefault()
+
+		fetch(
+			`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/request_shop/${userCTX.state.userID}`,
+			{
+				mode: 'cors',
+				method: 'PUT',
+				headers: {
+					Authorization: `Bearer ${userCTX.state.accessToken}`,
+					Accept: 'application/json',
+					'Content-Type': 'application/json'
+				}
+			}
+		)
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				}
+			})
+			.then(data => {
+				if (data.status === 'SUCCESS') {
+					userCTX.state.isActiveShop = true
+					router.push('/user/settings/account')
+				}
+			})
+	}
 
 	if (userCTX.state.userID === null) {
 		return (
@@ -45,11 +76,14 @@ const SendRequestPage = () => {
 								</div>
 								<hr className={'mt-7 mr-10 ml-10 hr-SendRequest-size'} />
 								<div className={'grid grid-col-1'}>
-									<div>
-										<button className={'btn-SendRequest-sendRequest'}>
-											Gửi yêu cầu
-										</button>
-									</div>
+									<form onSubmit={requestShop}>
+										<div>
+											<input type={'text'}>Tên cửa hàng: </input>
+											<button className={'btn-SendRequest-sendRequest'}>
+												Gửi yêu cầu
+											</button>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>

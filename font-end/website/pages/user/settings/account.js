@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { TITLE_ACTION, TitleContext } from '../../../reducer/Title.Reducer'
 import { UserContext } from '../../../reducer/User.Reducer'
 import {
@@ -8,16 +8,104 @@ import {
 import Authentication from '../../../component/common/Authentication'
 import LeftMenuUser from '../../../component/user/settings/LeftMenuUser'
 import UserAccountBackground from '../../../component/common/UserAccountBackground'
+import { API_DOMAIN, API_USER_SERVICE } from '../../../utils/APIUtils'
 
 const AccountPage = () => {
 	const titleCTX = useContext(TitleContext)
 	const userCTX = useContext(UserContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
 
+	const [userInfo, setUserInfo] = useState({
+		userId: '',
+		userFullName: '',
+		userPhone: '',
+		userBirthday: '',
+		userSex: '',
+		userEmail: '',
+		userName: ''
+	})
+
+	const onChange = e => {
+		if (e.target.name === 'userBirthday') {
+			setUserInfo({
+				...userInfo,
+				[e.target.name]: new Date(e.target.value).getTime() / 1000
+			})
+		} else if (e.target.name === 'userSex') {
+			setUserInfo({ ...userInfo, [e.target.name]: e.target.value })
+			setGender(e.target.value)
+		} else {
+			setUserInfo({ ...userInfo, [e.target.name]: e.target.value })
+		}
+	}
+
+	const formatDate = date => {
+		let timestamp = date * 1000
+		let date_not_formatted = new Date(timestamp)
+
+		let formatted_string = date_not_formatted.getFullYear() + '-'
+
+		if (date_not_formatted.getMonth() < 9) {
+			formatted_string += '0'
+		}
+		formatted_string += date_not_formatted.getMonth() + 1
+		formatted_string += '-'
+
+		if (date_not_formatted.getDate() < 10) {
+			formatted_string += '0'
+		}
+		formatted_string += date_not_formatted.getDate()
+
+		return formatted_string
+	}
+
+	const [date, setDate] = useState('')
+	const [gender, setGender] = useState('')
+
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Hồ sơ người dùng')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_PROFILE)
-	}, [])
+
+		if (userCTX.state.userID !== null) {
+			fetch(
+				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/${userCTX.state.userID}`,
+				{
+					headers: {
+						Authorization: `Bearer ${userCTX.state.accessToken}`
+					},
+					mode: 'cors',
+					method: 'GET'
+				}
+			)
+				.then(response => response.json())
+				.then(data => {
+					setDate(formatDate(data.userBirthday))
+					setGender(data.userSex)
+					setUserInfo(data)
+				})
+		}
+	}, [userCTX.state.userID])
+
+	const updateUser = e => {
+		e.preventDefault()
+
+		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile`, {
+			method: 'PUT',
+			mode: 'cors',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`,
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(userInfo)
+		})
+			.then(response => {
+				if (response.status === 200) {
+					response.json()
+				}
+			})
+			.then(data => console.log(data))
+	}
 
 	if (userCTX.state.userID === null) {
 		return (
@@ -29,142 +117,183 @@ const AccountPage = () => {
 				/>
 			</>
 		)
-	} else {
+	}
+	if (userCTX.state.userID !== null) {
 		return (
 			<>
 				<div className={'px-330 div-AccountPage-container'}>
 					<div className={'grid grid-cols-1'}>
-						<UserAccountBackground />
+						<UserAccountBackground
+							userId={userInfo.userId}
+							avatarImage={userInfo.currentAvatar}
+							coverImage={userInfo.currentCover}
+							userFullName={userInfo.userFullName}
+						/>
 
 						<div className={'flex grid-flow-col mt-6'}>
 							<div className={'div-AccountPage-leftMenu'}>
 								<LeftMenuUser />
 							</div>
-							<div className={'ml-5 col-spans-9 div-AccountPage-formAccount'}>
-								<p className={'mt-10 ml-10 span-AccountPage-textTitle'}>
-									Hồ Sơ Của Tôi
-								</p>
-								<br />
-								<span className={'ml-10 span-AccountPage-textSubtitle'}>
-									Quản lý thông tin hồ sơ để bảo mật tài khoản
-								</span>
-								<hr className={'mt-7 mr-10 ml-10 hr-AccountPage-size'} />
-								<div className={'grid grid-cols-1 gap-6 '}>
-									<div
-										className={
-											'grid grid-cols-5 grid-flow-col items-center mt-7 ml-7'
-										}>
-										<label
+							<form onSubmit={updateUser}>
+								<div className={'ml-5 col-spans-9 div-AccountPage-formAccount'}>
+									<p className={'mt-10 ml-10 span-AccountPage-textTitle'}>
+										Hồ Sơ Của Tôi
+									</p>
+									<br />
+									<span className={'ml-10 span-AccountPage-textSubtitle'}>
+										Quản lý thông tin hồ sơ để bảo mật tài khoản
+									</span>
+									<hr className={'mt-7 mr-10 ml-10 hr-AccountPage-size'} />
+									<div className={'grid grid-cols-1 gap-6 '}>
+										<div
 											className={
-												'flex justify-end mr-14 span-AccountPage-textTitleInput '
+												'grid grid-cols-5 grid-flow-col items-center mt-7 ml-7'
 											}>
-											Tên Đăng Nhập
-										</label>
-										<input className={'ml-4 input-AccountPage-size '} />
-									</div>
-									<div
-										className={
-											'grid grid-cols-5 grid-flow-col items-center ml-7'
-										}>
-										<label
+											<label
+												className={
+													'flex justify-end mr-14 span-AccountPage-textTitleInput '
+												}>
+												Tên Đăng Nhập
+											</label>
+											<input
+												className={'ml-4 input-AccountPage-size '}
+												readOnly={true}
+												defaultValue={userCTX.state.name}
+												name={'userName'}
+											/>
+										</div>
+										<div
 											className={
-												'flex justify-end mr-14 span-AccountPage-textTitleInput'
+												'grid grid-cols-5 grid-flow-col items-center ml-7'
 											}>
-											Tên
-										</label>
-										<input className={'ml-4 input-AccountPage-size'} />
-									</div>
-									<div
-										className={
-											'grid grid-cols-5 grid-flow-col items-center ml-7'
-										}>
-										<label
+											<label
+												className={
+													'flex justify-end mr-14 span-AccountPage-textTitleInput'
+												}>
+												Tên
+											</label>
+											<input
+												className={'ml-4 input-AccountPage-size'}
+												defaultValue={userInfo.userFullName}
+												onChange={onChange}
+												name={'userFullName'}
+											/>
+										</div>
+										<div
 											className={
-												'flex justify-end mr-14 span-AccountPage-textTitleInput'
+												'grid grid-cols-5 grid-flow-col items-center ml-7'
 											}>
-											Email
-										</label>
-										<input className={'ml-4 input-AccountPage-size'} />
-									</div>
-									<div
-										className={
-											'grid grid-cols-5 grid-flow-col items-center ml-7'
-										}>
-										<label
+											<label
+												className={
+													'flex justify-end mr-14 span-AccountPage-textTitleInput'
+												}>
+												Email
+											</label>
+											<input
+												className={'ml-4 input-AccountPage-size'}
+												defaultValue={userInfo.userEmail}
+												onChange={onChange}
+												name={'userEmail'}
+											/>
+										</div>
+										<div
 											className={
-												'flex justify-end mr-14 span-AccountPage-textTitleInput'
+												'grid grid-cols-5 grid-flow-col items-center ml-7'
 											}>
-											Số Điện Thoại
-										</label>
-										<input className={'ml-4 input-AccountPage-size'} />
-									</div>
-									<div
-										className={
-											'grid grid-cols-5 grid-flow-col items-center ml-7'
-										}>
-										<label
+											<label
+												className={
+													'flex justify-end mr-14 span-AccountPage-textTitleInput'
+												}>
+												Số Điện Thoại
+											</label>
+											<input
+												className={'ml-4 input-AccountPage-size'}
+												defaultValue={userInfo.userPhone}
+												onChange={onChange}
+												name={'userPhone'}
+											/>
+										</div>
+										<div
 											className={
-												'flex justify-end mr-14 span-AccountPage-textTitleInput'
+												'grid grid-cols-5 grid-flow-col items-center ml-7'
 											}>
-											Ngày Sinh
-										</label>
-										<input
-											type={'date'}
-											className={'ml-4 input-AccountPage-size '}
-										/>
-									</div>
-									<div
-										className={
-											'grid grid-cols-5 grid-flow-col items-center ml-7'
-										}>
-										<label
+											<label
+												className={
+													'flex justify-end mr-14 span-AccountPage-textTitleInput'
+												}>
+												Ngày Sinh
+											</label>
+											<input
+												type={'date'}
+												className={'ml-4 input-AccountPage-size '}
+												defaultValue={date}
+												name={'userBirthday'}
+												onChange={onChange}
+											/>
+										</div>
+										<div
 											className={
-												'flex justify-end mr-14 span-AccountPage-textTitleInput'
+												'grid grid-cols-5 grid-flow-col items-center ml-7'
 											}>
-											Giới Tính
-										</label>
-										<div className={'grid grid-flow-col gap-8 ml-4'}>
-											<div className={'flex gap-2.5 items-center'}>
-												<input
-													name={'gender'}
-													className={'input-AccountPage-gender'}
-													type={'radio'}
-													checked
-												/>
-												<label className={'span-AccountPage-textTitleInput '}>
-													Nam
-												</label>
-											</div>
-											<div className={'flex gap-2.5 items-center'}>
-												<input
-													name={'gender'}
-													className={'input-AccountPage-gender'}
-													type={'radio'}
-												/>
-												<label className={'span-AccountPage-textTitleInput'}>
-													Nữ
-												</label>
-											</div>
-											<div className={'flex gap-2.5 items-center'}>
-												<input
-													name={'gender'}
-													className={'input-AccountPage-gender'}
-													type={'radio'}
-												/>
-												<label className={'span-AccountPage-textTitleInput'}>
-													Khác
-												</label>
+											<label
+												className={
+													'flex justify-end mr-14 span-AccountPage-textTitleInput'
+												}>
+												Giới Tính
+											</label>
+											<div className={'grid grid-flow-col gap-8 ml-4'}>
+												<div className={'flex gap-2.5 items-center'}>
+													<input
+														className={'input-AccountPage-gender'}
+														type={'radio'}
+														value={'MALE'}
+														checked={gender === 'MALE'}
+														name={'userSex'}
+														onChange={onChange}
+													/>
+													<label className={'span-AccountPage-textTitleInput '}>
+														Nam
+													</label>
+												</div>
+												<div className={'flex gap-2.5 items-center'}>
+													<input
+														className={'input-AccountPage-gender'}
+														type={'radio'}
+														value={'FEMALE'}
+														checked={gender === 'FEMALE'}
+														name={'userSex'}
+														onChange={onChange}
+													/>
+													<label className={'span-AccountPage-textTitleInput'}>
+														Nữ
+													</label>
+												</div>
+												<div className={'flex gap-2.5 items-center'}>
+													<input
+														name={'userSex'}
+														value={'OTHER'}
+														className={'input-AccountPage-gender'}
+														type={'radio'}
+														checked={gender === 'OTHER'}
+														onChange={onChange}
+													/>
+													<label className={'span-AccountPage-textTitleInput'}>
+														Khác
+													</label>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div
-										className={'grid grid-cols-5 grid-flow-col items-center'}>
-										<div className={'col-start-2 col-end-3 ml-10 '}>
-											<button className={'button-AccountPage-save'}>Lưu</button>
+										<div
+											className={'grid grid-cols-5 grid-flow-col items-center'}>
+											<div className={'col-start-2 col-end-3 ml-10 '}>
+												<button className={'button-AccountPage-save'}>
+													Lưu
+												</button>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
+							</form>
 						</div>
 					</div>
 				</div>

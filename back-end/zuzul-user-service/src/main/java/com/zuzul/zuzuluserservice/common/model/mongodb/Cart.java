@@ -18,6 +18,4 @@ public class Cart {
     private String purchaserId;
     private String sellerId;
     private int count;
-    private int originPrice;
-    private int productSales;
 }

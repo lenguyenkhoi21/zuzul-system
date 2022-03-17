@@ -26,5 +26,5 @@ public class Address {
     private String userCity;
     private String detailsAddress;
     private String userId;
-    private List<String> type;
+    private boolean type;
 }

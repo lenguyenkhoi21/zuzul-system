@@ -13,7 +13,10 @@ const CategoryDetail = ({ category, key }) => {
 	return (
 		<>
 			<div key={key} className={'mr-2'}>
-				<Link href={`/category/${categoryId}`}>
+				<Link
+					href={{
+						pathname: `/category/${categoryId}`
+					}}>
 					<a>
 						<div className={'flex flex-col items-center'}>
 							<Image

@@ -4,7 +4,7 @@ import { timeNow } from '../utils/Utils'
 export const USER_ACTION = {
 	ADD_USER: 'ADD_USER',
 	REMOVE_USER: 'REMOVE_USER',
-	LOGIN: 'LOGIN'
+	ADD_USER_COOKIE: 'ADD_USER_COOKIE'
 }
 
 export const UserContext = createContext()
@@ -26,6 +26,9 @@ const Reducer = (state, action) => {
 		case USER_ACTION.ADD_USER:
 			console.log(`${timeNow()} --- [add-user]`)
 			localStorage.setItem('data', JSON.stringify(action.user))
+			return { ...action.user }
+
+		case USER_ACTION.ADD_USER_COOKIE:
 			return { ...action.user }
 
 		default:

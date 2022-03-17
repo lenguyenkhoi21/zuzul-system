@@ -15,5 +15,7 @@ public class LoginPOSTResponse {
     private String access_token;
     private String role;
     private String name;
+    private String fullname;
     private boolean isActivatedShop;
+    private boolean isModifiedProfile;
 }
