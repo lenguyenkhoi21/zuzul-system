@@ -26,7 +26,7 @@ public class GETProductByIDResponse {
     private String prdShortDes;
     private String prdLongDes;
     private List<String> prdImages;
-    private Date prdDateCreate;
+    private long prdDateCreate;
     private int discount;
     private String prdOrigin;
 

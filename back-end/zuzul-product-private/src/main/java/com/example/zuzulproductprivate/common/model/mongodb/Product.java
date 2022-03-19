@@ -37,8 +37,8 @@ public class Product {
     private String currentImage;
     private int prdReact;
     private String prdStatus;
-    private Date prdDateCreate;
-    private Date prdDateExpiry;
+    private long prdDateCreate;
+    private long prdDateExpiry;
     private int prdMonthWarranty;
     private int prdNumberInStorage;
     private int discount;

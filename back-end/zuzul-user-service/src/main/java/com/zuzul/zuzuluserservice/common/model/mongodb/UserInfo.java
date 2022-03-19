@@ -33,4 +33,7 @@ public class UserInfo {
     private boolean userActivated = false;
     @Builder.Default
     private String userShopName = "";
+    @Builder.Default
+    private boolean sendRequest = false;
+    private long sendRequestDate;
 }

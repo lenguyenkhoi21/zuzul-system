@@ -15,21 +15,36 @@ public class CreateAddress {
 
     public POSTCreateAddressResponse createAddress (POSTCreateAddressPayload payload, Principal principal) {
         if (principal.getName().equals(payload.getUserId())) {
-
             String addressId = FunctionalUtils.generateAddressUUID();
-
-            Address address = Address
-                    .builder()
-                    .addressId(addressId)
-                    .userName(payload.getUserName())
-                    .userPhone(payload.getUserPhone())
-                    .userWard(payload.getUserWard())
-                    .userCity(payload.getUserCity())
-                    .userDistinct(payload.getUserDistinct())
-                    .detailsAddress(payload.getDetailsAddress())
-                    .type(payload.isType())
-                    .userId(payload.getUserId())
-                    .build();
+            Address address = null;
+            if (addressRepository.findAllByUserId(payload.getUserId()).size() == 0) {
+                address = Address
+                        .builder()
+                        .addressId(addressId)
+                        .userName(payload.getUserName())
+                        .userPhone(payload.getUserPhone())
+                        .userWard(payload.getUserWard())
+                        .userCity(payload.getUserCity())
+                        .userDistinct(payload.getUserDistinct())
+                        .detailsAddress(payload.getDetailsAddress())
+                        .type(true)
+                        .userId(payload.getUserId())
+                        .build();
+            }
+            else {
+                address = Address
+                        .builder()
+                        .addressId(addressId)
+                        .userName(payload.getUserName())
+                        .userPhone(payload.getUserPhone())
+                        .userWard(payload.getUserWard())
+                        .userCity(payload.getUserCity())
+                        .userDistinct(payload.getUserDistinct())
+                        .detailsAddress(payload.getDetailsAddress())
+                        .type(false)
+                        .userId(payload.getUserId())
+                        .build();
+            }
 
             addressRepository.save(address);
 

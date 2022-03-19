@@ -61,4 +61,6 @@ public class Payload {
     private int prdNumberInStorage;
 
     private double discount;
+
+    private long prdDateCreate;
 }

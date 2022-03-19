@@ -1,23 +1,34 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../../reducer/User.Reducer'
 import { TITLE_ACTION, TitleContext } from '../../../reducer/Title.Reducer'
 import Authentication from '../../../component/common/Authentication'
 import LeftMenuUser from '../../../component/user/settings/LeftMenuUser'
 import UserAccountBackground from '../../../component/common/UserAccountBackground'
 import { API_DOMAIN, API_USER_SERVICE } from '../../../utils/APIUtils'
-import { data } from 'autoprefixer'
-import { router } from 'next/client'
+import { useRouter } from 'next/router'
 
 const SendRequestPage = () => {
 	const userCTX = useContext(UserContext)
 	const titleCTX = useContext(TitleContext)
+	const [render, setRender] = useState({})
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Gửi yêu cầu')
-	}, [])
+	}, [render])
+
+	const [userShopName, setUserShopName] = useState('')
+	const router = useRouter()
+
+	const onChange = e => setUserShopName(e.target.value)
 
 	const requestShop = e => {
 		e.preventDefault()
+
+		const payload = {
+			userShopName: userShopName,
+			//	sendRequest: true,
+			sendRequestDate: Math.floor(Date.now() / 1000)
+		}
 
 		fetch(
 			`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/request_shop/${userCTX.state.userID}`,
@@ -28,7 +39,8 @@ const SendRequestPage = () => {
 					Authorization: `Bearer ${userCTX.state.accessToken}`,
 					Accept: 'application/json',
 					'Content-Type': 'application/json'
-				}
+				},
+				body: JSON.stringify(payload)
 			}
 		)
 			.then(response => {
@@ -38,8 +50,12 @@ const SendRequestPage = () => {
 			})
 			.then(data => {
 				if (data.status === 'SUCCESS') {
-					userCTX.state.isActiveShop = true
-					router.push('/user/settings/account')
+					//					userCTX.state.isActiveShop = true
+					userCTX.state.sendRequest = true
+					setRender({})
+				}
+				if (data.status === 'NO ADDRESS') {
+					router.push('/user/settings/address')
 				}
 			})
 	}
@@ -77,8 +93,13 @@ const SendRequestPage = () => {
 								<hr className={'mt-7 mr-10 ml-10 hr-SendRequest-size'} />
 								<div className={'grid grid-col-1'}>
 									<form onSubmit={requestShop}>
+										Tên cửa hàng:{' '}
+										<input
+											type={'text'}
+											name={'userShopName'}
+											onChange={onChange}
+										/>
 										<div>
-											<input type={'text'}>Tên cửa hàng: </input>
 											<button className={'btn-SendRequest-sendRequest'}>
 												Gửi yêu cầu
 											</button>

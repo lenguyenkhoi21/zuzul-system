@@ -1,14 +1,44 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './ProductCensorShipItem.css'
+import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../utils/Constant'
+import { UserContext } from '../../reducer/User.Reducer'
 
 const ProductCensorShipItem = ({
+	productId,
 	productName,
 	cateName,
 	subName,
 	shopName,
 	number,
-	dateCreate
+	dateCreate,
+	setRender
 }) => {
+	const userCTX = useContext(UserContext)
+
+	const accept = (e, type) => {
+		e.preventDefault()
+		const productId = e.target.name
+
+		fetch(
+			`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/admin/management/product/${type}/${productId}`,
+			{
+				method: 'PUT',
+				mode: 'cors',
+				headers: {
+					Authorization: `Bearer ${userCTX.state.accessToken}`
+				}
+			}
+		)
+			.then(response => response.json())
+			.then(data => {
+				if (data.status === 'SUCCESS') {
+					setRender({})
+				}
+			})
+	}
+
+	//useEffect(() => {}, [render])
+
 	return (
 		<>
 			<tr className={'tr-ProductCensorShipItem-header'}>
@@ -35,13 +65,19 @@ const ProductCensorShipItem = ({
 						<span className={'span-ProductCensorShipItem-space'} />
 						<div>
 							<span className={'span-ProductCensorShipItem-spaceBtn'}>
-								<button className={'button-ProductCensorShipItem-accept'}>
+								<button
+									className={'button-ProductCensorShipItem-accept'}
+									name={productId}
+									onClick={event => accept(event, 'accept')}>
 									{' '}
 									Chấp nhận{' '}
 								</button>
 							</span>
 							<span>
-								<button className={'button-ProductCensorShipItem-cancel'}>
+								<button
+									className={'button-ProductCensorShipItem-cancel'}
+									name={productId}
+									onClick={event => accept(event, 'cancle')}>
 									{' '}
 									Hủy{' '}
 								</button>

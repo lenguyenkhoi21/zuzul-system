@@ -42,9 +42,13 @@ const Authentication = ({
 					userID: data.userID,
 					accessToken: data.access_token,
 					name: data.name,
-					isActiveShop: data.activatedShop
+					isActiveShop: data.activatedShop,
+					sendRequest: data.sendRequest,
+					modifiedProfile: data.modifiedProfile
 				})
-				router.push('/')
+				if (data.modifiedProfile === false)
+					router.push('/user/settings/account')
+				else router.push('/')
 			})
 			.catch(reason => userCTX.removeUser(USER_ACTION.REMOVE_USER))
 	}

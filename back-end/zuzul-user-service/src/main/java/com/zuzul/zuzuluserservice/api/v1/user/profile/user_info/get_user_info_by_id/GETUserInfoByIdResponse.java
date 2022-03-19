@@ -21,4 +21,5 @@ public class GETUserInfoByIdResponse {
     private String userShopName;
     private String userName;
     private String userEmail;
+    private boolean sendRequest;
 }

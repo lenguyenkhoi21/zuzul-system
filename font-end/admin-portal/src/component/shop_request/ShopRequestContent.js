@@ -1,9 +1,51 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './ShopRequestContent.css'
 import ShopRequestItem from './ShopRequestItem'
+import {
+	API_DOMAIN,
+	API_PRODUCT_SERVICE,
+	API_USER_SERVICE
+} from '../../utils/Constant'
+import { UserContext } from '../../reducer/User.Reducer'
 
 const ShopRequestContent = () => {
 	const points = [...Array(50)]
+	const userCTX = useContext(UserContext)
+	const [userInfo, setUserInfo] = useState([])
+	const [render, setRender] = useState({})
+
+	useEffect(() => {
+		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/admin/shop/requestShop`, {
+			method: 'GET',
+			mode: 'cors',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`
+			}
+		})
+			.then(response => (response.status === 200 ? response.json() : response))
+			.then(data => setUserInfo(data))
+	}, [userCTX.state.userID, render])
+
+	const formatDate = date => {
+		let timestamp = date * 1000
+		let date_not_formatted = new Date(timestamp)
+
+		let formatted_string = date_not_formatted.getFullYear() + '-'
+
+		if (date_not_formatted.getMonth() < 9) {
+			formatted_string += '0'
+		}
+		formatted_string += date_not_formatted.getMonth() + 1
+		formatted_string += '-'
+
+		if (date_not_formatted.getDate() < 10) {
+			formatted_string += '0'
+		}
+		formatted_string += date_not_formatted.getDate()
+
+		return formatted_string
+	}
+
 	return (
 		<>
 			<table className={'table-ShopRequestContent'}>
@@ -47,15 +89,18 @@ const ShopRequestContent = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{points.map((value, index) => (
+					{userInfo.map((value, index) => (
 						<React.Fragment key={index}>
 							<ShopRequestItem
-								username={'Lê Nguyên Khôi'}
-								address={{
+								username={value.userFullName}
+								/*address={{
 									road: '40 Phan Chu Trinh, P. Thắng Lợi',
 									city: 'Kon tum'
-								}}
-								date={'23/07/2000'}
+								}}*/
+								address={value.address}
+								date={formatDate(value.sendRequestDate)}
+								setRender={setRender}
+								userId={value.userId}
 							/>
 						</React.Fragment>
 					))}

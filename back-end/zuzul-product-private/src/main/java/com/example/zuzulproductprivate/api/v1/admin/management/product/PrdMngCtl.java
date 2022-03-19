@@ -1,5 +1,7 @@
 package com.example.zuzulproductprivate.api.v1.admin.management.product;
 
+import com.example.zuzulproductprivate.api.v1.admin.management.product.accept_product.AcceptProduct;
+import com.example.zuzulproductprivate.api.v1.admin.management.product.accept_product.PUTAcceptProductResponse;
 import com.example.zuzulproductprivate.api.v1.admin.management.product.get_all_registered_product.GetAllRegisteredProduct;
 import com.example.zuzulproductprivate.api.v1.admin.management.product.get_all_registered_product.ProductsModel;
 import com.example.zuzulproductprivate.api.v1.admin.management.product.prd_mng.Payload;
@@ -20,6 +22,8 @@ import java.util.List;
 public class PrdMngCtl {
     private final UpdatePrd updatePrd;
     private final GetAllRegisteredProduct getAllRegisteredProduct;
+    private final AcceptProduct acceptProduct;
+
 
     @PutMapping(value = "/admin/management/product",
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -28,7 +32,7 @@ public class PrdMngCtl {
         return updatePrd.updateProduct(payload);
     }
 
-    @GetMapping(value = "/admin/managment/product/registered/{userId}")
+    @GetMapping(value = "/admin/management/product/registered/{userId}")
     public List<ProductsModel> getAllRegisteredProduct (@PathVariable("userId") String userId, Principal principal) {
         try {
             return getAllRegisteredProduct.getAllRegisteredProduct(userId, principal);
@@ -37,5 +41,18 @@ public class PrdMngCtl {
             exception.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    @PutMapping("/admin/management/product/{type}/{productId}")
+    public PUTAcceptProductResponse accept (@PathVariable("type") String type,
+                                            @PathVariable("productId") String productId,
+                                            Principal principal) {
+        try {
+            return acceptProduct.acceptProduct(type, productId, principal);
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return PUTAcceptProductResponse.builder().status("FAIL").build();
     }
 }
