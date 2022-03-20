@@ -29,6 +29,7 @@ public class GetUserInfoById {
                     .userSex(userInfo.getUserSex())
                     .userShopName(userInfo.getUserShopName())
                     .userEmail(userInfo.getUserEmail())
+                    .sendRequest(userInfo.isSendRequest())
                     .build();
         }
         return GETUserInfoByIdResponse

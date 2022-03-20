@@ -18,4 +18,5 @@ public class LoginPOSTResponse {
     private String fullname;
     private boolean isActivatedShop;
     private boolean isModifiedProfile;
+    private boolean sendRequest;
 }

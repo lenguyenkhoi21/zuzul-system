@@ -14,6 +14,8 @@ const UserInitState = {
 	name: null,
 	access_token: null,
 	isActiveShop: false,
+	sendRequest: false,
+	modifiedProfile: false,
 	role: null
 }
 

@@ -1,7 +1,36 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './ShopRequestItem.css'
+import {
+	API_DOMAIN,
+	API_PRODUCT_SERVICE,
+	API_USER_SERVICE
+} from '../../utils/Constant'
+import { UserContext } from '../../reducer/User.Reducer'
 
-const ShopRequestItem = ({ username, address, date }) => {
+const ShopRequestItem = ({ username, address, date, setRender, userId }) => {
+	const userCTX = useContext(UserContext)
+	const accept = (e, type) => {
+		e.preventDefault()
+		const productId = e.target.name
+
+		fetch(
+			`${API_DOMAIN}/${API_USER_SERVICE}/v1/admin/shop/${type}/${e.target.name}`,
+			{
+				method: 'PUT',
+				mode: 'cors',
+				headers: {
+					Authorization: `Bearer ${userCTX.state.accessToken}`
+				}
+			}
+		)
+			.then(response => response.json())
+			.then(data => {
+				if (data.status === 'SUCCESS') {
+					setRender({})
+				}
+			})
+	}
+
 	return (
 		<>
 			<tr className={'tr-ShopRequestItem-header'}>
@@ -22,8 +51,8 @@ const ShopRequestItem = ({ username, address, date }) => {
 					<div className={'d-flex align-items-center justify-content-center'}>
 						<span className={'span-ShopRequestItem-space'} />
 						<div>
-							<div> {address.road} </div>
-							<div> {address.city} </div>
+							<div> {address} </div>
+							{/*<div> {address.city} </div>*/}
 						</div>
 					</div>
 				</td>
@@ -38,13 +67,19 @@ const ShopRequestItem = ({ username, address, date }) => {
 						<span className={'span-ShopRequestItem-space'} />
 						<div>
 							<span className={'span-ShopRequestItem-spaceBtn'}>
-								<button className={'button-ShopRequestItem-accept'}>
+								<button
+									className={'button-ShopRequestItem-accept'}
+									name={userId}
+									onClick={event => accept(event, 'accept')}>
 									{' '}
 									Chấp nhận{' '}
 								</button>
 							</span>
 							<span>
-								<button className={'button-ShopRequestItem-cancel'}>
+								<button
+									className={'button-ShopRequestItem-cancel'}
+									name={userId}
+									onClick={event => accept(event, 'reject')}>
 									{' '}
 									Hủy{' '}
 								</button>

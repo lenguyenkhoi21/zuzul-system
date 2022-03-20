@@ -11,10 +11,14 @@ import com.zuzul.zuzuluserservice.api.v1.user.cart.get_all_items.GetAllItems;
 import com.zuzul.zuzuluserservice.api.v1.user.cart.remove_item.DELETEItemInCartPayload;
 import com.zuzul.zuzuluserservice.api.v1.user.cart.remove_item.DELETEItemInCartResponse;
 import com.zuzul.zuzuluserservice.api.v1.user.cart.remove_item.DeleteItem;
+import com.zuzul.zuzuluserservice.api.v1.user.profile.shop.shop_request.PUTRequestShopPayload;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.shop.shop_request.PUTRequestShopResponse;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.shop.shop_request.RequestShop;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.user_info.get_user_info_by_id.GETUserInfoByIdResponse;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.user_info.get_user_info_by_id.GetUserInfoById;
+import com.zuzul.zuzuluserservice.api.v1.user.profile.user_info.get_user_info_by_prd.GETUserInfoByPrdPayload;
+import com.zuzul.zuzuluserservice.api.v1.user.profile.user_info.get_user_info_by_prd.GETUserInfoByPrdResponse;
+import com.zuzul.zuzuluserservice.api.v1.user.profile.user_info.get_user_info_by_prd.GetUserInfoByPrd;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.user_info.update_user_info.PUTUpdateProfilePayload;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.user_info.update_user_info.PUTUpdateProfileResponse;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.user_info.update_user_info.UpdateProfile;
@@ -23,7 +27,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.Path;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,6 +43,7 @@ public class UserController {
     private final DeleteItem deleteItem;
     private final GetUserInfoById getUserInfoById;
     private final RequestShop requestShop;
+    private final GetUserInfoByPrd getUserInfoByPrd;
 
     @RolesAllowed("USER")
     @PutMapping("/user/profile")
@@ -81,13 +89,25 @@ public class UserController {
 
     @RolesAllowed("USER")
     @PutMapping("/user/profile/request_shop/{userId}")
-    public PUTRequestShopResponse requestShop (@PathVariable("userId") String userId, Principal principal) {
+    public PUTRequestShopResponse requestShop (@PathVariable("userId") String userId, @RequestBody PUTRequestShopPayload payload, Principal principal) {
         try {
-            return requestShop.requestShop(userId, principal);
+            return requestShop.requestShop(userId, payload, principal);
         }
         catch (Exception exception) {
             exception.printStackTrace();
         }
         return PUTRequestShopResponse.builder().build();
+    }
+
+    @RolesAllowed("USER")
+    @PostMapping("/user/userInfoByPrd/{adminId}")
+    public GETUserInfoByPrdResponse getInfo (@PathVariable("adminId") String adminId, @RequestBody List<String> userIds, Principal principal) {
+        try {
+            return getUserInfoByPrd.getUserInfoByPrd(adminId, userIds, principal);
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return GETUserInfoByPrdResponse.builder().build();
     }
 }

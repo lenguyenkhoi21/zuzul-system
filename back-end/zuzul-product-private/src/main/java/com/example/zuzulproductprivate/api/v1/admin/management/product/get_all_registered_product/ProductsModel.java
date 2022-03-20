@@ -13,9 +13,11 @@ import java.util.Date;
 @AllArgsConstructor
 public class ProductsModel {
     private String userId;
+    private String productId;
     private String userShopName;
     private int count;
     private String categoryName;
     private String subCategoryName;
-    private Date prdDateCreate;
+    private long prdDateCreate;
+    private String productName;
 }

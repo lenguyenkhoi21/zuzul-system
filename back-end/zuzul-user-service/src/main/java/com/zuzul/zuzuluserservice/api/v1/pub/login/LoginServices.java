@@ -54,6 +54,7 @@ public class LoginServices {
                         .fullname(isUpdatedUser.getUserFullName())
                         .isActivatedShop(isUpdatedUser.isUserActivated())
                         .isModifiedProfile(true)
+                        .sendRequest(isUpdatedUser.isSendRequest())
                         .build();
             }
             else {
@@ -66,6 +67,7 @@ public class LoginServices {
                         .fullname(null)
                         .isActivatedShop(false)
                         .isModifiedProfile(false)
+                        .sendRequest(false)
                         .build();
             }
         } else {

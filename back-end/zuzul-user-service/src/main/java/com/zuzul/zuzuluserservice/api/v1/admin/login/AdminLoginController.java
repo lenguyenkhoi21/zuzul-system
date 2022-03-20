@@ -7,10 +7,7 @@ import com.zuzul.zuzuluserservice.common.usercontext.UserContext;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(Constant.rootPathV1)
 @RestController
@@ -20,7 +17,7 @@ public class AdminLoginController {
     private final LoginAdmin loginAdmin;
     private final Logger logger = LoggerFactory.getLogger(LoginControllers.class);
 
-    @GetMapping("/admin/login")
+    @PostMapping("/admin/login")
     public POSTLoginAdminResponse login(@RequestBody POSTUserPayload payload) {
         logger.info("CorrelationID - " +
                 UserContext.getCorrelationId() +

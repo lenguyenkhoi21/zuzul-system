@@ -16,7 +16,7 @@ const AccountPage = () => {
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
 
 	const [userInfo, setUserInfo] = useState({
-		userId: '',
+		userId: userCTX.state.userID,
 		userFullName: '',
 		userPhone: '',
 		userBirthday: '',
@@ -79,15 +79,27 @@ const AccountPage = () => {
 			)
 				.then(response => response.json())
 				.then(data => {
-					setDate(formatDate(data.userBirthday))
-					setGender(data.userSex)
-					setUserInfo(data)
+					if (data.status !== 403) {
+						setDate(formatDate(data.userBirthday))
+						setGender(data.userSex)
+						setUserInfo(data)
+					}
 				})
 		}
 	}, [userCTX.state.userID])
 
 	const updateUser = e => {
 		e.preventDefault()
+
+		const payload = {
+			userId: userCTX.state.userID,
+			userFullName: userInfo.userFullName,
+			userPhone: userInfo.userPhone,
+			userBirthday: userInfo.userBirthday,
+			userSex: userInfo.userSex,
+			userEmail: userInfo.userEmail,
+			userName: userInfo.userFullName
+		}
 
 		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile`, {
 			method: 'PUT',
@@ -97,7 +109,7 @@ const AccountPage = () => {
 				Accept: 'application/json',
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(userInfo)
+			body: JSON.stringify(payload)
 		})
 			.then(response => {
 				if (response.status === 200) {
