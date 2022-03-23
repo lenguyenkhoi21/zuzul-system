@@ -75,7 +75,7 @@ public class CategoryCtr {
 
     @RolesAllowed("ADMIN")
     @PutMapping(value = "/admin/management/category/disable",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public PUTDisableCategoryResponse disableCategory(@RequestBody PUTDisableCategoryPayload payload,
                                                       Principal principal) {
