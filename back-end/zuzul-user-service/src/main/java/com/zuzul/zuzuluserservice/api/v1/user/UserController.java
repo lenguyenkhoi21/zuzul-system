@@ -71,7 +71,7 @@ public class UserController {
 
     @RolesAllowed("USER")
     @DeleteMapping("/user/cart")
-    public DELETEItemInCartResponse deleteItem (DELETEItemInCartPayload payload, Principal principal) {
+    public DELETEItemInCartResponse deleteItem (@RequestBody DELETEItemInCartPayload payload, Principal principal) {
         return deleteItem.deleteItemInCart(payload, principal);
     }
 
