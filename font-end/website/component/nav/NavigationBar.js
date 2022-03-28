@@ -63,7 +63,7 @@ const NavigationBar = () => {
 						</div>
 					</div>
 					<div className={'h-auto'}>
-						<Link href={'/'}>
+						<Link href={'/cart'}>
 							<a>
 								<div>
 									<Image
