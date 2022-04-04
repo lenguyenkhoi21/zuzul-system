@@ -51,6 +51,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         super.configure(http);
         http.authorizeRequests()
             .antMatchers(Constant.rootPathV1 + "/pub/**").permitAll()
+                .antMatchers(Constant.rootPathV1 + "/user/**").permitAll()
             .antMatchers(HttpMethod.OPTIONS).permitAll()
             .anyRequest().authenticated()
             .and().csrf().disable();

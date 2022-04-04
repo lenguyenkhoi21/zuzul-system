@@ -135,14 +135,14 @@ const LeftMenuUser = () => {
 								</div>
 							</div>
 							<ul className={'ml-11'}>
-								<Link href={'/product/listProduct'}>
+								<Link href={'/user/settings/listProduct'}>
 									<li>
 										<button className={'div-LeftMenuUser-subHeader'}>
 											Tất cả sản phẩm
 										</button>
 									</li>
 								</Link>
-								<Link href={'/product/addNewProduct'}>
+								<Link href={'/user/settings/addNewProduct'}>
 									<li>
 										<button className={'div-LeftMenuUser-subHeader'}>
 											Thêm sản phẩm

@@ -17,6 +17,13 @@ public class AddItemToCart {
             //Kiểm tra xem product này đã nằm trong cart chưa
             Cart checkCart = cartRepository.findCartByPurchaserIdAndProductId(payload.getPurchaserId(), payload.getProductId());
 
+            if (payload.getPurchaserId().equals(payload.getSellerId())) {
+                return POSTItemToCartResponse
+                        .builder()
+                        .status("FAIL")
+                        .build();
+            }
+
             //Chưa thì thêm vào
             if (checkCart == null) {
                 Cart cart = Cart

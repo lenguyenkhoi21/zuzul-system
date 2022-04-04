@@ -1,24 +1,41 @@
-import React, { useContext, useEffect } from 'react'
-import { UserContext } from '../../reducer/User.Reducer'
-import { TITLE_ACTION, TitleContext } from '../../reducer/Title.Reducer'
+import React, { useContext, useEffect, useState } from 'react'
+import { UserContext } from '../../../reducer/User.Reducer'
+import { TITLE_ACTION, TitleContext } from '../../../reducer/Title.Reducer'
 import {
 	LEFT_MENU_USER_ACTION,
 	LeftMenuUserContext
-} from '../../reducer/LeftMenuUser.Reducer'
-import Authentication from '../../component/common/Authentication'
-import LeftMenuUser from '../../component/user/settings/LeftMenuUser'
-import UserAccountBackground from '../../component/common/UserAccountBackground'
+} from '../../../reducer/LeftMenuUser.Reducer'
+import Authentication from '../../../component/common/Authentication'
+import LeftMenuUser from '../../../component/user/settings/LeftMenuUser'
+import UserAccountBackground from '../../../component/common/UserAccountBackground'
 import Link from 'next/link'
+import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../../utils/APIUtils'
 
 const ListProduct = () => {
 	const userCTX = useContext(UserContext)
 	const titleCTX = useContext(TitleContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
 
+	const [product, setProduct] = useState([])
+
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Tất cả sản phẩm')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.RESET)
-	}, [])
+		if (userCTX.state.userID !== null) {
+			fetch(
+				`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/user/product/${userCTX.state.userID}/all`,
+				{
+					method: 'GET',
+					mode: 'cors',
+					headers: {
+						Authorization: `Bearer ${userCTX.state.accessToken}`
+					}
+				}
+			)
+				.then(response => response.json())
+				.then(data => setProduct(data))
+		}
+	}, [userCTX.state.userID])
 
 	if (userCTX.state.userID === null) {
 		return (
@@ -65,6 +82,7 @@ const ListProduct = () => {
 												<tr>
 													<th width={245}>Tên Sản Phẩm</th>
 													<th width={139}>Danh Mục</th>
+													<th width={139}>Danh Mục con</th>
 													<th width={82}>Giá</th>
 													<th width={90}>Kho Hàng</th>
 													<th width={70}>Đã Bán</th>
@@ -72,52 +90,35 @@ const ListProduct = () => {
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>Tâm Lý Học - Phác Họa Chân Dung Kẻ Phạm Tội</td>
-													<td>Sách</td>
-													<td>120.000 đ</td>
-													<td>10</td>
-													<td>1</td>
-													<td>
-														<div className={'flex gap-2'}>
-															<div>
-																<Link href={'/product/editProduct'}>
-																	<button className={'btn-ListProduct-edit'}>
-																		Sửa
-																	</button>
-																</Link>
-															</div>
-															<div>
-																<button className={'btn-ListProduct-edit'}>
-																	Xóa
-																</button>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>Tâm Lý Học - Phác Họa Chân Dung Kẻ Phạm Tội</td>
-													<td>Sách</td>
-													<td>120.000 đ</td>
-													<td>10</td>
-													<td>1</td>
-													<td>
-														<div className={'flex gap-2'}>
-															<div>
-																<Link href={'/product/editProduct'}>
-																	<button className={'btn-ListProduct-edit'}>
-																		Sửa
-																	</button>
-																</Link>
-															</div>
-															<div>
-																<button className={'btn-ListProduct-edit'}>
-																	Xóa
-																</button>
-															</div>
-														</div>
-													</td>
-												</tr>
+												{product.map((value, key) => (
+													<React.Fragment key={key}>
+														<tr>
+															<td>{value.productName}</td>
+															<td>{value.categoryName}</td>
+															<td>{value.subCategoryName}</td>
+															<td>{value.originPrice}</td>
+															<td>{value.numberInStorage}</td>
+															<td>{value.sales}</td>
+															<td>
+																<div className={'flex gap-2'}>
+																	<div>
+																		<Link href={'/product/editProduct'}>
+																			<button
+																				className={'btn-ListProduct-edit'}>
+																				Sửa
+																			</button>
+																		</Link>
+																	</div>
+																	<div>
+																		<button className={'btn-ListProduct-edit'}>
+																			Xóa
+																		</button>
+																	</div>
+																</div>
+															</td>
+														</tr>
+													</React.Fragment>
+												))}
 											</tbody>
 										</table>
 									</div>
