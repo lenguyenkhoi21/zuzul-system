@@ -4,6 +4,8 @@ import com.example.zuzulproductprivate.api.v1.user.product.change_prd_number_aft
 import com.example.zuzulproductprivate.api.v1.user.product.change_prd_number_after_buying.Details;
 import com.example.zuzulproductprivate.api.v1.user.product.change_prd_number_after_buying.PUTChangeNumberInStoragePayload;
 import com.example.zuzulproductprivate.api.v1.user.product.change_prd_number_after_buying.PUTNumberInStorageResponse;
+import com.example.zuzulproductprivate.api.v1.user.product.get_all_products.GetAllProducts;
+import com.example.zuzulproductprivate.api.v1.user.product.get_all_products.ProductsModel;
 import com.example.zuzulproductprivate.api.v1.user.product.post_create_new.CreateNewService;
 import com.example.zuzulproductprivate.api.v1.user.product.post_create_new.Payload;
 import com.example.zuzulproductprivate.api.v1.user.product.post_create_new.Response;
@@ -17,6 +19,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,6 +28,7 @@ import java.util.List;
 public class ProductController {
     private final CreateNewService createNewService;
     private final ChangeNumberInStorage changeNumberInStorage;
+    private final GetAllProducts getAllProducts;
 
     @RolesAllowed("USER")
     @PostMapping(value = "/user/product",
@@ -54,5 +58,17 @@ public class ProductController {
             exception.printStackTrace();
         }
         return "FAIL";
+    }
+
+    @RolesAllowed("USER")
+    @GetMapping("/user/product/{userId}/all")
+    public List<ProductsModel> getAllProduct (@PathVariable("userId") String userId, Principal principal) {
+        try {
+            return getAllProducts.getAllProductsforUser(userId, principal);
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }

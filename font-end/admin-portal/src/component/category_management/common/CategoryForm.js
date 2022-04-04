@@ -25,7 +25,7 @@ const CategoryForm = ({ title }) => {
 		formData.append('categoryName', category.categoryName)
 		formData.append('categoryDescription', category.categoryDescription)
 		formData.append('cat_image', picture)
-		console.log(formData)
+		console.log(picture)
 		fetch(`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/admin/management/category`, {
 			method: 'POST',
 			headers: {
