@@ -1,4 +1,4 @@
-package com.zuzul.zuzuluserservice.api.v1.user.cart.get_all_items;
+package com.zuzul.zuzuluserservice.api.v1.user.cart;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,5 +16,5 @@ public class CartModel {
     private String sellerId;
     private int count;
     private int originPrice;
-    private int productSales;
+    private int discount;
 }

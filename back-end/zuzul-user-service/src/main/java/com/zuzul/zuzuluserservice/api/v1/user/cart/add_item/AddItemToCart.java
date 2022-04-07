@@ -1,5 +1,6 @@
 package com.zuzul.zuzuluserservice.api.v1.user.cart.add_item;
 
+import com.zuzul.zuzuluserservice.api.v1.user.cart.CartResponse;
 import com.zuzul.zuzuluserservice.common.model.mongodb.Cart;
 import com.zuzul.zuzuluserservice.common.repo.mongodb.CartRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,15 +13,15 @@ import java.security.Principal;
 public class AddItemToCart {
     private final CartRepository cartRepository;
 
-    public POSTItemToCartResponse addItemToCart (POSTItemToCartPayload payload, Principal principal) {
+    public CartResponse addItemToCart (POSTItemToCartPayload payload, Principal principal) {
         if (principal.getName().equals(payload.getPurchaserId())) {
             //Kiểm tra xem product này đã nằm trong cart chưa
             Cart checkCart = cartRepository.findCartByPurchaserIdAndProductId(payload.getPurchaserId(), payload.getProductId());
 
             if (payload.getPurchaserId().equals(payload.getSellerId())) {
-                return POSTItemToCartResponse
+                return CartResponse
                         .builder()
-                        .status("FAIL")
+                        .alert(true)
                         .build();
             }
 
@@ -37,9 +38,9 @@ public class AddItemToCart {
 
                 cartRepository.save(cart);
 
-                return POSTItemToCartResponse
+                return CartResponse
                         .builder()
-                        .status("SUCCESS")
+                        .alert(false)
                         .build();
             }
             //Đã cò thì count cũ + count mới
@@ -56,17 +57,17 @@ public class AddItemToCart {
 
                 cartRepository.save(cart);
 
-                return POSTItemToCartResponse
+                return CartResponse
                         .builder()
-                        .status("SUCCESS")
+                        .alert(false)
                         .build();
             }
 
         }
 
-        return POSTItemToCartResponse
+        return CartResponse
                 .builder()
-                .status("FAIL")
+                .alert(false)
                 .build();
     }
 }

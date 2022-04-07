@@ -1,22 +1,18 @@
 package com.zuzul.zuzuluserservice.api.v1.user;
 
+import com.zuzul.zuzuluserservice.api.v1.user.cart.CartResponse;
 import com.zuzul.zuzuluserservice.api.v1.user.cart.add_item.AddItemToCart;
 import com.zuzul.zuzuluserservice.api.v1.user.cart.add_item.POSTItemToCartPayload;
-import com.zuzul.zuzuluserservice.api.v1.user.cart.add_item.POSTItemToCartResponse;
 import com.zuzul.zuzuluserservice.api.v1.user.cart.change_number_of_items.ChangeNumberItems;
 import com.zuzul.zuzuluserservice.api.v1.user.cart.change_number_of_items.PUTNumberItemsPayload;
-import com.zuzul.zuzuluserservice.api.v1.user.cart.change_number_of_items.PUTNumberItemsResponse;
-import com.zuzul.zuzuluserservice.api.v1.user.cart.get_all_items.GETAllItemsResponse;
 import com.zuzul.zuzuluserservice.api.v1.user.cart.get_all_items.GetAllItems;
 import com.zuzul.zuzuluserservice.api.v1.user.cart.remove_item.DELETEItemInCartPayload;
-import com.zuzul.zuzuluserservice.api.v1.user.cart.remove_item.DELETEItemInCartResponse;
 import com.zuzul.zuzuluserservice.api.v1.user.cart.remove_item.DeleteItem;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.shop.shop_request.PUTRequestShopPayload;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.shop.shop_request.PUTRequestShopResponse;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.shop.shop_request.RequestShop;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.user_info.get_user_info_by_id.GETUserInfoByIdResponse;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.user_info.get_user_info_by_id.GetUserInfoById;
-import com.zuzul.zuzuluserservice.api.v1.user.profile.user_info.get_user_info_by_prd.GETUserInfoByPrdPayload;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.user_info.get_user_info_by_prd.GETUserInfoByPrdResponse;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.user_info.get_user_info_by_prd.GetUserInfoByPrd;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.user_info.update_user_info.PUTUpdateProfilePayload;
@@ -27,9 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.Path;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -53,25 +47,25 @@ public class UserController {
 
     @RolesAllowed("USER")
     @PostMapping("/user/cart")
-    public POSTItemToCartResponse addItemToCart (@RequestBody POSTItemToCartPayload payload, Principal principal) {
+    public CartResponse addItemToCart (@RequestBody POSTItemToCartPayload payload, Principal principal) {
         return addItemToCart.addItemToCart(payload, principal);
     }
 
     @RolesAllowed("USER")
     @PutMapping("/user/cart")
-    public PUTNumberItemsResponse changeNumberItems (@RequestBody PUTNumberItemsPayload payload, Principal principal) {
+    public CartResponse changeNumberItems (@RequestBody PUTNumberItemsPayload payload, Principal principal) {
         return changeNumberItems.changeNumberItems(payload, principal);
     }
 
     @RolesAllowed("USER")
     @GetMapping("/user/{userId}/cart")
-    public GETAllItemsResponse getAllItems (@PathVariable("userId") String userId, Principal principal) {
+    public CartResponse getAllItems (@PathVariable("userId") String userId, Principal principal) {
         return getAllItems.getAllItemsInCart(userId, principal);
     }
 
     @RolesAllowed("USER")
     @DeleteMapping("/user/cart")
-    public DELETEItemInCartResponse deleteItem (@RequestBody DELETEItemInCartPayload payload, Principal principal) {
+    public CartResponse deleteItem (@RequestBody DELETEItemInCartPayload payload, Principal principal) {
         return deleteItem.deleteItemInCart(payload, principal);
     }
 
