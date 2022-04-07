@@ -4,6 +4,8 @@ import { imageLoader, timeNow } from '../../utils/Utils'
 import Image from 'next/image'
 import { CartContext } from '../../reducer/Cart.Reducer'
 import { UserContext } from '../../reducer/User.Reducer'
+import { API_DOMAIN, API_USER_SERVICE } from '../../utils/APIUtils'
+import {useRouter} from "next/router";
 
 const ProductShort = ({ product }) => {
 	console.log(
@@ -13,9 +15,11 @@ const ProductShort = ({ product }) => {
 	const cartCTX = useContext(CartContext)
 	const userCTX = useContext(UserContext)
 
+  const router = useRouter()
+
 	const onClickHandle = e => {
 		e.preventDefault()
-		if (userCTX.state.userID !== null && userCTX.state.userID !== '') {
+		/*if (userCTX.state.userID !== null && userCTX.state.userID !== '') {
 			const socket = cartCTX.state.socket
 			if (socket !== null) {
 				socket.emit('synchronization-cart', {
@@ -25,7 +29,32 @@ const ProductShort = ({ product }) => {
 					type: 'INCREMENT'
 				})
 			}
+		}*/
+		//TODO set payload
+		const payload = {
+			productId: product.prdId,
+			purchaserId: userCTX.state.userID,
+			sellerId: product.prdUserId,
+			count: 1
 		}
+
+		//TODO fetch POST cart
+		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/cart`, {
+			method: 'POST',
+			mode: 'cors',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`,
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(payload)
+		})
+			.then(response => response.json())
+			.then(data => {
+        if (data.alert === false) {
+          router.push('/cart')
+        }
+      })
 	}
 	return (
 		<>
@@ -51,18 +80,21 @@ const ProductShort = ({ product }) => {
 						</p>
 						<div className={''}>
 							<p className={'float-left font-poppins p-ProductShort-price'}>
-								{' '}
-								{product.prdPriceOrigin}{' '}
+								{product.prdPriceOrigin}
 							</p>
 							{/* eslint-disable-next-line tailwindcss/no-custom-classname */}
-							<button
-								onClick={e => onClickHandle(e)}
-								className={
-									'float-right bg-navbar font-poppins btn-ProductShort'
-								}>
-								{' '}
-								Mua ngay{' '}
-							</button>
+              <Link href={'/cart'}>
+                <div>
+                  <button
+                    onClick={e => onClickHandle(e)}
+                    name={product.prdId}
+                    className={
+                      'float-right bg-navbar font-poppins btn-ProductShort'
+                    }>
+                    Mua ngay
+                  </button>
+                </div>
+              </Link>
 							<div className={'clear-both'} />
 						</div>
 					</a>

@@ -140,25 +140,37 @@ const AddAddressFormPage = () => {
 									</div>
 								</div>
 
-								<div className={'grid gap-5 justify-center mt-6 mr-9'}>
-									<div className={'flex item-center'}>
-										<label className={'ml-2.5'}>Đặt làm địa chỉ mặc định</label>
-										<input
-											className={'input-AddAddressForm-radioBtn'}
-											name={'type'}
-											type={'radio'}
-											value={'YES'}
-											onChange={onChange}
-										/>
-										Có
-										<input
-											className={'input-AddAddressForm-radioBtn'}
-											name={'type'}
-											type={'radio'}
-											value={'NO'}
-											onChange={onChange}
-										/>
-										Không
+								<div className={'flex justify-center mt-6'}>
+									<div className={'flex gap-4'}>
+										<div>
+											<label className={'ml-24'}>
+												Đặt làm địa chỉ mặc định
+											</label>
+										</div>
+										<div className={'flex gap-1 item-center'}>
+											<input
+												className={'input-AddAddressForm-radioBtn'}
+												name={'type'}
+												type={'radio'}
+												value={'YES'}
+												onChange={onChange}
+											/>
+											<label>Có</label>
+										</div>
+										<div className={'flex gap-1 item-center'}>
+											<div>
+												<input
+													className={'input-AddAddressForm-radioBtn'}
+													name={'type'}
+													type={'radio'}
+													value={'NO'}
+													onChange={onChange}
+												/>
+											</div>
+											<div>
+												<label>Không</label>
+											</div>
+										</div>
 									</div>
 									{/*									<div className={'flex item-center'}>
 										<input
@@ -236,6 +248,8 @@ const AddAddressFormPage = () => {
 						border: 1px solid #d1d1d1;
 						box-sizing: border-box;
 						border-radius: 12px;
+						text-indent: 10px;
+						cursor: pointer;
 					}
 					.input-AddAddressForm-name {
 						width: 400px;
@@ -246,6 +260,8 @@ const AddAddressFormPage = () => {
 						border: 1px solid #d1d1d1;
 						box-sizing: border-box;
 						border-radius: 12px;
+						text-indent: 10px;
+						cursor: pointer;
 					}
 					.input-AddAddressForm-city {
 						width: 160px;
@@ -255,6 +271,8 @@ const AddAddressFormPage = () => {
 						border: 1px solid #d1d1d1;
 						box-sizing: border-box;
 						border-radius: 12px;
+						text-indent: 10px;
+						cursor: pointer;
 					}
 					.input-AddAddressForm-district {
 						width: 220px;
@@ -264,6 +282,8 @@ const AddAddressFormPage = () => {
 						border: 1px solid #d1d1d1;
 						box-sizing: border-box;
 						border-radius: 12px;
+						text-indent: 10px;
+						cursor: pointer;
 					}
 					.div-AddAddressForm-marginPhone {
 						margin-left: 43px;
@@ -283,6 +303,7 @@ const AddAddressFormPage = () => {
 						background: #ffffff;
 
 						border: 1.5px solid #d1d1d1;
+						cursor: pointer;
 					}
 					.btn-AddAddressForm-back {
 						width: 110px;

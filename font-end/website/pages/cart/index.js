@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../reducer/User.Reducer'
 import { TITLE_ACTION, TitleContext } from '../../reducer/Title.Reducer'
 import {
@@ -8,16 +8,100 @@ import {
 import Link from 'next/link'
 import Image from 'next/image'
 import Authentication from '../../component/common/Authentication'
+import { API_DOMAIN, API_USER_SERVICE } from '../../utils/APIUtils'
 
 const CartPage = () => {
 	const userCTX = useContext(UserContext)
 	const titleCTX = useContext(TitleContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
 
+	const [cart, setCart] = useState([])
+  const [total,setTotal] = useState(0)
+
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Giỏ Hàng')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.RESET)
-	}, [])
+
+		if (userCTX.state.userID !== null) {
+			fetch(
+				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/${userCTX.state.userID}/cart`,
+				{
+					method: 'GET',
+					mode: 'cors',
+					headers: {
+						Authorization: `Bearer ${userCTX.state.accessToken}`
+					}
+				}
+			)
+				.then(response => {
+					if (response.status === 200) return response.json()
+				})
+				.then(data => {
+					console.dir(data)
+					setCart(data.cartModelList)
+          setTotal(data.totalMoney)
+				})
+		}
+	}, [userCTX.state.userID])
+
+  const changeNumber = (e,productId,purchaserId) => {
+    e.preventDefault()
+
+    let payload = {
+      purchaserId: purchaserId,
+      productId: productId,
+      count : e.target.value
+    }
+    // api change number card
+    fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/cart`, {
+      method: 'PUT',
+      mode: 'cors',
+      headers: {
+        Authorization: `Bearer ${userCTX.state.accessToken}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(response => {
+        if (response.status === 200) {
+          return response.json()
+        }
+      })
+      .then(data => {
+        setCart(data.cartModelList)
+        setTotal(data.totalMoney)
+      })
+  }
+
+	const deleteProductCart = (e, purchaserId, productId) => {
+		e.preventDefault()
+
+		let payload = {
+			purchaserId: purchaserId,
+			productId: productId
+		}
+
+		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/cart`, {
+			method: 'DELETE',
+			mode: 'cors',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`,
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(payload)
+		})
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				}
+			})
+			.then(data => {
+        console.log(data)
+        setCart(data.cartModelList)
+			})
+	}
 	if (userCTX.state.userID === null) {
 		return (
 			<>
@@ -31,19 +115,19 @@ const CartPage = () => {
 	} else {
 		return (
 			<>
-				<div className={'grid px-330 div-CheckoutPage-container'}>
-					<div className={'flex div-CheckoutPage-homeText'}>
+				<div className={'grid px-330 div-CartPage-container'}>
+					<div className={'flex div-CartPage-homeText'}>
 						<div>
-							<p className={'p-CheckoutPage-subHeader'}>Trang chủ</p>
+							<p className={'p-CartPage-subHeader'}>Trang chủ</p>
 						</div>
 						<div>
-							<p className={'mr-2 ml-2 p-CheckoutPage-subHeader'}>/</p>
+							<p className={'mr-2 ml-2 p-CartPage-subHeader'}>/</p>
 						</div>
-						<div>
-							<p className={'p-CheckoutPage-textProduct'}>Giỏ Hàng</p>
-						</div>
+            <div>
+              <p className={'p-CartPage-textProduct'}>Giỏ hàng</p>
+            </div>
 					</div>
-					<div className={'div-CheckoutPage-formSize'}>
+					<div className={'div-CartPage-formSize'}>
 						<div className={'mt-10 ml-10'}>
 							<p className={'span-ListProduct-textTitle'}>Giỏ Hàng</p>
 						</div>
@@ -61,96 +145,47 @@ const CartPage = () => {
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>
-												<div>
-													<Image
-														width={165}
-														height={98}
-														src={'/png/userImage.png'}
-													/>
-												</div>
-											</td>
-											<td>Tâm Lý Học - Phác Họa Chân Dung Kẻ Phạm Tội</td>
-											<td>120.000 đ</td>
-											<td>
-												<div>
-													<input
-														className={'input-CartPage-amount'}
-														min={1}
-														type='number'
-													/>
-												</div>
-											</td>
-											<td>
-												<div>
-													<button className={'btn-ListProduct-edit'}>
-														Xóa
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div>
-													<Image
-														width={165}
-														height={98}
-														src={'/png/userImage.png'}
-													/>
-												</div>
-											</td>
-											<td>Tâm Lý Học - Phác Họa Chân Dung Kẻ Phạm Tội</td>
-											<td>120.000 đ</td>
-											<td>
-												<div>
-													<input
-														className={'input-CartPage-amount'}
-														min={1}
-														type='number'
-													/>
-												</div>
-											</td>
-											<td>
-												<div>
-													<button className={'btn-ListProduct-edit'}>
-														Xóa
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div>
-													<Image
-														width={165}
-														height={98}
-														src={'/png/userImage.png'}
-													/>
-												</div>
-											</td>
-											<td>Tâm Lý Học - Phác Họa Chân Dung Kẻ Phạm Tội</td>
-											<td>120.000 đ</td>
-											<td>
-												<div>
-													<input
-														className={'input-CartPage-amount'}
-														min={1}
-														type='number'
-													/>
-												</div>
-											</td>
-											<td>
-												<div>
-													<button className={'btn-ListProduct-edit'}>
-														Xóa
-													</button>
-												</div>
-											</td>
-										</tr>
+										{cart.map((value, key) => (
+											<React.Fragment key={key}>
+												<tr>
+													<td>
+														<div>
+															<Image
+																width={165}
+																height={98}
+																src={'/png/userImage.png'}
+															/>
+														</div>
+													</td>
+													<td>{value.productName}</td>
+													<td>{value.originPrice}</td>
+													<td>
+														<div>
+															<input
+																className={'input-CartPage-amount'}
+																min={1}
+																defaultValue={value.count}
+																type={'number'}
+                                onChange={e => changeNumber(e,value.productId,value.purchaserId)}
+															/>
+														</div>
+													</td>
+													<td>
+														<div>
+															<button
+																className={'btn-ListProduct-edit'}
+																value={value.productId}
+																onClick={e => deleteProductCart(e, value.purchaserId, value.productId)}>
+																Xóa
+															</button>
+														</div>
+													</td>
+												</tr>
+											</React.Fragment>
+										))}
 										<tr>
 											<th colSpan={4}>Tổng tiền:</th>
-											<td>360.000 đ</td>
+											<td>{total}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -164,10 +199,10 @@ const CartPage = () => {
 					</div>
 				</div>
 				<style jsx>{`
-					.div-CheckoutPage-container {
+					.div-CartPage-container {
 						background: #f9f9f9;
 					}
-					.div-CheckoutPage-homeText {
+					.div-CartPage-homeText {
 						width: 100%;
 
 						align-items: center;
@@ -175,7 +210,7 @@ const CartPage = () => {
 						box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25);
 						background: #fdfdfd;
 					}
-					.p-CheckoutPage-subHeader {
+					.p-CartPage-subHeader {
 						font-family: Open Sans;
 						font-style: normal;
 						font-weight: normal;
@@ -184,7 +219,7 @@ const CartPage = () => {
 
 						color: #a9a9a9;
 					}
-					.p-CheckoutPage-textProduct {
+					.p-CartPage-textProduct {
 						font-family: Open Sans;
 						font-style: normal;
 						font-weight: 400;
@@ -200,7 +235,7 @@ const CartPage = () => {
 						overflow-x: auto;
 						width: 92%;
 					}
-					.div-CheckoutPage-formSize {
+					.div-CartPage-formSize {
 						width: 100%;
 						margin-top: 2px;
 						background: #ffffff;

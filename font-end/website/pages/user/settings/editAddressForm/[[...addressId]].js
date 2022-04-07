@@ -284,6 +284,8 @@ const EditAddressFormPage = () => {
 						border: 1px solid #d1d1d1;
 						box-sizing: border-box;
 						border-radius: 12px;
+						text-indent: 10px;
+						cursor: pointer;
 					}
 					.input-EditAddressForm-name {
 						width: 400px;
@@ -294,6 +296,8 @@ const EditAddressFormPage = () => {
 						border: 1px solid #d1d1d1;
 						box-sizing: border-box;
 						border-radius: 12px;
+						text-indent: 10px;
+						cursor: pointer;
 					}
 					.input-EditAddressForm-city {
 						width: 160px;
@@ -303,6 +307,8 @@ const EditAddressFormPage = () => {
 						border: 1px solid #d1d1d1;
 						box-sizing: border-box;
 						border-radius: 12px;
+						text-indent: 10px;
+						cursor: pointer;
 					}
 					.input-EditAddressForm-district {
 						width: 220px;
@@ -312,6 +318,8 @@ const EditAddressFormPage = () => {
 						border: 1px solid #d1d1d1;
 						box-sizing: border-box;
 						border-radius: 12px;
+						text-indent: 10px;
+						cursor: pointer;
 					}
 					.div-EditAddressForm-marginPhone {
 						margin-left: 43px;
