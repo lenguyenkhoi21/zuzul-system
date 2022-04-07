@@ -1,5 +1,7 @@
 package com.zuzul.zuzuluserservice.api.v1.user.cart.change_number_of_items;
 
+import com.zuzul.zuzuluserservice.api.v1.user.cart.CartResponse;
+import com.zuzul.zuzuluserservice.api.v1.user.cart.get_all_items.GetAllItems;
 import com.zuzul.zuzuluserservice.common.model.mongodb.Cart;
 import com.zuzul.zuzuluserservice.common.repo.mongodb.CartRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +13,9 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class ChangeNumberItems {
     private final CartRepository cartRepository;
+    private final GetAllItems getAllItems;
 
-    public PUTNumberItemsResponse changeNumberItems (PUTNumberItemsPayload payload, Principal principal) {
+    public CartResponse changeNumberItems (PUTNumberItemsPayload payload, Principal principal) {
         if (principal.getName().equals(payload.getPurchaserId())) {
             Cart cart = cartRepository.findCartByPurchaserIdAndProductId(payload.getPurchaserId(), payload.getProductId());
 
@@ -27,15 +30,11 @@ public class ChangeNumberItems {
 
             cartRepository.save(updatedCart);
 
-            return PUTNumberItemsResponse
-                    .builder()
-                    .status("SUCCESS")
-                    .build();
+            CartResponse getCart = getAllItems.getAllItemsInCart(payload.getPurchaserId(), principal);
+
+            return getCart;
         }
 
-        return PUTNumberItemsResponse
-                .builder()
-                .status("FAIL")
-                .build();
+        return CartResponse.builder().build();
     }
 }

@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductsModel {
     private String prdName;
-    private int originPrice;
+    private int prdPriceOrigin;
+    private int discount;
 }

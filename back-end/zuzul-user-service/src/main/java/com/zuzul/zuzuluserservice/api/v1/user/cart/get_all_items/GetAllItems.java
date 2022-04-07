@@ -1,5 +1,7 @@
 package com.zuzul.zuzuluserservice.api.v1.user.cart.get_all_items;
 
+import com.zuzul.zuzuluserservice.api.v1.user.cart.CartModel;
+import com.zuzul.zuzuluserservice.api.v1.user.cart.CartResponse;
 import com.zuzul.zuzuluserservice.common.adminclient.AdminClient;
 import com.zuzul.zuzuluserservice.common.model.mongodb.Cart;
 import com.zuzul.zuzuluserservice.common.repo.mongodb.CartRepository;
@@ -31,13 +33,13 @@ public class GetAllItems {
 
     @Autowired
     @Qualifier(Constant.LOAD_BALANCED_BEAN)
-    private final RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     @CircuitBreaker(name = "productService")
     @RateLimiter(name = "productService")
     @Retry(name = "retryProductService")
     @Bulkhead(name = "bulkheadProductService", type = Bulkhead.Type.THREADPOOL)
-    public GETAllItemsResponse getAllItemsInCart (String userId, Principal principal) {
+    public CartResponse getAllItemsInCart (String userId, Principal principal) {
         if (principal.getName().equals(userId)) {
             List<Cart> items = cartRepository.findAllByPurchaserId(userId);
 
@@ -54,22 +56,28 @@ public class GetAllItems {
                                 .productId(item.getProductId())
                                 .purchaserId(item.getPurchaserId())
                                 .productName(productsModel.getPrdName())
-                                .originPrice(productsModel.getOriginPrice())
+                                .originPrice(productsModel.getPrdPriceOrigin())
+                                .discount(productsModel.getDiscount())
                                 .build()
                 );
             });
 
-            return GETAllItemsResponse
+            long totalMoney = 0;
+
+            for (CartModel cartModel : cartModels) {
+                totalMoney += (cartModel.getCount() * cartModel.getOriginPrice()) -
+                         (cartModel.getCount() * cartModel.getOriginPrice() * cartModel.getDiscount() / 100);
+            }
+
+            return CartResponse
                     .builder()
-                    .items(cartModels)
-                    .status("SUCCESS")
+                    .cartModelList(cartModels)
+                    .alert(false)
+                    .totalMoney(totalMoney)
                     .build();
         }
 
-        return GETAllItemsResponse
-                .builder()
-                .status("FAIL")
-                .build();
+        return CartResponse.builder().build();
     }
 
     private ProductsModel getModels (String productId) {
@@ -92,7 +100,8 @@ public class GetAllItems {
         return ProductsModel
                 .builder()
                 .prdName(restExchange.getBody().getPrdName())
-                .originPrice(restExchange.getBody().getOriginPrice())
+                .prdPriceOrigin(restExchange.getBody().getPrdPriceOrigin())
+                .discount(restExchange.getBody().getDiscount())
                 .build();
     }
 }

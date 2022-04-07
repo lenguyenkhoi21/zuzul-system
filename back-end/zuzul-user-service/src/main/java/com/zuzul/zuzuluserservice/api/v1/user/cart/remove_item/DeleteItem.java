@@ -1,5 +1,7 @@
 package com.zuzul.zuzuluserservice.api.v1.user.cart.remove_item;
 
+import com.zuzul.zuzuluserservice.api.v1.user.cart.CartResponse;
+import com.zuzul.zuzuluserservice.api.v1.user.cart.get_all_items.GetAllItems;
 import com.zuzul.zuzuluserservice.common.repo.mongodb.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,25 +12,31 @@ import java.security.Principal;
 @Service
 public class DeleteItem {
     private final CartRepository cartRepository;
+    private final GetAllItems getAllItems;
 
-    public DELETEItemInCartResponse deleteItemInCart (DELETEItemInCartPayload payload, Principal principal) {
+    public CartResponse deleteItemInCart (DELETEItemInCartPayload payload, Principal principal) {
         if (principal.getName().equals(payload.getPurchaserId())) {
             long isDeleted = cartRepository.deleteCartByPurchaserIdAndProductId(payload.getPurchaserId(), payload.getProductId());
 
+            CartResponse cartResponse = getAllItems.getAllItemsInCart(payload.getPurchaserId(), principal);
+
             if (isDeleted == 0)
-                return DELETEItemInCartResponse
+                return CartResponse
                         .builder()
-                        .status("SUCCESS")
+                        .alert(false)
+                        .cartModelList(cartResponse.getCartModelList())
+                        .totalMoney(cartResponse.getTotalMoney())
                         .build();
             else
-                return DELETEItemInCartResponse
+                return CartResponse
                         .builder()
-                        .status("FAIL")
+                        .alert(true)
+                        .cartModelList(cartResponse.getCartModelList())
+                        .totalMoney(cartResponse.getTotalMoney())
                         .build();
+
+
         }
-        return DELETEItemInCartResponse
-                .builder()
-                .status("FAIL")
-                .build();
+        return CartResponse.builder().build();
     }
 }
