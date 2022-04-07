@@ -150,6 +150,8 @@ const ChangePasswordPage = () => {
 						border: 1px solid #d1d1d1;
 						box-sizing: border-box;
 						border-radius: 12px;
+						text-indent: 10px;
+						cursor: pointer;
 					}
 					.label-ChangePasswordPage-inputHeader {
 						display: block;

@@ -149,7 +149,9 @@ const HistoryPage = () => {
 														<Link
 															href={`/user/settings/history/${value.historyId}`}>
 															<tr>
-																<td>{value.historyId}</td>
+																<td className={'div-HistoryPage-idPrd'}>
+																	{value.historyId}
+																</td>
 																<td>{formatDate(value.dateCreated)}</td>
 																<td>{value.productName}</td>
 																<td>{value.totalPrice} đồng</td>
@@ -165,6 +167,9 @@ const HistoryPage = () => {
 						</div>
 					</div>
 					<style jsx>{`
+						.div-HistoryPage-idPrd {
+							cursor: pointer;
+						}
 						.div-HistoryPage-container {
 							background: #f9f9f9;
 						}

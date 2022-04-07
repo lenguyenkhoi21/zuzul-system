@@ -16,7 +16,7 @@ const AddressPage = () => {
 	const titleCTX = useContext(TitleContext)
 	const userCTX = useContext(UserContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
-	const router = useRouter()
+	/*const router = useRouter()*/
 
 	const [address, setAddress] = useState([])
 	const [render, setRender] = useState({})
@@ -152,7 +152,7 @@ const AddressPage = () => {
 								{address.map((value, index) => {
 									return (
 										<React.Fragment key={index}>
-											<div className={'grid grid-flow-col mt-6 ml-9 w-11/12'}>
+											<div className={'flex mt-6 ml-9 '}>
 												<div>
 													<label>Họ Và Tên</label>
 													<label>Số Điện Thoại </label>
@@ -217,6 +217,9 @@ const AddressPage = () => {
 					</div>
 				</div>
 				<style jsx>{`
+					.div-test {
+						width: 98%;
+					}
 					.div-AddressPage-container {
 						background: #f9f9f9;
 					}
@@ -248,6 +251,7 @@ const AddressPage = () => {
 					}
 					label {
 						display: block;
+						width: 176px;
 						font-family: Poppins;
 						font-style: normal;
 						font-weight: 400;
@@ -259,6 +263,7 @@ const AddressPage = () => {
 					}
 					p {
 						font-family: Open Sans;
+						width: 473px;
 						font-style: normal;
 						font-weight: 400;
 						font-size: 18px;

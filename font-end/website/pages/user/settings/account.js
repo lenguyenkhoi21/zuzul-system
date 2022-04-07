@@ -148,9 +148,12 @@ const AccountPage = () => {
 							</div>
 							<form onSubmit={updateUser}>
 								<div className={'ml-5 col-spans-9 div-AccountPage-formAccount'}>
-									<p className={'mt-10 ml-10 span-AccountPage-textTitle'}>
-										Hồ Sơ Của Tôi
-									</p>
+									<div className={'grid'}>
+										<p className={'mt-10 ml-10 span-AccountPage-textTitle'}>
+											Hồ Sơ Của Tôi
+										</p>
+									</div>
+
 									<br />
 									<span className={'ml-10 span-AccountPage-textSubtitle'}>
 										Quản lý thông tin hồ sơ để bảo mật tài khoản
@@ -319,7 +322,7 @@ const AccountPage = () => {
 						border-radius: 12px;
 					}
 					.div-AccountPage-formAccount {
-						width: 100%;
+						width: 98%;
 						margin-bottom: 25px;
 						border-radius: 12px;
 						background: #ffffff;
@@ -363,6 +366,8 @@ const AccountPage = () => {
 						border: 1px solid #d1d1d1;
 						box-sizing: border-box;
 						border-radius: 12px;
+						text-indent: 10px;
+						cursor: pointer;
 					}
 					.button-AccountPage-save {
 						width: 119.59px;

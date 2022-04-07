@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { timeNow } from '../../utils/Utils'
 import { UserContext } from '../../reducer/User.Reducer'
-import { ChatContext } from '../../reducer/Chat.Reducer'
+/*import { ChatContext } from '../../reducer/Chat.Reducer'*/
 
 const IconBar = () => {
 	console.log(
@@ -11,13 +11,13 @@ const IconBar = () => {
 	)
 
 	const userCTX = useContext(UserContext)
-	const chatCTX = useContext(ChatContext)
+	/*const chatCTX = useContext(ChatContext)*/
 
 	return (
 		<>
 			<div className={'float-right'}>
 				<div className={'flex'}>
-					<div className={'mr-3.5 div-IconBar-container'}>
+					{/*<div className={'mr-3.5 div-IconBar-container'}>
 						<Link href={'/'}>
 							<a>
 								<div className={'flex'}>
@@ -64,7 +64,7 @@ const IconBar = () => {
 								</div>
 							</a>
 						</Link>
-					</div>
+					</div>*/}
 					{userCTX.state.userID === null ? (
 						<>
 							<div className={'flex mr-3.5 div-IconBar-container'}>
@@ -90,7 +90,7 @@ const IconBar = () => {
 						<div className={'flex mr-3.5 div-IconBar-container'}>
 							<Link href={'/user/settings/account'}>
 								<a>
-									<div className={'flex'}>
+									<div className={'flex gap-2'}>
 										<Image
 											src={'/svg/user.svg'}
 											width={25}
