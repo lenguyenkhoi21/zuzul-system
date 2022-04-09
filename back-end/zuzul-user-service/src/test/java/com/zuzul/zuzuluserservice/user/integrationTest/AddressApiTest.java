@@ -1,4 +1,4 @@
-package com.zuzul.zuzuluserservice.user;
+package com.zuzul.zuzuluserservice.user.integrationTest;
 
 import com.zuzul.zuzuluserservice.common.ultis.Constant;
 import org.json.JSONObject;
@@ -22,58 +22,53 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserApiTest {
+public class AddressApiTest {
 
     @Autowired
     private MockMvc mockMvc;
 
 
     @Test
-    public void testGetUserInfoById() throws Exception {
+    public void testGetAllAddress() throws Exception {
         String[] result = login("minh", "minh");
         String userID = result[0];
         String accessToken = result[1];
 
         this.mockMvc.perform(
-                        get(Constant.rootPathV1 + "/user/profile/" + "84f16d78-2dc4-4e21-aeb1-fa13f4539535")
+                        get(Constant.rootPathV1 + "/user/address/" + "84f16d78-2dc4-4e21-aeb1-fa13f4539535")
                                 .header("Authorization", "Bearer " + accessToken)
                                 .header("tmx-correlation-id", userID)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print()).andExpect(status().isOk())
-//                .andExpect(jsonPath("$.status").value("SUCCESS"))
         ;
     }
     @Test
-    public void testGetAllItems() throws Exception {
+    public void testGetAddressById() throws Exception {
         String[] result = login("minh", "minh");
         String userID = result[0];
         String accessToken = result[1];
 
         this.mockMvc.perform(
-                        get(Constant.rootPathV1 + "/user/84f16d78-2dc4-4e21-aeb1-fa13f4539535/cart")
+                        get(Constant.rootPathV1 + "/user/84f16d78-2dc4-4e21-aeb1-fa13f4539535/address/address-12856667-d5bb-4d49-b9fb-a0eae582589f")
                                 .header("Authorization", "Bearer " + accessToken)
                                 .header("tmx-correlation-id", userID)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.status").value("SUCCESS"))
         ;
     }
     @Test
-    public void testAddItemToCart() throws Exception {
+    public void testCreateAddress() throws Exception {
         String[] result = login("minh", "minh");
         String userID = result[0];
         String accessToken = result[1];
-        String prdId = "prd-9cbcd9e3-b3cc-4a36-a9ab-7ab9e2923c30";
-        String purchaserId = "84f16d78-2dc4-4e21-aeb1-fa13f4539535";
-        String sellerId = "5c6768dc-27bb-4ebb-949b-a075dfa1f40e";
         this.mockMvc.perform(
-                        post(Constant.rootPathV1 + "/user/cart")
+                        post(Constant.rootPathV1 + "/user/address")
                                 .header("Authorization", "Bearer " + accessToken)
                                 .header("tmx-correlation-id", userID)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content("{\"productId\": \""+prdId+"\", \"purchaserId\": \""+purchaserId+"\", \"sellerId\": \""+sellerId+"\", \"count\": \"2\"}")
+                                .content("{\"userName\":\"userName\",\"userPhone\":\"0123455678\",\"userWard\":\"userWard\",\"userDistinct\":\"userDistinct\",\"userCity\":\"userCity\",\"detailsAddress\":\"detailsAddress\",\"userId\":\"84f16d78-2dc4-4e21-aeb1-fa13f4539535\",\"type\":\"false\"}")
                                 .accept(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print()).andExpect(status().isOk())
@@ -82,35 +77,16 @@ public class UserApiTest {
     }
 
     @Test
-    public void testGetInfo() throws Exception {
-        String[] result = login("minh", "minh");
-        String userID = result[0];
-        String accessToken = result[1];
-        String adminId = "84f16d78-2dc4-4e21-aeb1-fa13f4539535";
-        this.mockMvc.perform(
-                        post(Constant.rootPathV1 + "/user/userInfoByPrd/"+adminId)
-                                .header("Authorization", "Bearer " + accessToken)
-                                .header("tmx-correlation-id", userID)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content("[\"84f16d78-2dc4-4e21-aeb1-fa13f4539535\"]")
-                                .accept(MediaType.APPLICATION_JSON)
-                )
-                .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.userShopNames").value("Minh Huỳnh Shop"))
-        ;
-    }
-
-    @Test
-    public void testUpdateProfile() throws Exception {
+    public void testUpdateAddress() throws Exception {
         String[] result = login("minh", "minh");
         String userID = result[0];
         String accessToken = result[1];
         this.mockMvc.perform(
-                        put(Constant.rootPathV1 + "/user/profile")
+                        put(Constant.rootPathV1 + "/user/address")
                                 .header("Authorization", "Bearer " + accessToken)
                                 .header("tmx-correlation-id", userID)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content("{\"userId\":\"84f16d78-2dc4-4e21-aeb1-fa13f4539535\",\"userFullName\":\"minh test\",\"userPhone\":\"0932565923\",\"userBirthday\":\"976752000\",\"userSex\":\"MALE\",\"userEmail\":\"minh@gmail.com\",\"userName\":\"minh\"}")
+                                .content("{\"userName\":\"test\",\"userPhone\":\"0123455678\",\"userWard\":\"userWard\",\"userDistinct\":\"userDistinct\",\"userCity\":\"userCity\",\"detailsAddress\":\"detailsAddress\",\"userId\":\"84f16d78-2dc4-4e21-aeb1-fa13f4539535\",\"addressId\":\"address-d6b242a7-f3ae-4e82-8ff5-409194c7ae23\"}")
                                 .accept(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print()).andExpect(status().isOk())
@@ -119,34 +95,16 @@ public class UserApiTest {
     }
 
     @Test
-    public void testChangeNumberItems() throws Exception {
+    public void testSetDefalt() throws Exception {
         String[] result = login("minh", "minh");
         String userID = result[0];
         String accessToken = result[1];
         this.mockMvc.perform(
-                        put(Constant.rootPathV1 + "/user/cart")
+                        put(Constant.rootPathV1 + "/user/address/setDefault")
                                 .header("Authorization", "Bearer " + accessToken)
                                 .header("tmx-correlation-id", userID)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content("{\"productId\":\"prd-9cbcd9e3-b3cc-4a36-a9ab-7ab9e2923c30\",\"purchaserId\":\"84f16d78-2dc4-4e21-aeb1-fa13f4539535\",\"count\":\"8\"}")
-                                .accept(MediaType.APPLICATION_JSON)
-                )
-                .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.status").value("SUCCESS"))
-        ;
-    }
-
-    @Test
-    public void testRequestShop() throws Exception {
-        String[] result = login("minh", "minh");
-        String userID = result[0];
-        String accessToken = result[1];
-        this.mockMvc.perform(
-                        put(Constant.rootPathV1 + "/user/profile/request_shop/"+"84f16d78-2dc4-4e21-aeb1-fa13f4539535")
-                                .header("Authorization", "Bearer " + accessToken)
-                                .header("tmx-correlation-id", userID)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content("{\"userShopName\":\"Minh Huỳnh shop\",\"sendRequestDate\":\"1648177549\"}")
+                                .content("{\"userId\":\"84f16d78-2dc4-4e21-aeb1-fa13f4539535\", \"addressId\":\"address-d6b242a7-f3ae-4e82-8ff5-409194c7ae23\"}")
                                 .accept(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print()).andExpect(status().isOk())
@@ -159,11 +117,11 @@ public class UserApiTest {
         String userID = result[0];
         String accessToken = result[1];
         this.mockMvc.perform(
-                        delete(Constant.rootPathV1 + "/user/cart")
+                        delete(Constant.rootPathV1 + "/user/address")
                                 .header("Authorization", "Bearer " + accessToken)
                                 .header("tmx-correlation-id", userID)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content("{\"purchaserId\":\"84f16d78-2dc4-4e21-aeb1-fa13f4539535\",\"productId\":\"prd-9cbcd9e3-b3cc-4a36-a9ab-7ab9e2923c30\"}")
+                                .content("{\"userId\":\"84f16d78-2dc4-4e21-aeb1-fa13f4539535\", \"addressId\":\"address-d6b242a7-f3ae-4e82-8ff5-409194c7ae23\"}")
                                 .accept(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print()).andExpect(status().isOk())

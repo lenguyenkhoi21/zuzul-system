@@ -1,15 +1,7 @@
-package com.example.zuzulproductprivate.adminManagement.category;
+package com.example.zuzulproductprivate.adminManagement.sub.integrationTest;
 
 import com.example.zuzulproductprivate.common.ultis.Constant;
 import com.example.zuzulproductprivate.common.usercontext.UserContext;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,123 +13,110 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
-import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CategoryApiTest {
+public class SubCategoryApiTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void testGetAllCategories() throws Exception {
-        String[] result = login("admin-system", "admin-system");
-        String userID = result[0];
-        String accessToken = result[1];
-
-        this.mockMvc.perform(
-                        get(Constant.rootPathV1 + "/admin/management/category/all/" + userID)
-                                .header(UserContext.AUTH_TOKEN, "Bearer " + accessToken)
-                                .header(UserContext.CORRELATION_ID, userID)
-                )
-                .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].categoryId").value("cate-af5faa32-0fd5-4940-8e96-7e4a6e3eb658"))
-                .andExpect(jsonPath("$[0].categoryName").value("Áo Dày"))
-                .andExpect(jsonPath("$[0].categoryImage").value("cate-img-86cba0d7-0360-4fec-bcc2-7e16050e22c9.jpg"))
-        ;
-    }
-
-    @Test
-    public void testGetCategoryById() throws Exception {
+    public void testGetAllSubCategoriesByCategory() throws Exception {
         String[] result = login("admin-system", "admin-system");
         String userID = result[0];
         String accessToken = result[1];
         String cateId = "cate-af5faa32-0fd5-4940-8e96-7e4a6e3eb658";
-
         this.mockMvc.perform(
-                        get(Constant.rootPathV1 + "/admin/management/category/" + userID+ "/" + cateId)
+                        get(Constant.rootPathV1 + "/admin/management/sub/all/" + userID+ "/"+cateId)
                                 .header(UserContext.AUTH_TOKEN, "Bearer " + accessToken)
                                 .header(UserContext.CORRELATION_ID, userID)
                 )
                 .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.categoryName").value("Áo Dày"))
-                .andExpect(jsonPath("$.categoryImage").value("cate-img-86cba0d7-0360-4fec-bcc2-7e16050e22c9.jpg"))
+                .andExpect(jsonPath("$[0].subCategoryId").value("sub-cate-26428007-04ce-49aa-b0b0-ef47c85004d6"))
+                .andExpect(jsonPath("$[0].subCategoryName").value("Áo khoác mùa thu"))
+                .andExpect(jsonPath("$[0].subCategoryDescription").value("aaa"))
         ;
     }
 
     @Test
-    public void testCreateCategory() throws Exception {
+    public void testGetSubCategoryById() throws Exception {
         String[] result = login("admin-system", "admin-system");
         String userID = result[0];
         String accessToken = result[1];
+        String subCateId = "sub-cate-26428007-04ce-49aa-b0b0-ef47c85004d6";
 
         this.mockMvc.perform(
-                        multipart(Constant.rootPathV1 + "/admin/management/category")
-                                .file(makeMultipartFile( "cat_image", "PixelApple.png", "application/octet-stream", "src/test/PixelApple.png"))
-                                .param("userId", userID)
-                                .param("categoryName", "testCategoryTest")
-                                .param("categoryDescription", "testDesTest")
+                        get(Constant.rootPathV1 + "/admin/management/sub/" + userID+ "/" + subCateId)
                                 .header(UserContext.AUTH_TOKEN, "Bearer " + accessToken)
                                 .header(UserContext.CORRELATION_ID, userID)
-                                .accept(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.status").value("SUCCESS"));
+                .andExpect(jsonPath("$.subCategoryId").value("sub-cate-26428007-04ce-49aa-b0b0-ef47c85004d6"))
+                .andExpect(jsonPath("$.subCategoryName").value("Áo khoác mùa thu"))
+        ;
     }
 
     @Test
-    public void testUpdateCategory() throws Exception {
+    public void testCreateSubCategory() throws Exception {
         String[] result = login("admin-system", "admin-system");
         String userID = result[0];
         String accessToken = result[1];
-
+        String cateId = "cate-af5faa32-0fd5-4940-8e96-7e4a6e3eb658";
         this.mockMvc.perform(
-                        multipart(Constant.rootPathV1 + "/admin/management/category/")
-                                .file(makeMultipartFile( "cat_image", "PixelApple.png", "application/octet-stream", "src/test/PixelApple.png"))
-                                .with(new RequestPostProcessor() {
-                                    @Override
-                                    public MockHttpServletRequest postProcessRequest(MockHttpServletRequest request) {
-                                        request.setMethod("PUT");
-                                        return request;
-                                    }
-                                })
-                                .param("categoryId", "cate-60f56be7-e57e-4edf-b78b-1ca372a528c0")
-                                .param("categoryName", "testCategoryABC")
-                                .param("userId", userID)
-                                .header(UserContext.AUTH_TOKEN, "Bearer " + accessToken)
-                                .header(UserContext.CORRELATION_ID, userID)
-                                .accept(MediaType.APPLICATION_JSON)
-                )
-                .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.status").value("SUCCESS"));
-    }
-
-    @Test
-    public void testDisableCategory() throws Exception {
-        String[] result = login("admin-system", "admin-system");
-        String userID = result[0];
-        String accessToken = result[1];
-
-        this.mockMvc.perform(
-//                        multipart(Constant.rootPathV1 + "/admin/management/category/disable")
-                        put(Constant.rootPathV1 + "/admin/management/category/disable")
-                                .content("{\"categoryId\": \"cate-60f56be7-e57e-4edf-b78b-1ca372a528c0\", \"userId\": \"" + userID + "\"}")
-//                                .file(makeMultipartFile( "cat_image", "PixelApple.png", "application/octet-stream", "src/test/PixelApple.png"))
+                        post(Constant.rootPathV1 + "/admin/management/sub")
                                 .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"userId\":\""+userID+"\",\"subCategoryName\": \"testSubCategoryTest\",\"subCategoryDescription\": \"testDesTest\",\"categoryId\":\"" +cateId+"\"}")
+                                .header(UserContext.AUTH_TOKEN, "Bearer " + accessToken)
+                                .header(UserContext.CORRELATION_ID, userID)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("SUCCESS"));
+    }
+
+    @Test
+    public void testUpdateSubCategory() throws Exception {
+        String[] result = login("admin-system", "admin-system");
+        String userID = result[0];
+        String accessToken = result[1];
+
+        this.mockMvc.perform(
+                        put(Constant.rootPathV1 + "/admin/management/sub")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"subCategoryId\": \"sub-cate-ad050816-951e-4e9e-b53e-152cf1405978\",\"subCategoryName\": \"testCategory1\",\"userId\":\"" + userID +"\" }")
+                                .header(UserContext.AUTH_TOKEN, "Bearer " + accessToken)
+                                .header(UserContext.CORRELATION_ID, userID)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("SUCCESS"));
+    }
+
+    @Test
+    public void testDisableSubCategory() throws Exception {
+        String[] result = login("admin-system", "admin-system");
+        String userID = result[0];
+        String accessToken = result[1];
+
+        this.mockMvc.perform(
+                        put(Constant.rootPathV1 + "/admin/management/sub/disable")
+//                                .file(makeMultipartFile( "cat_image", "PixelApple.png", "application/octet-stream", "src/test/PixelApple.png"))
 //                                .with(new RequestPostProcessor() {
 //                                    @Override
 //                                    public MockHttpServletRequest postProcessRequest(MockHttpServletRequest request) {
@@ -145,7 +124,9 @@ public class CategoryApiTest {
 //                                        return request;
 //                                    }
 //                                })
-//                                .param("categoryId", "cate-60f56be7-e57e-4edf-b78b-1ca372a528c0")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"userId\": \""+userID+"\",\"subCategoryId\": \"sub-cate-ad050816-951e-4e9e-b53e-152cf1405978\"}")
+//                                .param("subCategoryId", "cate-60f56be7-e57e-4edf-b78b-1ca372a528c0")
 //                                .param("userId", userID)
                                 .header(UserContext.AUTH_TOKEN, "Bearer " + accessToken)
                                 .header(UserContext.CORRELATION_ID, userID)

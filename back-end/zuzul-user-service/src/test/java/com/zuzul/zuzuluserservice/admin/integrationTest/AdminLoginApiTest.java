@@ -1,4 +1,4 @@
-package com.zuzul.zuzuluserservice.admin;
+package com.zuzul.zuzuluserservice.admin.integrationTest;
 
 import com.zuzul.zuzuluserservice.common.ultis.Constant;
 import org.junit.jupiter.api.Test;

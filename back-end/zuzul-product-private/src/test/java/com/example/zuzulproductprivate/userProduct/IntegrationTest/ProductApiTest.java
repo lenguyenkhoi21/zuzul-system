@@ -1,4 +1,4 @@
-package com.example.zuzulproductprivate.userProduct;
+package com.example.zuzulproductprivate.userProduct.IntegrationTest;
 
 import com.example.zuzulproductprivate.common.ultis.Constant;
 import com.example.zuzulproductprivate.common.usercontext.UserContext;

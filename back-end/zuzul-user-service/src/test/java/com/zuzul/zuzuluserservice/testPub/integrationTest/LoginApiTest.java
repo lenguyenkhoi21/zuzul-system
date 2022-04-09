@@ -1,4 +1,4 @@
-package com.zuzul.zuzuluserservice.testPub;
+package com.zuzul.zuzuluserservice.testPub.integrationTest;
 
 import com.zuzul.zuzuluserservice.api.v1.pub.login.LoginServices;
 import com.zuzul.zuzuluserservice.common.adminclient.Keycloak;

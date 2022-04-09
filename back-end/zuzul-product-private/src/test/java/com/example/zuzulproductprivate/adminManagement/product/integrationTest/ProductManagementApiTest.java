@@ -1,4 +1,4 @@
-package com.example.zuzulproductprivate.adminManagement.product;
+package com.example.zuzulproductprivate.adminManagement.product.integrationTest;
 
 import com.example.zuzulproductprivate.common.ultis.Constant;
 import com.example.zuzulproductprivate.common.usercontext.UserContext;
