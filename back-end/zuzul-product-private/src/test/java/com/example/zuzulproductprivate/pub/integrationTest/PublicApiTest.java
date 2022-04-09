@@ -1,4 +1,4 @@
-package com.example.zuzulproductprivate.pub;
+package com.example.zuzulproductprivate.pub.integrationTest;
 
 import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
