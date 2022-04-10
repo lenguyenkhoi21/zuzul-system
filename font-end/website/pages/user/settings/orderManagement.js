@@ -167,14 +167,14 @@ const OrderManagementPage = () => {
 									<table className={'div-OrderManagement-table'}>
 										<thead align={'left'}>
 											<tr>
-												<th width={125}>Mã Đơn Hàng</th>
+												<th width={145}>Mã Đơn Hàng</th>
 												<th width={200}>Vị trí</th>
 												<th width={245}>Tên Sản Phẩm</th>
-												<th>Số Lượng</th>
-												<th>Danh Mục</th>
-												<th>Giá (Sau khi trừ khuyến mãi)</th>
-												<th>Trạng Thái</th>
-												<th></th>
+												<th width={150}>Số Lượng</th>
+												<th width={180}>Danh Mục</th>
+												<th width={100}>Giá (Đã sale)</th>
+												<th width={150}>Trạng Thái</th>
+												<th width={100}></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -318,7 +318,7 @@ const OrderManagementPage = () => {
 						width: 55px;
 						height: 30px;
 						background: #46d362;
-						border: 2px solid #2aa71a;
+						border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 						font-family: Poppins;

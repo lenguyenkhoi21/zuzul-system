@@ -441,6 +441,7 @@ const EditProduct = () => {
 						color: #151515;
 
 						background: #f5f5f5;
+						border: 1px solid #46760a;
 						border-radius: 12px;
 					}
 					.btn-EditProduct-save {
@@ -456,7 +457,7 @@ const EditProduct = () => {
 						color: #ffffff;
 
 						background: #46d362;
-						border: 2px solid #2aa71a;
+						border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 					}

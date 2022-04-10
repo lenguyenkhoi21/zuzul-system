@@ -54,7 +54,7 @@ const ChangePasswordPage = () => {
 								<div className={'grid grid-col-1'}>
 									{/*mat khau hien tai*/}
 									<div
-										className={'grid grid-cols-3 grid-flow-col items-center'}>
+										className={'grid grid-cols-3 grid-flow-col '}>
 										<div>
 											<label className={'label-ChangePasswordPage-inputHeader'}>
 												Mật Khẩu Hiện Tại
@@ -67,7 +67,7 @@ const ChangePasswordPage = () => {
 
 									{/*mat khau moi*/}
 									<div
-										className={'grid grid-cols-3 grid-flow-col items-center'}>
+										className={'grid grid-cols-3 grid-flow-col'}>
 										<div>
 											<label className={'label-ChangePasswordPage-inputHeader'}>
 												Mật Khẩu Mới
@@ -80,7 +80,7 @@ const ChangePasswordPage = () => {
 
 									{/*xac nhan mat khau*/}
 									<div
-										className={'grid grid-cols-3 grid-flow-col items-center'}>
+										className={'grid grid-cols-3 grid-flow-col'}>
 										<div>
 											<label className={'label-ChangePasswordPage-inputHeader'}>
 												Xác Nhận Mật Khẩu
@@ -94,7 +94,7 @@ const ChangePasswordPage = () => {
 									<div
 										className={'grid grid-cols-3 grid-flow-col items-center'}>
 										<div className={'grid col-start-2'}>
-											<button className={'btn-ChangePasswordPage-acceptBtn'}>
+											<button className={'btn-ChangePasswordPage-acceptBtn mb-8'}>
 												Xác Nhận
 											</button>
 										</div>
@@ -121,7 +121,6 @@ const ChangePasswordPage = () => {
 					}
 					.div-ChangePasswordPage-formAccount {
 						width: 100%;
-						height: 699px;
 						border-radius: 12px;
 						background: #ffffff;
 						margin-bottom: 25px;
@@ -182,7 +181,7 @@ const ChangePasswordPage = () => {
 						color: #ffffff;
 
 						background: #46d362;
-						border: 2px solid #2aa71a;
+            border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 					}

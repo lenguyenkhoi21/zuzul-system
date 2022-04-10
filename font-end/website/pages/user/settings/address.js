@@ -172,16 +172,16 @@ const AddressPage = () => {
 													</p>
 												</div>
 
-												<div className={'mt-2'}>
-													<div className={'flex justify-start'}>
+												<div className={'mt-4'}>
+													<div className={''}>
 														<button
 															hidden={value.type === false}
-															className={'ml-2 btn-AddressPage-tagContent'}>
-															Mặc Định
+															className={'btn-AddressPage-tagContent'}>
+															Địa Chỉ Mặc Định
 														</button>
 													</div>
 												</div>
-												<div className={'mt-4 ml-12'}>
+												<div className={'mt-4 ml-12 div-test'}>
 													<div className={'flex justify-end'}>
 														<Link
 															href={`/user/settings/editAddressForm/${value.addressId}`}>
@@ -218,7 +218,8 @@ const AddressPage = () => {
 				</div>
 				<style jsx>{`
 					.div-test {
-						width: 98%;
+            width: 184px;
+            margin-left: 150px;
 					}
 					.div-AddressPage-container {
 						background: #f9f9f9;
@@ -263,7 +264,7 @@ const AddressPage = () => {
 					}
 					p {
 						font-family: Open Sans;
-						width: 473px;
+						width: 350px;
 						font-style: normal;
 						font-weight: 400;
 						font-size: 18px;
@@ -272,6 +273,7 @@ const AddressPage = () => {
 						padding: 15px;
 					}
 					.btn-AddressPage-tagContent {
+					  position: absolute;
 						font-family: Roboto;
 						font-style: normal;
 						font-weight: bold;
@@ -292,7 +294,7 @@ const AddressPage = () => {
 					.btn-AddressPage-funcBtn {
 						display: inline;
 						background: #46d362;
-						border: 2px solid #2aa71a;
+            border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 
@@ -311,7 +313,7 @@ const AddressPage = () => {
 					}
 					.btn-AddressPage-funcSetup {
 						background: #46d362;
-						border: 2px solid #2aa71a;
+            border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 
@@ -331,7 +333,7 @@ const AddressPage = () => {
 					.btn-AddressPage-addBtn {
 						font-family: Roboto;
 						background: #46d362;
-						border: 2px solid #2aa71a;
+            border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 
