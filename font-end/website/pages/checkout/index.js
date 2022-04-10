@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { TITLE_ACTION, TitleContext } from '../../reducer/Title.Reducer'
 import { UserContext } from '../../reducer/User.Reducer'
 import {
@@ -7,17 +7,190 @@ import {
 } from '../../reducer/LeftMenuUser.Reducer'
 import Authentication from '../../component/common/Authentication'
 import Image from 'next/image'
+import { API_DOMAIN, API_USER_SERVICE } from '../../utils/APIUtils'
+import Link from 'next/link'
 
 const CheckoutPage = () => {
 	const userCTX = useContext(UserContext)
 	const titleCTX = useContext(TitleContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
+	const [cart, setCart] = useState([])
+	const [address, setAddress] = useState([])
+	const [chooseAddress, setChooseAddress] = useState({})
+	const [total, setTotal] = useState(0)
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Thanh toán')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.RESET)
+
+		if (userCTX.state.userID !== null) {
+			fetch(
+				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/${userCTX.state.userID}/cart`,
+				{
+					method: 'GET',
+					mode: 'cors',
+					headers: {
+						Authorization: `Bearer ${userCTX.state.accessToken}`
+					}
+				}
+			)
+				.then(response => {
+					if (response.status === 200) return response.json()
+				})
+				.then(data => {
+					console.dir(data)
+					setCart(data.cartModelList)
+					setTotal(data.totalMoney)
+				})
+		}
+		if (userCTX.state.userID !== null) {
+			fetch(
+				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/address/${userCTX.state.userID}`,
+				{
+					method: 'GET',
+					mode: 'cors',
+					headers: {
+						Authorization: `Bearer ${userCTX.state.accessToken}`
+					}
+				}
+			)
+				.then(response => {
+					if (response.status === 200) return response.json()
+				})
+				.then(data => {
+					console.dir(data)
+					setAddress(data)
+				})
+		}
 	}, [])
 
+	const changeNumber = (e, productId, purchaserId) => {
+		e.preventDefault()
+
+		let payload = {
+			purchaserId: purchaserId,
+			productId: productId,
+			count: e.target.value
+		}
+		// api change number card
+		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/cart`, {
+			method: 'PUT',
+			mode: 'cors',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`,
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(payload)
+		})
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				}
+			})
+			.then(data => {
+				setCart(data.cartModelList)
+				setTotal(data.totalMoney)
+			})
+	}
+	const deleteProductCart = (e, purchaserId, productId) => {
+		e.preventDefault()
+
+		let payload = {
+			purchaserId: purchaserId,
+			productId: productId
+		}
+
+		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/cart`, {
+			method: 'DELETE',
+			mode: 'cors',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`,
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(payload)
+		})
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				}
+			})
+			.then(data => {
+				console.log(data)
+				setCart(data.cartModelList)
+        setTotal(data.totalMoney)
+			})
+	}
+
+	const getAddressById = e => {
+		e.preventDefault()
+
+		fetch(
+			`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/${userCTX.state.userID}/address/${e.target.value}`,
+			{
+				method: 'GET',
+				mode: 'cors',
+				headers: {
+					Authorization: `Bearer ${userCTX.state.accessToken}`
+				}
+			}
+		)
+			.then(response => {
+				if (response.status === 200) return response.json()
+			})
+			.then(data => {
+				console.dir(data)
+				setChooseAddress(data)
+			})
+	}
+
+  const Order = (e) => {
+    e.preventDefault()
+
+    let payload = {
+      userId: userCTX.state.userID,
+      userName: chooseAddress.userName,
+      paymentType: 'DIRECT',
+      address: chooseAddress.detailsAddress + ', ' + chooseAddress.userWard + ', ' + chooseAddress.userDistinct + ', ' + chooseAddress.userCity,
+      phone: chooseAddress.userPhone,
+      dateCreated: Math.round(new Date().getTime() / 1000),
+      detailsList: [],
+      totalPrice: total
+    }
+
+    cart.map((value) => {
+      const add = {
+        productId: value.productId,
+        productName: value.productName,
+        count: value.count,
+        originPrice: value.originPrice,
+        discount: value.discount
+      }
+
+      payload.detailsList.push(add)
+    })
+
+    fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/history`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        Authorization: `Bearer ${userCTX.state.accessToken}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(response => {
+        if (response.status === 200) {
+          return response.json()
+        }
+      })
+      .then(data => {
+        setCart([])
+        setTotal(0)
+      })
+  }
 	if (userCTX.state.userID === null) {
 		return (
 			<>
@@ -53,16 +226,42 @@ const CheckoutPage = () => {
 									Vui lòng nhập thông tin thanh toán của bạn
 								</p>
 							</div>
+							<div>
+								<div className={'flex'}>
+									<div className={'div-CheckoutPage-padding'}>
+										<select
+											className={'input-CheckoutPage-informationAddress'}
+											placeholder={'Địa chỉ đã có'}
+											onChange={e => getAddressById(e)}>
+											<option value='0'>Địa chỉ đã lưu: </option>
+											{address.map((value, key) => (
+												<React.Fragment key={key}>
+													<option value={value.addressId}>
+														{value.detailsAddress +
+															',' +
+															value.userWard +
+															',' +
+															value.userDistinct +
+															',' +
+															value.userCity}
+													</option>
+												</React.Fragment>
+											))}
+										</select>
+									</div>
+								</div>
+							</div>
 
 							{/*ten va sdt*/}
 							<div>
 								<div className={'flex'}>
 									<div className={'div-CheckoutPage-padding'}>
-										<label>Tên</label>
+										<label>Họ và tên</label>
 										<br />
 										<input
 											className={'input-CheckoutPage-informationSize'}
-											placeholder={'Tên'}
+											placeholder={'Họ và tên'}
+											value={chooseAddress.userName}
 										/>
 									</div>
 									<div className={'div-CheckoutPage-padding'}>
@@ -71,6 +270,7 @@ const CheckoutPage = () => {
 										<input
 											className={'input-CheckoutPage-informationSize'}
 											placeholder={'Số điện thoại'}
+											value={chooseAddress.userPhone}
 										/>
 									</div>
 								</div>
@@ -80,35 +280,51 @@ const CheckoutPage = () => {
 							<div>
 								<div className={'flex'}>
 									<div className={'div-CheckoutPage-padding'}>
-										<label>Địa chỉ</label>
+										<label>Tỉnh/Thành phố</label>
 										<br />
 										<input
 											className={'input-CheckoutPage-informationSize'}
-											placeholder={'Địa chỉ'}
+											placeholder={'Tỉnh/Thành phố'}
+											value={chooseAddress.userCity}
 										/>
 									</div>
 									<div className={'div-CheckoutPage-padding'}>
-										<label>Thành phố</label>
+										<label>Quận/Huyện</label>
 										<br />
 										<input
 											className={'input-CheckoutPage-informationSize'}
-											placeholder={'Thành phố'}
+											placeholder={'Quận huyện'}
+											value={chooseAddress.userDistinct}
 										/>
 									</div>
 								</div>
 							</div>
 
-							{/*quoc gia*/}
-							<div className={'div-CheckoutPage-padding'}>
-								<label>Quốc gia</label>
-								<br />
-								<input
-									className={'input-CheckoutPage-informationSize'}
-									placeholder={'Quốc gia'}
-								/>
+							{/*phuong xa,dia chi cu the*/}
+							<div>
+								<div className={'flex'}>
+									<div className={'div-CheckoutPage-padding'}>
+										<label>Phường/Xã</label>
+										<br />
+										<input
+											className={'input-CheckoutPage-informationSize'}
+											placeholder={'Phường/Xã'}
+											value={chooseAddress.userWard}
+										/>
+									</div>
+									<div className={'div-CheckoutPage-padding'}>
+										<label>Địa chỉ cụ thể</label>
+										<br />
+										<input
+											className={'input-CheckoutPage-informationSize'}
+											placeholder={'Địa chỉ cụ thể'}
+											value={chooseAddress.detailsAddress}
+										/>
+									</div>
+								</div>
 							</div>
 
-							<div className={'mt-12 ml-4'}>
+							{/*<div className={'mt-12 ml-4'}>
 								<span>Thông tin bổ sung</span>
 								<br />
 								<p className={'p-CheckoutPage-subHeader'}>
@@ -125,9 +341,9 @@ const CheckoutPage = () => {
 										'Cần một ngày giao hàng cụ thể? Gửi gitf? Hãy cùng nói nào ...'
 									}
 								/>
-							</div>
+							</div>*/}
 
-							<div className={'mt-16 ml-4'}>
+							{/*<div className={'mt-16 ml-4'}>
 								<div>
 									<span>Xác nhận</span>
 									<br />
@@ -164,9 +380,11 @@ const CheckoutPage = () => {
 										</p>
 									</div>
 								</div>
-							</div>
-							<div className={'ml-4'}>
-								<button className={'btn-CheckoutPage-accept'}>Đặt Hàng</button>
+							</div>*/}
+							<div className={'flex mt-20 ml-4'}>
+                <Link href={'/'}>
+								  <button className={'btn-CheckoutPage-accept'} onClick={e => Order(e)}>Đặt Hàng</button>
+                </Link>
 							</div>
 						</div>
 
@@ -181,159 +399,124 @@ const CheckoutPage = () => {
 								</p>
 
 								{/*product*/}
+
 								<div className={'mt-8'}>
-									<div className={'flex mb-8'}>
-										<div>
-											<Image
-												width={100}
-												height={67}
-												src={'/png/userImage.png'}
-											/>
-											<br />
-											<button className={'p-CheckoutPage-delete'}>xóa</button>
-										</div>
-										<div className={'flex'}>
-											{/*p1*/}
-											<div>
-												<p className={'p-CheckoutPage-productName'}>
-													Tên sản phẩm 1
-												</p>
-												<div className={'flex items-center'}>
-													<div>
-														<p className={'p-CheckoutPage-subHeader'}>
-															Xuất xứ:
-														</p>
-													</div>
-													<div>
-														<p className={'p-CheckoutPage-textProduct'}>
-															nông trại ?
-														</p>
-													</div>
-												</div>
-												<div className={'flex items-center'}>
-													<div>
-														<p className={'p-CheckoutPage-subHeader'}>
-															Hạn sử dụng:
-														</p>
-													</div>
-													<div>
-														<p className={'p-CheckoutPage-textProduct'}>
-															còn 1 ngày
-														</p>
-													</div>
-												</div>
+									{cart.map((value, key) => (
+										<React.Fragment key={key}>
+											<div className={'flex mb-8'}>
 												<div>
-													<p className={'p-CheckoutPage-priceText'}>99.000 đ</p>
-													<p className={'p-CheckoutPage-textSale'}>120.000 đ</p>
+													<Image
+														width={100}
+														height={67}
+														src={'/png/userImage.png'}
+													/>
+												</div>
+												<div className={'flex'}>
+													{/*p1*/}
+													<div>
+														<p className={'p-CheckoutPage-productName'}>
+															{value.productName}
+														</p>
+														{/* <div className={'flex items-center'}>
+                              <div>
+                                <p className={'p-CheckoutPage-subHeader'}>
+                                  Xuất xứ:
+                                </p>
+                              </div>
+                              <div>
+                                <p className={'p-CheckoutPage-textProduct'}>
+                                  nông trại ?
+                                </p>
+                              </div>
+                            </div>*/}
+														{/*<div className={'flex items-center'}>
+                              <div>
+                                <p className={'p-CheckoutPage-subHeader'}>
+                                  Hạn sử dụng:
+                                </p>
+                              </div>
+                              <div>
+                                <p className={'p-CheckoutPage-textProduct'}>
+                                  còn 1 ngày
+                                </p>
+                              </div>
+                            </div>*/}
+														<div className={'flex gap-2 items-center'}>
+															<div>
+																<p className={'p-CheckoutPage-subHeader'}>
+																	Giá tiền:
+																</p>
+															</div>
+															<div>
+																<p className={'p-CheckoutPage-priceText'}>
+																	{value.originPrice}VND
+																</p>
+																{/*<p className={'p-CheckoutPage-textSale'}>120.000 đ</p>*/}
+															</div>
+														</div>
+														<div className={'flex gap-2'}>
+															<div>
+																<label className={'p-CheckoutPage-subHeader'}>
+																	Số lượng :{' '}
+																</label>
+															</div>
+															<div>
+																<input
+																	className={'input-CartPage-amount'}
+																	min={1}
+																	defaultValue={value.count}
+																	type={'number'}
+																	onChange={e =>
+																		changeNumber(
+																			e,
+																			value.productId,
+																			value.purchaserId
+																		)
+																	}
+																/>
+															</div>
+														</div>
+													</div>
+													<div className={'flex items-center ml-20 '}>
+														<button
+															className={'p-CheckoutPage-delete'}
+															value={value.productId}
+															onClick={e =>
+																deleteProductCart(
+																	e,
+																	value.purchaserId,
+																	value.productId
+																)
+															}>
+															xóa
+														</button>
+													</div>
 												</div>
 											</div>
-											{/*p2*/}
-											<div className={'flex items-end'}>
-												<div
-													className={
-														'flex justify-center div-CheckoutPage-amount'
-													}>
-													<div>
-														<button>-</button>
-													</div>
-													<div className={'mr-5 ml-5'}>
-														<p>1</p>
-													</div>
-													<div>
-														<button>+</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div className={'flex mb-8'}>
-										<div>
-											<Image
-												width={100}
-												height={67}
-												src={'/png/userImage.png'}
-											/>
-											<br />
-											<button className={'p-CheckoutPage-delete'}>xóa</button>
-										</div>
-										<div className={'flex'}>
-											{/*p1*/}
-											<div>
-												<p className={'p-CheckoutPage-productName'}>
-													Tên sản phẩm 2
-												</p>
-												<div className={'flex items-center'}>
-													<div>
-														<p className={'p-CheckoutPage-subHeader'}>
-															Xuất xứ:
-														</p>
-													</div>
-													<div>
-														<p className={'p-CheckoutPage-textProduct'}>
-															nông trại ?
-														</p>
-													</div>
-												</div>
-												<div className={'flex items-center'}>
-													<div>
-														<p className={'p-CheckoutPage-subHeader'}>
-															Hạn sử dụng:
-														</p>
-													</div>
-													<div>
-														<p className={'p-CheckoutPage-textProduct'}>
-															còn 1 ngày
-														</p>
-													</div>
-												</div>
-												<div>
-													<p className={'p-CheckoutPage-priceText'}>99.000 đ</p>
-													<p className={'p-CheckoutPage-textSale'}>120.000 đ</p>
-												</div>
-											</div>
-											{/*p2*/}
-											<div className={'flex items-end'}>
-												<div
-													className={
-														'flex justify-center div-CheckoutPage-amount'
-													}>
-													<div>
-														<button>-</button>
-													</div>
-													<div className={'mr-5 ml-5'}>
-														<p>1</p>
-													</div>
-													<div>
-														<button>+</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
+										</React.Fragment>
+									))}
 									<div className={'grid gap-3'}>
 										<div className={'flex justify-between'}>
 											<label>Thành Tiền</label>
-											<label>188.000 VND</label>
+											<label>{total} VND</label>
 										</div>
 										<div className={'flex justify-between'}>
 											<label>Phí Vận Chuyển</label>
 											<label>0 VND</label>
 										</div>
-										<div className={''}>
+										{/*<div className={''}>
 											<input
 												className={'input-CheckoutPage-saleCode '}
 												placeholder={'Nhập mã giảm giá'}
 											/>
-										</div>
+										</div>*/}
 										<div className={'flex justify-between'}>
 											<div>
 												<label>Tổng Tiền</label>
 											</div>
 											<div>
 												<p className={'p-CheckoutPage-priceText'}>
-													188.000 VND
+													{total} VND
 												</p>
 											</div>
 										</div>
@@ -346,6 +529,15 @@ const CheckoutPage = () => {
 				<style jsx>{`
 					.div-CheckoutPage-container {
 						background: #f9f9f9;
+					}
+					.input-CartPage-amount {
+						width: 60px;
+						cursor: text;
+						text-align: center;
+						border-width: 1px;
+						font-family: inherit;
+						line-height: inherit;
+						font-size: inherit;
 					}
 					.div-CheckoutPage-margin {
 						margin-top: 16px;
@@ -397,6 +589,16 @@ const CheckoutPage = () => {
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
+					.input-CheckoutPage-informationAddress {
+						width: 670px;
+						height: 42px;
+
+						text-indent: 10px;
+						background: #f9f9f9;
+						border: 1px solid #d1d1d1;
+						box-sizing: border-box;
+						border-radius: 12px;
+					}
 					.input-CheckoutPage-description {
 						width: 670px;
 						height: 112px;
@@ -409,7 +611,7 @@ const CheckoutPage = () => {
 					}
 					.div-CheckoutPage-form2 {
 						width: 468px;
-						margin-top: 31px;
+						margin-top: 112px;
 						margin-bottom: 16px;
 						height: fit-content;
 						background: #ffffff;
@@ -524,8 +726,8 @@ const CheckoutPage = () => {
 						color: #151515;
 					}
 					.p-CheckoutPage-delete {
-						width: 45px;
-						height: 25px;
+						width: 50px;
+						height: 30px;
 
 						background: #46d362;
 						border: 2px solid #2aa71a;

@@ -16,7 +16,7 @@ const CartPage = () => {
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
 
 	const [cart, setCart] = useState([])
-  const [total,setTotal] = useState(0)
+	const [total, setTotal] = useState(0)
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Giỏ Hàng')
@@ -39,40 +39,40 @@ const CartPage = () => {
 				.then(data => {
 					console.dir(data)
 					setCart(data.cartModelList)
-          setTotal(data.totalMoney)
+					setTotal(data.totalMoney)
 				})
 		}
 	}, [userCTX.state.userID])
 
-  const changeNumber = (e,productId,purchaserId) => {
-    e.preventDefault()
+	const changeNumber = (e, productId, purchaserId) => {
+		e.preventDefault()
 
-    let payload = {
-      purchaserId: purchaserId,
-      productId: productId,
-      count : e.target.value
-    }
-    // api change number card
-    fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/cart`, {
-      method: 'PUT',
-      mode: 'cors',
-      headers: {
-        Authorization: `Bearer ${userCTX.state.accessToken}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-      .then(response => {
-        if (response.status === 200) {
-          return response.json()
-        }
-      })
-      .then(data => {
-        setCart(data.cartModelList)
-        setTotal(data.totalMoney)
-      })
-  }
+		let payload = {
+			purchaserId: purchaserId,
+			productId: productId,
+			count: e.target.value
+		}
+		// api change number card
+		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/cart`, {
+			method: 'PUT',
+			mode: 'cors',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`,
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(payload)
+		})
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				}
+			})
+			.then(data => {
+				setCart(data.cartModelList)
+				setTotal(data.totalMoney)
+			})
+	}
 
 	const deleteProductCart = (e, purchaserId, productId) => {
 		e.preventDefault()
@@ -98,8 +98,8 @@ const CartPage = () => {
 				}
 			})
 			.then(data => {
-        console.log(data)
-        setCart(data.cartModelList)
+				console.log(data)
+				setCart(data.cartModelList)
 			})
 	}
 	if (userCTX.state.userID === null) {
@@ -123,9 +123,9 @@ const CartPage = () => {
 						<div>
 							<p className={'mr-2 ml-2 p-CartPage-subHeader'}>/</p>
 						</div>
-            <div>
-              <p className={'p-CartPage-textProduct'}>Giỏ hàng</p>
-            </div>
+						<div>
+							<p className={'p-CartPage-textProduct'}>Giỏ hàng</p>
+						</div>
 					</div>
 					<div className={'div-CartPage-formSize'}>
 						<div className={'mt-10 ml-10'}>
@@ -166,7 +166,13 @@ const CartPage = () => {
 																min={1}
 																defaultValue={value.count}
 																type={'number'}
-                                onChange={e => changeNumber(e,value.productId,value.purchaserId)}
+																onChange={e =>
+																	changeNumber(
+																		e,
+																		value.productId,
+																		value.purchaserId
+																	)
+																}
 															/>
 														</div>
 													</td>
@@ -175,7 +181,13 @@ const CartPage = () => {
 															<button
 																className={'btn-ListProduct-edit'}
 																value={value.productId}
-																onClick={e => deleteProductCart(e, value.purchaserId, value.productId)}>
+																onClick={e =>
+																	deleteProductCart(
+																		e,
+																		value.purchaserId,
+																		value.productId
+																	)
+																}>
 																Xóa
 															</button>
 														</div>
