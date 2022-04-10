@@ -191,6 +191,7 @@ const HistoryPage = () => {
 							width: 100%;
 							border-radius: 12px;
 							background: #ffffff;
+							margin-bottom: 25px;
 						}
 
 						.span-HistoryPage-textTitle {
@@ -204,11 +205,11 @@ const HistoryPage = () => {
 
 						th {
 							font-family: Poppins;
-							font-style: normal;
-							font-weight: 400;
-							font-size: 18px;
-							line-height: 23px;
-							color: #151515;
+              font-style: normal;
+              font-weight: 700;
+              font-size: 18px;
+              line-height: 23px;
+              color: #151515;
 						}
 
 						td {
@@ -229,6 +230,7 @@ const HistoryPage = () => {
 						.div-HistoryPage-table {
 							margin-left: 32px;
 							margin-top: 27px;
+							margin-bottom: 20px;
 							overflow-x: auto;
 							width: 92%;
 						}

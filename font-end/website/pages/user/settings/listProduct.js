@@ -67,7 +67,10 @@ const ListProduct = () => {
 									</div>
 									<div>
 										<Link href={'/product/addNewProduct'}>
-											<button className={'btn-ListProduct-addPrd'}>
+											<button className={'flex justify-center btn-ListProduct-addPrd items-center'}>
+                        <span className={'mr-5 span-ListProduct-plus'}>
+														+
+                        </span>
 												Thêm Sản Phẩm Mới
 											</button>
 										</Link>
@@ -77,15 +80,15 @@ const ListProduct = () => {
 								<hr className={'mt-7 mr-10 ml-10 hr-ListProduct-size'} />
 								<div className={'grid grid-col-1'}>
 									<div>
-										<table className={'div-ListProduct-table'}>
+										<table className={'div-ListProduct-table mb-6'}>
 											<thead align={'left'}>
 												<tr>
-													<th width={245}>Tên Sản Phẩm</th>
+													<th width={225}>Tên Sản Phẩm</th>
 													<th width={139}>Danh Mục</th>
 													<th width={139}>Danh Mục con</th>
 													<th width={82}>Giá</th>
-													<th width={90}>Kho Hàng</th>
-													<th width={70}>Đã Bán</th>
+													<th width={150}>Kho Hàng</th>
+													<th width={100}>Đã Bán</th>
 													<th width={174}>Sửa/Xóa Thông Tin</th>
 												</tr>
 											</thead>
@@ -172,13 +175,13 @@ const ListProduct = () => {
 
 						color: #ffffff;
 						background: #46d362;
-						border: 2px solid #2aa71a;
+            border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
 					.btn-ListProduct-edit {
 						width: 55px;
-						height: 36px;
+						height: 30px;
 						font-family: 'Poppins';
 						font-style: normal;
 						font-weight: 700;
@@ -187,7 +190,7 @@ const ListProduct = () => {
 
 						color: #ffffff;
 						background: #46d362;
-						border: 2px solid #2aa71a;
+            border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
@@ -197,10 +200,22 @@ const ListProduct = () => {
 						overflow-x: auto;
 						width: 92%;
 					}
+					.span-ListProduct-plus {
+						font-family: 'Poppins', sans-serif;
+						font-style: normal;
+						font-weight: 900;
+						font-size: 20px;
+						line-height: 17px;
+
+						align-items: center;
+						text-align: center;
+
+						color: #ffffff;
+					}
 					th {
 						font-family: Poppins;
 						font-style: normal;
-						font-weight: 400;
+						font-weight: 700;
 						font-size: 18px;
 						line-height: 23px;
 						color: #151515;

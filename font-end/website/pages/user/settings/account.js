@@ -370,10 +370,11 @@ const AccountPage = () => {
 						cursor: pointer;
 					}
 					.button-AccountPage-save {
-						width: 119.59px;
-						height: 32px;
-						background: #6a983c;
-						border: 2px solid #46760a;
+						width: 120px;
+						height: 35px;
+            margin-bottom: 20px;
+						background: #46d362;
+            border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 

@@ -263,12 +263,14 @@ const AuthenticationRegister = ({
 						border: 1px solid #d9d9d9;
 						box-sizing: border-box;
 						border-radius: 12px;
+						text-indent: 10px;
+						cursor: pointer;
 					}
 					.btn-AuthenticationRegister-size {
 						width: 200px;
 						height: 41px;
-						background: #6a983c;
-						border: 2px solid #46760a;
+						background: #46d362;
+            border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
