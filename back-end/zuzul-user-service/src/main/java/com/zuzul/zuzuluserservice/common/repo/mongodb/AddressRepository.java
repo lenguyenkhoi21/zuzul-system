@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface AddressRepository extends MongoRepository<Address, String> {
+    List<Address> findAllByUserIdAndType(String id, boolean type);
     List<Address> findAllByUserId(String id);
     Address findAddressByAddressId(String id);
     long deleteAddressByAddressId(String id);

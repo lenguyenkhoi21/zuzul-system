@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { CartContext } from '../../reducer/Cart.Reducer'
 import { UserContext } from '../../reducer/User.Reducer'
 import { API_DOMAIN, API_USER_SERVICE } from '../../utils/APIUtils'
-import {useRouter} from "next/router";
+import { useRouter } from 'next/router'
 
 const ProductShort = ({ product }) => {
 	console.log(
@@ -15,7 +15,7 @@ const ProductShort = ({ product }) => {
 	const cartCTX = useContext(CartContext)
 	const userCTX = useContext(UserContext)
 
-  const router = useRouter()
+	const router = useRouter()
 
 	const onClickHandle = e => {
 		e.preventDefault()
@@ -51,10 +51,10 @@ const ProductShort = ({ product }) => {
 		})
 			.then(response => response.json())
 			.then(data => {
-        if (data.alert === false) {
-          router.push('/cart')
-        }
-      })
+				if (data.alert === false) {
+					router.push('/checkout')
+				}
+			})
 	}
 	return (
 		<>
@@ -83,18 +83,18 @@ const ProductShort = ({ product }) => {
 								{product.prdPriceOrigin}
 							</p>
 							{/* eslint-disable-next-line tailwindcss/no-custom-classname */}
-              <Link href={'/cart'}>
-                <div>
-                  <button
-                    onClick={e => onClickHandle(e)}
-                    name={product.prdId}
-                    className={
-                      'float-right bg-navbar font-poppins btn-ProductShort'
-                    }>
-                    Mua ngay
-                  </button>
-                </div>
-              </Link>
+							<Link href={'/cart'}>
+								<div>
+									<button
+										onClick={e => onClickHandle(e)}
+										name={product.prdId}
+										className={
+											'float-right bg-navbar font-poppins btn-ProductShort'
+										}>
+										Mua ngay
+									</button>
+								</div>
+							</Link>
 							<div className={'clear-both'} />
 						</div>
 					</a>

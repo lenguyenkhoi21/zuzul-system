@@ -16,10 +16,23 @@ public class GetAllAddress {
 
     public List<AddressModel> getAllAddress (String userId, Principal principal) {
         if (principal.getName().equals(userId)) {
-            List<Address> addresses = addressRepository.findAllByUserId(userId);
+            Address defaultAddress = addressRepository.findAddressByUserIdAndType(userId, true);
+            List<Address> addresses = addressRepository.findAllByUserIdAndType(userId, false);
 
             List<AddressModel> addressModels = new ArrayList<>();
 
+            addressModels.add(AddressModel
+                    .builder()
+                    .addressId(defaultAddress.getAddressId())
+                    .userName(defaultAddress.getUserName())
+                    .userPhone(defaultAddress.getUserPhone())
+                    .userWard(defaultAddress.getUserWard())
+                    .userCity(defaultAddress.getUserCity())
+                    .userDistinct(defaultAddress.getUserDistinct())
+                    .type(defaultAddress.isType())
+                    .detailsAddress(defaultAddress.getDetailsAddress())
+                    .build()
+            );
             addresses.forEach(address ->
                     addressModels.add(
                      AddressModel
