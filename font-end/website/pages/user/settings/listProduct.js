@@ -67,10 +67,11 @@ const ListProduct = () => {
 									</div>
 									<div>
 										<Link href={'/product/addNewProduct'}>
-											<button className={'flex justify-center btn-ListProduct-addPrd items-center'}>
-                        <span className={'mr-5 span-ListProduct-plus'}>
-														+
-                        </span>
+											<button
+												className={
+													'flex justify-center items-center btn-ListProduct-addPrd'
+												}>
+												<span className={'mr-5 span-ListProduct-plus'}>+</span>
 												Thêm Sản Phẩm Mới
 											</button>
 										</Link>
@@ -80,7 +81,7 @@ const ListProduct = () => {
 								<hr className={'mt-7 mr-10 ml-10 hr-ListProduct-size'} />
 								<div className={'grid grid-col-1'}>
 									<div>
-										<table className={'div-ListProduct-table mb-6'}>
+										<table className={'mb-6 div-ListProduct-table'}>
 											<thead align={'left'}>
 												<tr>
 													<th width={225}>Tên Sản Phẩm</th>
@@ -105,7 +106,8 @@ const ListProduct = () => {
 															<td>
 																<div className={'flex gap-2'}>
 																	<div>
-																		<Link href={'/product/editProduct'}>
+																		<Link
+																			href={`/user/settings/editProductForm/${value.productId}`}>
 																			<button
 																				className={'btn-ListProduct-edit'}>
 																				Sửa
@@ -175,7 +177,7 @@ const ListProduct = () => {
 
 						color: #ffffff;
 						background: #46d362;
-            border: 1px solid #46760a;
+						border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
@@ -190,7 +192,7 @@ const ListProduct = () => {
 
 						color: #ffffff;
 						background: #46d362;
-            border: 1px solid #46760a;
+						border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 					}

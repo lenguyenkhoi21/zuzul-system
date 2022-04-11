@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface HistoryShopRepository extends MongoRepository<HistoryShop, String> {
@@ -12,4 +13,5 @@ public interface HistoryShopRepository extends MongoRepository<HistoryShop, Stri
     List<HistoryShop> findAllByUserId(String userId);
     List<HistoryShop> findAllByUserIdAndStatus(String userId, String status);
     List<HistoryShop> findAllByUserIdAndCategoryId(String userId, String categoryId);
+    Optional<HistoryShop> findById (String historyId);
 }

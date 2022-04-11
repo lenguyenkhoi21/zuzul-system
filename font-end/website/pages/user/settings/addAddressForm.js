@@ -331,7 +331,7 @@ const AddAddressFormPage = () => {
 						margin-right: 28px;
 
 						background: #46d362;
-            border: 1px solid #46760a;
+						border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 

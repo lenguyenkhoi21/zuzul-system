@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HistoryShopModels {
+    private String id;
     private String historyId;
     private String userId; //shopId
     private String productName;

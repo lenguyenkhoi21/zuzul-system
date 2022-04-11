@@ -29,7 +29,7 @@ public class Product {
     private String prdSubId;
     private int prdPriceOrigin;
     private String prdOrigin;
-    private Date prdDateManufacture;
+    private long prdDateManufacture;
     private String prdShortDes;
     private String prdLongDes;
     private float prdSale;
