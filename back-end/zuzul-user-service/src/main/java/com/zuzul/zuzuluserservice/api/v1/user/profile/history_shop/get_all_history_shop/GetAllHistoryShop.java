@@ -16,11 +16,18 @@ public class GetAllHistoryShop {
     private final HistoryShopRepository historyShopRepository;
     private static final String ALL = "ALL";
 
-    public List<HistoryShopModels> getAllHistoryShop (String userId, String status, String categoryId,  Principal principal) {
+    public List<HistoryShopModels> getAllHistoryShop (String userId, String status,  Principal principal) {
         if (principal.getName().equals(userId)) {
             List<HistoryShop> historyShops = null;
 
-            if (status.equals(ALL) && categoryId.equals(ALL)) {
+            if (status.equals(ALL)) {
+                historyShops = historyShopRepository.findAllByUserId(userId);
+            }
+            else {
+                historyShops = historyShopRepository.findAllByUserIdAndStatus(userId, status);
+            }
+
+            /*if (status.equals(ALL) && categoryId.equals(ALL)) {
                 historyShops = historyShopRepository.findAllByUserId(userId);
             }
 
@@ -34,13 +41,14 @@ public class GetAllHistoryShop {
 
             if (!status.equals(ALL) && !categoryId.equals(ALL)) {
                 historyShops = historyShopRepository.findAllByUserIdAndStatusAndAndCategoryId(userId, status, categoryId);
-            }
+            }*/
 
             List<HistoryShopModels> historyShopModels = new ArrayList<>();
             if (historyShops.size() > 0) {
                 historyShops.forEach(historyShop -> {
                     historyShopModels.add(HistoryShopModels
                             .builder()
+                            .id(historyShop.getId())
                             .count(historyShop.getCount())
                             .dateCreated(historyShop.getDateCreated())
                             .historyId(historyShop.getHistoryId())

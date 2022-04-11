@@ -1,10 +1,4 @@
-import React, {
-	useCallback,
-	useContext,
-	useEffect,
-	useRef,
-	useState
-} from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { TITLE_ACTION, TitleContext } from '../../../reducer/Title.Reducer'
 import { UserContext } from '../../../reducer/User.Reducer'
 import Authentication from '../../../component/common/Authentication'
@@ -21,14 +15,13 @@ const OrderManagementPage = () => {
 	const userCTX = useContext(UserContext)
 
 	const [historyShop, setHistoryShop] = useState([])
-	const [categoryList, setCategoryList] = useState([])
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Quản lí đơn hàng')
 
 		if (userCTX.state.userID !== null)
 			fetch(
-				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/${userCTX.state.userID}/historyShop/ALL/ALL`,
+				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/${userCTX.state.userID}/historyShop/ALL`,
 				{
 					method: 'GET',
 					mode: 'cors',
@@ -45,19 +38,6 @@ const OrderManagementPage = () => {
 				.then(data => {
 					setHistoryShop(data)
 				})
-
-		fetch(`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/category/all`, {
-			method: 'GET',
-			mode: 'cors'
-		})
-			.then(response => {
-				if (response.status === 200) {
-					return response.json()
-				}
-			})
-			.then(data => {
-				setCategoryList(data)
-			})
 	}, [userCTX.state.userID])
 
 	/*  const objectsEqual = (object_1, object_2) =>
@@ -69,25 +49,16 @@ const OrderManagementPage = () => {
   const arraysEqual = (array_1, array_2) =>
     array_1.length === array_2.length && array_1.every((object, index) => objectsEqual(object, array_2[index]))*/
 
-	const [key, setKey] = useState({
-		category: 'ALL',
-		status: 'ALL'
-	})
-
 	/*const set = useCallback((e) => {
     setKey( {...key, [e.target.name]: e.target.value})
   }, [key])*/
 
+	const [key, setKey] = useState('ALL')
+
 	const filterList = e => {
-		//(e.target.name === 'category') ? key.category = e.target.value : key.status = e.target.value
-
-		e.persist()
 		e.preventDefault()
-
-		// set(e)
-
-		/*		fetch(
-			`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/${userCTX.state.userID}/historyShop/${key.status}/${key.category}`,
+		fetch(
+			`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/${userCTX.state.userID}/historyShop/${e.target.value}`,
 			{
 				method: 'GET',
 				mode: 'cors',
@@ -103,7 +74,36 @@ const OrderManagementPage = () => {
 			})
 			.then(data => {
 				setHistoryShop(data)
-			})*/
+				setKey(e.target.value)
+			})
+	}
+
+	const changeState = (e, historyId, status) => {
+		e.preventDefault()
+
+		const payload = {
+			userId: userCTX.state.userID,
+			historyId: historyId,
+			status: status,
+			filterStatus: key
+		}
+
+		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/historyShop`, {
+			method: 'PUT',
+			mode: 'cors',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`,
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(payload)
+		})
+			.then(response => {
+				if (response.status === 200) return response.json()
+			})
+			.then(data => {
+				setHistoryShop(data)
+			})
 	}
 
 	if (userCTX.state.userID === null) {
@@ -135,7 +135,7 @@ const OrderManagementPage = () => {
 								</div>
 								<hr className={'mt-7 mr-10 ml-10 hr-OrderManagement-size'} />
 								<div className={'flex grid-flow-col justify-end mt-6'}>
-									<div className={'div-OrderManagement-marginCategory'}>
+									{/*									<div className={'div-OrderManagement-marginCategory'}>
 										<select
 											className={'select-OrderManagement-color'}
 											onChange={filterList}
@@ -149,7 +149,7 @@ const OrderManagementPage = () => {
 												</React.Fragment>
 											))}
 										</select>
-									</div>
+									</div>*/}
 									<div className={'div-OrderManagement-marginStatus'}>
 										<select
 											className={'select-OrderManagement-color '}
@@ -194,7 +194,7 @@ const OrderManagementPage = () => {
 															đ
 														</td>
 														<td>
-															<select
+															{/*<select
 																className={'select-OrderManagement-table'}>
 																<option value='ALL'>Chọn trạng thái</option>
 																<option value='WAIT_FOR_ACCEPTING'>
@@ -205,7 +205,15 @@ const OrderManagementPage = () => {
 																</option>
 																<option value='DELIVERING'>Đang giao</option>
 																<option value='DELIVERED'>Đã giao</option>
-															</select>
+															</select>*/}
+															{/*//TODO CuongNQ Fix CSS*/}
+															<button
+																style={{ height: 60 }}
+																onClick={e =>
+																	changeState(e, value.id, value.status)
+																}>
+																{value.status}
+															</button>
 														</td>
 														<td>
 															<button className={'btn-OrderManagement-size'}>

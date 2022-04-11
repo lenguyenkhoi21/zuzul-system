@@ -53,8 +53,7 @@ const ChangePasswordPage = () => {
 								<hr className={'mt-7 mr-10 ml-10 hr-ChangePasswordPage-size'} />
 								<div className={'grid grid-col-1'}>
 									{/*mat khau hien tai*/}
-									<div
-										className={'grid grid-cols-3 grid-flow-col '}>
+									<div className={'grid grid-cols-3 grid-flow-col '}>
 										<div>
 											<label className={'label-ChangePasswordPage-inputHeader'}>
 												Mật Khẩu Hiện Tại
@@ -66,8 +65,7 @@ const ChangePasswordPage = () => {
 									</div>
 
 									{/*mat khau moi*/}
-									<div
-										className={'grid grid-cols-3 grid-flow-col'}>
+									<div className={'grid grid-cols-3 grid-flow-col'}>
 										<div>
 											<label className={'label-ChangePasswordPage-inputHeader'}>
 												Mật Khẩu Mới
@@ -79,8 +77,7 @@ const ChangePasswordPage = () => {
 									</div>
 
 									{/*xac nhan mat khau*/}
-									<div
-										className={'grid grid-cols-3 grid-flow-col'}>
+									<div className={'grid grid-cols-3 grid-flow-col'}>
 										<div>
 											<label className={'label-ChangePasswordPage-inputHeader'}>
 												Xác Nhận Mật Khẩu
@@ -94,7 +91,8 @@ const ChangePasswordPage = () => {
 									<div
 										className={'grid grid-cols-3 grid-flow-col items-center'}>
 										<div className={'grid col-start-2'}>
-											<button className={'btn-ChangePasswordPage-acceptBtn mb-8'}>
+											<button
+												className={'mb-8 btn-ChangePasswordPage-acceptBtn'}>
 												Xác Nhận
 											</button>
 										</div>
@@ -181,7 +179,7 @@ const ChangePasswordPage = () => {
 						color: #ffffff;
 
 						background: #46d362;
-            border: 1px solid #46760a;
+						border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 					}

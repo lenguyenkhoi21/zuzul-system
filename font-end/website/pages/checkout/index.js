@@ -119,7 +119,7 @@ const CheckoutPage = () => {
 			.then(data => {
 				console.log(data)
 				setCart(data.cartModelList)
-        setTotal(data.totalMoney)
+				setTotal(data.totalMoney)
 			})
 	}
 
@@ -145,52 +145,59 @@ const CheckoutPage = () => {
 			})
 	}
 
-  const Order = (e) => {
-    e.preventDefault()
+	const Order = e => {
+		e.preventDefault()
 
-    let payload = {
-      userId: userCTX.state.userID,
-      userName: chooseAddress.userName,
-      paymentType: 'DIRECT',
-      address: chooseAddress.detailsAddress + ', ' + chooseAddress.userWard + ', ' + chooseAddress.userDistinct + ', ' + chooseAddress.userCity,
-      phone: chooseAddress.userPhone,
-      dateCreated: Math.round(new Date().getTime() / 1000),
-      detailsList: [],
-      totalPrice: total
-    }
+		let payload = {
+			userId: userCTX.state.userID,
+			userName: chooseAddress.userName,
+			paymentType: 'DIRECT',
+			address:
+				chooseAddress.detailsAddress +
+				', ' +
+				chooseAddress.userWard +
+				', ' +
+				chooseAddress.userDistinct +
+				', ' +
+				chooseAddress.userCity,
+			phone: chooseAddress.userPhone,
+			dateCreated: Math.round(new Date().getTime() / 1000),
+			detailsList: [],
+			totalPrice: total
+		}
 
-    cart.map((value) => {
-      const add = {
-        productId: value.productId,
-        productName: value.productName,
-        count: value.count,
-        originPrice: value.originPrice,
-        discount: value.discount
-      }
+		cart.map(value => {
+			const add = {
+				productId: value.productId,
+				productName: value.productName,
+				count: value.count,
+				originPrice: value.originPrice,
+				discount: value.discount
+			}
 
-      payload.detailsList.push(add)
-    })
+			payload.detailsList.push(add)
+		})
 
-    fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/history`, {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        Authorization: `Bearer ${userCTX.state.accessToken}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-      .then(response => {
-        if (response.status === 200) {
-          return response.json()
-        }
-      })
-      .then(data => {
-        setCart([])
-        setTotal(0)
-      })
-  }
+		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/history`, {
+			method: 'POST',
+			mode: 'cors',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`,
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(payload)
+		})
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				}
+			})
+			.then(data => {
+				setCart([])
+				setTotal(0)
+			})
+	}
 	if (userCTX.state.userID === null) {
 		return (
 			<>
@@ -382,9 +389,13 @@ const CheckoutPage = () => {
 								</div>
 							</div>*/}
 							<div className={'flex mt-20 ml-4'}>
-                <Link href={'/'}>
-								  <button className={'btn-CheckoutPage-accept'} onClick={e => Order(e)}>Đặt Hàng</button>
-                </Link>
+								<Link href={'/'}>
+									<button
+										className={'btn-CheckoutPage-accept'}
+										onClick={e => Order(e)}>
+										Đặt Hàng
+									</button>
+								</Link>
 							</div>
 						</div>
 

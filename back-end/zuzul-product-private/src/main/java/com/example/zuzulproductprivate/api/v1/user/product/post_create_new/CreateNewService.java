@@ -48,7 +48,7 @@ public class CreateNewService {
                     .prdSubId(payload.getPrdSubId())
                     .prdPriceOrigin(payload.getPrdPriceOrigin())
                     .prdOrigin(payload.getPrdOrigin())
-                    .prdDateManufacture(new Date(payload.getPrdDateManufacture()))
+                    .prdDateManufacture(payload.getPrdDateManufacture())
                     .prdDateExpiry(payload.getPrdDateExpiry())
                     .prdMonthWarranty(payload.getPrdMonthWarranty())
                     .prdDateCreate(payload.getPrdDateCreate())

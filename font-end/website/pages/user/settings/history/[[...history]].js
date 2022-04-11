@@ -205,11 +205,11 @@ const HistoryPage = () => {
 
 						th {
 							font-family: Poppins;
-              font-style: normal;
-              font-weight: 700;
-              font-size: 18px;
-              line-height: 23px;
-              color: #151515;
+							font-style: normal;
+							font-weight: 700;
+							font-size: 18px;
+							line-height: 23px;
+							color: #151515;
 						}
 
 						td {

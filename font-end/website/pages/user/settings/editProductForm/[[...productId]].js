@@ -1,25 +1,151 @@
-import React, { useContext, useEffect } from 'react'
-import { UserContext } from '../../reducer/User.Reducer'
-import { TITLE_ACTION, TitleContext } from '../../reducer/Title.Reducer'
+import React, { useContext, useEffect, useState } from 'react'
+import { UserContext } from '../../../../reducer/User.Reducer'
+import { TITLE_ACTION, TitleContext } from '../../../../reducer/Title.Reducer'
 import {
 	LEFT_MENU_USER_ACTION,
 	LeftMenuUserContext
-} from '../../reducer/LeftMenuUser.Reducer'
-import Authentication from '../../component/common/Authentication'
-import UserAccountBackground from '../../component/common/UserAccountBackground'
-import LeftMenuUser from '../../component/user/settings/LeftMenuUser'
+} from '../../../../reducer/LeftMenuUser.Reducer'
+import Authentication from '../../../../component/common/Authentication'
+import UserAccountBackground from '../../../../component/common/UserAccountBackground'
+import LeftMenuUser from '../../../../component/user/settings/LeftMenuUser'
 import Image from 'next/image'
 import Link from 'next/link'
+import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../../../utils/APIUtils'
+import { useRouter } from 'next/router'
 
 const EditProduct = () => {
 	const userCTX = useContext(UserContext)
 	const titleCTX = useContext(TitleContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
 
+	const router = useRouter()
+	const path = router.asPath
+	const productId = path.split('/')[4]
+
+	const [product, setProduct] = useState({})
+	const [category, setCategory] = useState([])
+	const [subCategory, setSubCategory] = useState([])
+	const [date, setDate] = useState('')
+
+	const formatDate = date => {
+		let timestamp = date * 1000
+		let date_not_formatted = new Date(timestamp)
+
+		let formatted_string = date_not_formatted.getFullYear() + '-'
+
+		if (date_not_formatted.getMonth() < 9) {
+			formatted_string += '0'
+		}
+		formatted_string += date_not_formatted.getMonth() + 1
+		formatted_string += '-'
+
+		if (date_not_formatted.getDate() < 10) {
+			formatted_string += '0'
+		}
+		formatted_string += date_not_formatted.getDate()
+
+		return formatted_string
+	}
+
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Sửa thông tin sản phẩm')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.RESET)
-	}, [])
+
+		if (userCTX.state.userID !== null && productId !== '[[...productId]]') {
+			fetch(
+				`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/user/${userCTX.state.userID}/product/${productId}`,
+				{
+					method: 'GET',
+					mode: 'cors',
+					headers: {
+						Authorization: `Bearer ${userCTX.state.accessToken}`
+					}
+				}
+			)
+				.then(response => {
+					if (response.status === 200) {
+						return response.json()
+					}
+				})
+				.then(data => {
+					setProduct(data)
+					setDate(formatDate(data.prdDateManufacture))
+				})
+
+			fetch(`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/category/all`, {
+				method: 'GET',
+				mode: 'cors'
+			})
+				.then(response => {
+					if (response.status === 200) {
+						return response.json()
+					}
+				})
+				.then(data => {
+					setCategory(data)
+				})
+		}
+
+		if (product !== {}) {
+			fetch(
+				`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/${product.prdCateId}/sub/all`,
+				{
+					method: 'GET',
+					mode: 'cors'
+				}
+			)
+				.then(response => {
+					if (response.status === 200) {
+						return response.json()
+					}
+				})
+				.then(data => {
+					setSubCategory(data)
+				})
+		}
+	}, [userCTX.state.userID, path])
+
+	const onSelectSub = e => {
+		e.preventDefault()
+
+		setProduct({
+			...product,
+			['prdCateId']: e.target.value
+		})
+
+		fetch(
+			`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/${e.target.value}/sub/all`,
+			{
+				method: 'GET',
+				mode: 'cors'
+			}
+		)
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				}
+			})
+			.then(data => {
+				setSubCategory(data)
+			})
+	}
+
+	const onChange = e => {
+		e.preventDefault()
+		if (e.target.name === 'prdDateManufacture') {
+			setProduct({
+				...product,
+				[e.target.name]: new Date(e.target.value).getTime() / 1000
+			})
+		} else {
+			setProduct({ ...product, [e.target.name]: e.target.value })
+		}
+	}
+
+	const discountStandard = []
+	for (var i = 0; i <= 100; i++) {
+		discountStandard.push(i)
+	}
 
 	const getImagePreview0 = e => {
 		var image = URL.createObjectURL(e.target.files[0])
@@ -86,7 +212,12 @@ const EditProduct = () => {
 											</label>
 										</div>
 										<div>
-											<input className={'input-EditProduct-namePrd'} />
+											<input
+												className={'input-EditProduct-namePrd'}
+												name={'prdName'}
+												onChange={onChange}
+												defaultValue={product.prdName}
+											/>
 										</div>
 									</div>
 									{/*Tên Danh Mục*/}
@@ -97,21 +228,41 @@ const EditProduct = () => {
 											</label>
 										</div>
 										<div className={''}>
-											<select className={'select-EditProduct-color'}>
+											<select
+												className={'select-EditProduct-color'}
+												name={'prdCateId'}
+												onChange={onSelectSub}
+												defaultValue={category.filter(
+													cate => cate.categoryId === product.prdCateId
+												)}>
 												<option value='0'>Chọn danh mục</option>
-												<option value='1'>Sách</option>
-												<option value='1'>Thời trang nam</option>
-												<option value='2'>Thời trang nữ</option>
-												<option value='3'>Đồng Hồ</option>
-												<option value='4'>Điện thoại & phụ kiện</option>
-												<option value='5'>Mẹ & Bé</option>
-												<option value='6'>Giày dép</option>
-												<option value='7'>Thiết bị điện tử</option>
-												<option value='8'>Nhà cửa & Đời sống</option>
-												<option value='9'>Máy tính & Laptop</option>
-												<option value='10'>Máy ảnh & Máy quay phim</option>
-												<option value='11'>Sắc đẹp</option>
-												<option value='12'>Sức khỏe</option>
+												{category.map((value, key) => (
+													<React.Fragment key={key}>
+														<option value={value.categoryId}>
+															{value.categoryName}
+														</option>
+													</React.Fragment>
+												))}
+											</select>
+										</div>
+										<div>
+											<label className={'label-EditProduct-subTitle'}>
+												Tên Danh Mục Con
+											</label>
+										</div>
+										<div className={''}>
+											<select
+												className={'select-EditProduct-color'}
+												name={'prdSubId'}
+												onChange={onChange}
+												defaultValue={product.prdSubId}>
+												{subCategory.map((value, key) => (
+													<React.Fragment key={key}>
+														<option value={value.subCategoryId}>
+															{value.subCategoryName}
+														</option>
+													</React.Fragment>
+												))}
 											</select>
 										</div>
 									</div>
@@ -119,11 +270,16 @@ const EditProduct = () => {
 									<div className={'flex items-center mt-6'}>
 										<div>
 											<label className={'label-EditProduct-subTitle'}>
-												Tiêu đề
+												Thời hạn bảo hành (tháng)
 											</label>
 										</div>
 										<div>
-											<input className={'input-EditProduct-title'} />
+											<input
+												className={'input-EditProduct-title'}
+												name={'prdMonthWarranty'}
+												onChange={onChange}
+												defaultValue={product.prdMonthWarranty}
+											/>
 										</div>
 									</div>
 									{/*Xuất Xứ*/}
@@ -134,7 +290,12 @@ const EditProduct = () => {
 											</label>
 										</div>
 										<div>
-											<input className={'input-EditProduct-origin'} />
+											<input
+												className={'input-EditProduct-origin'}
+												name={'prdOrigin'}
+												onChange={onChange}
+												defaultValue={product.prdOrigin}
+											/>
 										</div>
 									</div>
 									{/*Ngày Sản Xuất*/}
@@ -148,6 +309,9 @@ const EditProduct = () => {
 											<input
 												type={'date'}
 												className={'input-EditProduct-createDate'}
+												onChange={onChange}
+												defaultValue={date}
+												name={'prdDateManufacture'}
 											/>
 										</div>
 									</div>
@@ -159,18 +323,48 @@ const EditProduct = () => {
 											</label>
 										</div>
 										<div>
-											<input className={'input-EditProduct-createDate'} />
+											<input
+												className={'input-EditProduct-createDate'}
+												defaultValue={product.prdPriceOrigin}
+												name={'prdPriceOrigin'}
+												onChange={onChange}
+											/>
+										</div>
+									</div>
+									<div className={'flex items-center mt-6'}>
+										<div>
+											<label className={'label-EditProduct-subTitle'}>
+												Giảm Giá
+											</label>
+										</div>
+										<div>
+											<select
+												onChange={onChange}
+												className={'select-EditProduct-color'}
+												defaultValue={product.discount}
+												name={'discount'}>
+												{discountStandard.map((value, key) => (
+													<React.Fragment key={key}>
+														<option value={value}>{value}</option>
+													</React.Fragment>
+												))}
+											</select>
 										</div>
 									</div>
 									{/*Sale*/}
 									<div className={'flex items-center mt-6'}>
 										<div>
 											<label className={'label-EditProduct-subTitle'}>
-												Sale
+												Numbers In Storage
 											</label>
 										</div>
 										<div>
-											<input className={'input-EditProduct-sale'} />
+											<input
+												className={'input-EditProduct-sale'}
+												onChange={onChange}
+												defaultValue={product.prdNumberInStorage}
+												name={'prdNumberInStorage'}
+											/>
 										</div>
 									</div>
 									{/*Ảnh*/}
@@ -261,20 +455,41 @@ const EditProduct = () => {
 											</label>
 										</div>
 										<div>
-											<textarea className={'input-EditProduct-description'} />
+											<textarea
+												className={'input-EditProduct-description'}
+												name={'prdShortDes'}
+												onChange={onChange}
+												defaultValue={product.prdShortDes}
+											/>
+										</div>
+									</div>
+
+									<div className={'flex mt-6'}>
+										<div>
+											<label className={'label-EditProduct-subTitle'}>
+												Mô Tả Chi Tiết
+											</label>
+										</div>
+										<div>
+											<textarea
+												className={'input-EditProduct-description'}
+												onChange={onChange}
+												name={'prdLongDes'}
+												defaultValue={product.prdLongDes}
+											/>
 										</div>
 									</div>
 
 									<div className={'flex gap-9 justify-end mt-6 mr-28 mb-10'}>
 										<div>
-											<Link href={'/product/listProduct'}>
+											<Link href={'/user/settings/listProduct'}>
 												<button className={'btn-EditProduct-cancel'}>
 													Hủy
 												</button>
 											</Link>
 										</div>
 										<div>
-											<Link href={'/product/listProduct'}>
+											<Link href={'/user/settings/listProduct'}>
 												<button className={'btn-EditProduct-save'}>Lưu</button>
 											</Link>
 										</div>

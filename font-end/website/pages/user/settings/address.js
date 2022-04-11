@@ -218,8 +218,8 @@ const AddressPage = () => {
 				</div>
 				<style jsx>{`
 					.div-test {
-            width: 184px;
-            margin-left: 150px;
+						width: 184px;
+						margin-left: 150px;
 					}
 					.div-AddressPage-container {
 						background: #f9f9f9;
@@ -273,7 +273,7 @@ const AddressPage = () => {
 						padding: 15px;
 					}
 					.btn-AddressPage-tagContent {
-					  position: absolute;
+						position: absolute;
 						font-family: Roboto;
 						font-style: normal;
 						font-weight: bold;
@@ -294,7 +294,7 @@ const AddressPage = () => {
 					.btn-AddressPage-funcBtn {
 						display: inline;
 						background: #46d362;
-            border: 1px solid #46760a;
+						border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 
@@ -313,7 +313,7 @@ const AddressPage = () => {
 					}
 					.btn-AddressPage-funcSetup {
 						background: #46d362;
-            border: 1px solid #46760a;
+						border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 
@@ -333,7 +333,7 @@ const AddressPage = () => {
 					.btn-AddressPage-addBtn {
 						font-family: Roboto;
 						background: #46d362;
-            border: 1px solid #46760a;
+						border: 1px solid #46760a;
 						box-sizing: border-box;
 						border-radius: 12px;
 
