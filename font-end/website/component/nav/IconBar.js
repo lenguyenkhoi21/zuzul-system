@@ -4,12 +4,13 @@ import Image from 'next/image'
 import { timeNow } from '../../utils/Utils'
 import { UserContext } from '../../reducer/User.Reducer'
 /*import { ChatContext } from '../../reducer/Chat.Reducer'*/
+import { CartContext } from '../../reducer/Cart.Reducer'
 
 const IconBar = () => {
 	console.log(
 		`${timeNow()} --- [IconBar] --- Render at component/nav/IconBar.js`
 	)
-
+  const cartCTX = useContext(CartContext)
 	const userCTX = useContext(UserContext)
 	/*const chatCTX = useContext(ChatContext)*/
 
@@ -65,6 +66,21 @@ const IconBar = () => {
 							</a>
 						</Link>
 					</div>*/}
+          <div className={'flex items-center mr-2 mt-1'}>
+            <Link href={'/checkout'}>
+              <a>
+                <div>
+                  <Image
+                    src={'/svg/shopping-cart.svg'}
+                    width={25}
+                    height={25}
+                    alt={'Shopping Cart'}
+                  />
+                  <span> {cartCTX.state.totalProduct} </span>
+                </div>
+              </a>
+            </Link>
+          </div>
 					{userCTX.state.userID === null ? (
 						<>
 							<div className={'flex mr-3.5 div-IconBar-container'}>
