@@ -134,7 +134,7 @@ const AddNewProduct = () => {
 			body: formData
 		})
 			.then(response => {
-				if (response.status === 200) response.json()
+				if (response.status === 200) return response.json()
 			})
 			.then(data => {
 				if (data.status === 'Success') router.push('/user/settings/listProduct')
