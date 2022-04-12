@@ -3,14 +3,14 @@ import IconBar from './IconBar'
 import Image from 'next/image'
 import Link from 'next/link'
 import { timeNow } from '../../utils/Utils'
-import { CartContext } from '../../reducer/Cart.Reducer'
+/*import { CartContext } from '../../reducer/Cart.Reducer'*/
 
 const NavigationBar = () => {
 	console.log(
 		`${timeNow()} --- [NavigationBar] --- Render at component/nav/NavigationBar.js`
 	)
 
-	const cartCTX = useContext(CartContext)
+	/*const cartCTX = useContext(CartContext)*/
 
 	return (
 		<>
@@ -65,7 +65,7 @@ const NavigationBar = () => {
 
 						</div>
 					</div>
-					<div className={'h-auto'}>
+					{/*<div className={'h-auto'}>
 						<Link href={'/checkout'}>
 							<a>
 								<div>
@@ -79,7 +79,7 @@ const NavigationBar = () => {
 								</div>
 							</a>
 						</Link>
-					</div>
+					</div>*/}
 				</div>
 			</div>
 			<style jsx>
