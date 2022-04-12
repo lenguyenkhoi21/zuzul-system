@@ -54,12 +54,15 @@ const NavigationBar = () => {
 								className={'mr-2 focus:outline-none input-NavigationBar'}
 								placeholder={'Find your product that you want !'}
 							/>
-							<Image
-								src={'/svg/search.svg'}
-								width={25}
-								height={25}
-								alt={'Shopping Cart'}
-							/>
+              <button>
+                <Image
+                  src={'/svg/search.svg'}
+                  width={25}
+                  height={25}
+                  alt={'Shopping Cart'}
+                />
+              </button>
+
 						</div>
 					</div>
 					<div className={'h-auto'}>
