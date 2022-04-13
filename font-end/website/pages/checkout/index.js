@@ -211,7 +211,7 @@ const CheckoutPage = () => {
 	} else {
 		return (
 			<>
-				<div className={'px-330 div-CheckoutPage-container'}>
+				<div className={'px-330 page-body div-CheckoutPage-container'}>
 					<div className={'flex div-CheckoutPage-homeText'}>
 						<div>
 							<p className={'p-CheckoutPage-subHeader'}>Trang chủ</p>

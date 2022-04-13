@@ -3,8 +3,10 @@ import './CategoryForm.css'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../../../reducer/User.Reducer'
 import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../../utils/Constant'
+import { useNavigate } from 'react-router-dom'
 
 const CategoryForm = ({ title }) => {
+  const navigate = useNavigate()
 	const userCTX = useContext(UserContext)
 	const [category, setCategory] = useState({
 		userId: userCTX.state.userID,
@@ -34,8 +36,13 @@ const CategoryForm = ({ title }) => {
 			mode: 'cors',
 			body: formData
 		})
-			.then(response => response.json())
-			.catch(data => console.log(data))
+			.then(response => {
+        navigate('/category_management')
+        return response.json()
+      })
+			.catch(data => {
+				console.log(data)
+			})
 	}
 
 	// const resetCategory = e => {

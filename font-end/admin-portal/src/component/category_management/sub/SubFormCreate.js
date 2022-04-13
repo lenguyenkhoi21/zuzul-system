@@ -2,8 +2,10 @@ import React, { useContext, useState } from 'react'
 import { UserContext } from '../../../reducer/User.Reducer'
 import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../../utils/Constant'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const SubFormCreate = ({ cateId }) => {
+  const navigate = useNavigate()
 	const userCTX = useContext(UserContext)
 
 	const [subCategory, setSubCategory] = useState({
@@ -39,7 +41,10 @@ const SubFormCreate = ({ cateId }) => {
 			mode: 'cors',
 			body: JSON.stringify(data)
 		})
-			.then(response => response.json())
+			.then(response => {
+        navigate('/category_management')
+        return response.json()
+      })
 			.then(data => setStatus(data))
 	}
 

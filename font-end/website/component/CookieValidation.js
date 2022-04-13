@@ -20,11 +20,6 @@ const CookieValidation = props => {
 		const userID = userCTX.state.userID
 		// Cookie has been existed
 		if (user !== undefined && user !== null && user !== '' && userID === null) {
-			/*
-			 * TODO: Validated the Token
-			 * Solution 1: Send the Token to the services authentication
-			 * Solution 2: Logout. I'm lazy to fetch API
-			 * */
 			fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/pub/valid_token`, {
 				method: 'GET',
 				headers: {
@@ -51,4 +46,4 @@ const CookieValidation = props => {
 	return <>{props.children}</>
 }
 
-export default React.memo(CookieValidation)
+export default CookieValidation

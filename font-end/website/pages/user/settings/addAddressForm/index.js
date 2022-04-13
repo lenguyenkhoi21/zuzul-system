@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { TITLE_ACTION, TitleContext } from '../../../reducer/Title.Reducer'
-import { timeNow } from '../../../utils/Utils'
+import { TITLE_ACTION, TitleContext } from '../../../../reducer/Title.Reducer'
+import { timeNow } from '../../../../utils/Utils'
 import Link from 'next/link'
-import Authentication from '../../../component/common/Authentication'
-import { UserContext } from '../../../reducer/User.Reducer'
-import { API_DOMAIN, API_USER_SERVICE } from '../../../utils/APIUtils'
+import Authentication from '../../../../component/common/Authentication'
+import { UserContext } from '../../../../reducer/User.Reducer'
+import { API_DOMAIN, API_USER_SERVICE } from '../../../../utils/APIUtils'
 import { useRouter } from 'next/router'
 const AddAddressFormPage = () => {
 	console.log(
@@ -81,7 +81,7 @@ const AddAddressFormPage = () => {
 	} else {
 		return (
 			<>
-				<div className={'flex justify-center px-330'}>
+				<div className={'flex justify-center px-330 page-body'}>
 					<form className={'form-AddAddressForm-size '} onSubmit={addAddress}>
 						<div>
 							<div>

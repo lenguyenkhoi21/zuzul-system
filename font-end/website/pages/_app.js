@@ -25,12 +25,12 @@ const MyApp = ({ Component, pageProps }) => {
 							<CartReducer>
 								<LeftMenuUserReducer>
 									<CookieValidation>
-										<ConnectSocket />
+										{/*<ConnectSocket />*/}
+										<Metadata />
+										<NavigationBar />
+										<Component {...pageProps} />
+										<Footer />
 									</CookieValidation>
-									<Metadata />
-									<NavigationBar />
-									<Component {...pageProps} />
-									<Footer />
 								</LeftMenuUserReducer>
 							</CartReducer>
 						</ChatReducer>

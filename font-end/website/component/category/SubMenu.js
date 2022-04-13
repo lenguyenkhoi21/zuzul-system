@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../utils/APIUtils'
-import { data } from 'autoprefixer'
 
 const SubMenu = ({ setProduct, pathname, path }) => {
 	const [submenu, setSubmenu] = useState([])
@@ -149,6 +148,7 @@ const SubMenu = ({ setProduct, pathname, path }) => {
 					label:checked ~ .geekmark {
 						background-color: green;
 					}
+
 					.geekmark {
 						padding-right: 10px;
 					}
@@ -156,12 +156,6 @@ const SubMenu = ({ setProduct, pathname, path }) => {
 					.filter-group-list {
 						display: block;
 						padding-bottom: 12px;
-					}
-
-					li {
-						//list-style-type: disc;
-						//list-style-position: revert;
-						//margin-left: 20px;
 					}
 				`}
 			</style>

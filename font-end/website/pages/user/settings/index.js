@@ -31,7 +31,7 @@ const UserSettingsPage = () => {
 	} else {
 		return (
 			<>
-				<div className={'px-330'}>
+				<div className={'px-330 page-body'}>
 					<LeftMenuUser />
 				</div>
 				<style jsx>{``}</style>

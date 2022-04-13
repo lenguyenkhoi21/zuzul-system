@@ -225,4 +225,4 @@ const ConnectSocket = props => {
 	return <>{props.children}</>
 }
 
-export default React.memo(ConnectSocket)
+export default ConnectSocket

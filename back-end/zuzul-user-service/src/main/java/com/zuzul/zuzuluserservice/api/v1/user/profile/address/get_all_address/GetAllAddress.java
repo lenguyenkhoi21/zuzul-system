@@ -19,6 +19,10 @@ public class GetAllAddress {
             Address defaultAddress = addressRepository.findAddressByUserIdAndType(userId, true);
             List<Address> addresses = addressRepository.findAllByUserIdAndType(userId, false);
 
+            if (defaultAddress == null) {
+                return new ArrayList<>();
+            }
+
             List<AddressModel> addressModels = new ArrayList<>();
 
             addressModels.add(AddressModel

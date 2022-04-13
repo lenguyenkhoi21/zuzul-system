@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../../../reducer/User.Reducer'
-import { TITLE_ACTION, TitleContext } from '../../../reducer/Title.Reducer'
+import { UserContext } from '../../../../reducer/User.Reducer'
+import { TITLE_ACTION, TitleContext } from '../../../../reducer/Title.Reducer'
 import {
 	LEFT_MENU_USER_ACTION,
 	LeftMenuUserContext
-} from '../../../reducer/LeftMenuUser.Reducer'
-import Authentication from '../../../component/common/Authentication'
-import LeftMenuUser from '../../../component/user/settings/LeftMenuUser'
-import UserAccountBackground from '../../../component/common/UserAccountBackground'
+} from '../../../../reducer/LeftMenuUser.Reducer'
+import Authentication from '../../../../component/common/Authentication'
+import LeftMenuUser from '../../../../component/user/settings/LeftMenuUser'
+import UserAccountBackground from '../../../../component/common/UserAccountBackground'
 import Image from 'next/image'
 import Link from 'next/link'
-import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../../utils/APIUtils'
+import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../../../utils/APIUtils'
 import { useRouter } from 'next/router'
 
 const AddNewProduct = () => {
@@ -18,54 +18,55 @@ const AddNewProduct = () => {
 	const titleCTX = useContext(TitleContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
 
+	const [discountStandard] = useState(Array.from(Array(99).keys(), n => n))
 	const [category, setCategory] = useState([])
 	const [subCategory, setSubCategory] = useState([])
+
 	const [picture1, setPicture1] = useState(null)
 	const [picture2, setPicture2] = useState(null)
 	const [picture3, setPicture3] = useState(null)
+
 	const router = useRouter()
+
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Thêm sản phẩm')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.RESET)
 
-		fetch(`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/category/all`, {
-			method: 'GET',
-			mode: 'cors'
-		})
-			.then(response => {
-				if (response.status === 200) {
-					return response.json()
+		const handleLogic = async () => {
+			const cateResponse = await fetch(
+				`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/category/all`,
+				{
+					method: 'GET',
+					mode: 'cors'
 				}
-			})
-			.then(data => {
-				setCategory(data)
-			})
-	}, [])
+			)
+			const cateData = await cateResponse.json()
 
-	const onSelectSub = e => {
-		e.preventDefault()
+			const arr = []
 
-		setProduct({
-			...product,
-			['prdCateId']: e.target.value
-		})
+			for (let i = 0; i < cateData.length; i++) {
+				const subResponse = await fetch(
+					`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/${cateData[i].categoryId}/sub/all`,
+					{
+						method: 'GET',
+						mode: 'cors'
+					}
+				)
 
-		fetch(
-			`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/${e.target.value}/sub/all`,
-			{
-				method: 'GET',
-				mode: 'cors'
+				const subData = await subResponse.json()
+
+				const row = {
+					categoryId: cateData[i].categoryId,
+					categoryName: cateData[i].categoryName,
+					sub: subData
+				}
+				arr.push(row)
 			}
-		)
-			.then(response => {
-				if (response.status === 200) {
-					return response.json()
-				}
-			})
-			.then(data => {
-				setSubCategory(data)
-			})
-	}
+			setCategory(arr)
+		}
+
+		handleLogic()
+	}, [userCTX.state.userID])
 
 	const onChange = e => {
 		e.preventDefault()
@@ -79,14 +80,17 @@ const AddNewProduct = () => {
 		}
 	}
 
-	const discountStandard = []
-	for (var i = 0; i <= 100; i++) {
-		discountStandard.push(i)
+	const onSelectSub = e => {
+		const findSub = category.filter(
+			category => category.categoryId === e.target.value
+		)
+		setSubCategory(findSub[0].sub)
+		setProduct({ ...product, prdCateId: e.target.value, prdSubId: '' })
 	}
 
 	const [product, setProduct] = useState({
 		prdName: '',
-		prdUserId: userCTX.state.userID,
+		prdUserId: '',
 		prdCateId: '',
 		prdSubId: '',
 		prdPriceOrigin: '',
@@ -102,15 +106,10 @@ const AddNewProduct = () => {
 	const addProduct = e => {
 		e.preventDefault()
 
-		console.log(product)
-		console.log(picture1)
-		console.log(picture2)
-		console.log(picture3)
-
 		const formData = new FormData()
 
 		formData.append('prdName', product.prdName)
-		formData.append('prdUserId', product.prdUserId)
+		formData.append('prdUserId', userCTX.state.userID)
 		formData.append('prdCateId', product.prdCateId)
 		formData.append('prdSubId', product.prdSubId)
 		formData.append('prdPriceOrigin', product.prdPriceOrigin)
@@ -142,9 +141,9 @@ const AddNewProduct = () => {
 	}
 
 	const getImagePreview = e => {
-		var image = URL.createObjectURL(e.target.files[0])
-		var imagediv = document.getElementById('display_image')
-		var newdiv = document.createElement('img')
+		const image = URL.createObjectURL(e.target.files[0])
+		const imagediv = document.getElementById('display_image')
+		const newdiv = document.createElement('img')
 		imagediv.innerHTML = ''
 		newdiv.src = image
 		newdiv.width = 85
@@ -152,9 +151,9 @@ const AddNewProduct = () => {
 		imagediv.appendChild(newdiv)
 	}
 	const getImagePreview1 = e => {
-		var image = URL.createObjectURL(e.target.files[0])
-		var imagediv = document.getElementById('display_image1')
-		var newdiv = document.createElement('img')
+		const image = URL.createObjectURL(e.target.files[0])
+		const imagediv = document.getElementById('display_image1')
+		const newdiv = document.createElement('img')
 		imagediv.innerHTML = ''
 		newdiv.src = image
 		newdiv.width = 85
@@ -162,9 +161,9 @@ const AddNewProduct = () => {
 		imagediv.appendChild(newdiv)
 	}
 	const getImagePreview2 = e => {
-		var image = URL.createObjectURL(e.target.files[0])
-		var imagediv = document.getElementById('display_image2')
-		var newdiv = document.createElement('img')
+		const image = URL.createObjectURL(e.target.files[0])
+		const imagediv = document.getElementById('display_image2')
+		const newdiv = document.createElement('img')
 		imagediv.innerHTML = ''
 		newdiv.src = image
 		newdiv.width = 85
@@ -185,7 +184,7 @@ const AddNewProduct = () => {
 	} else {
 		return (
 			<>
-				<div className={'px-330 div-AddNewProduct-container'}>
+				<div className={'px-330 page-body div-AddNewProduct-container'}>
 					<div className={'grid grid-cols-1'}>
 						<UserAccountBackground />
 
@@ -202,7 +201,6 @@ const AddNewProduct = () => {
 									</div>
 									<hr className={'mt-7 mr-10 ml-10 hr-AddNewProduct-size'} />
 									<div className={'grid ml-20 grid-col-1'}>
-										{/*ten san pham*/}
 										<div className={'flex items-center mt-20'}>
 											<div>
 												<label className={'label-AddNewProduct-subTitle'}>
@@ -217,7 +215,6 @@ const AddNewProduct = () => {
 												/>
 											</div>
 										</div>
-										{/*Tên Danh Mục*/}
 										<div className={'flex items-center mt-6'}>
 											<div>
 												<label className={'label-AddNewProduct-subTitle'}>
@@ -229,7 +226,7 @@ const AddNewProduct = () => {
 													className={'select-AddNewProduct-color'}
 													name={'prdCateId'}
 													onChange={onSelectSub}>
-													<option value='0'>Chọn danh mục</option>
+													<option value=''>Chọn danh mục</option>
 													{category.map((value, key) => (
 														<React.Fragment key={key}>
 															<option value={value.categoryId}>
@@ -251,6 +248,7 @@ const AddNewProduct = () => {
 													className={'select-AddNewProduct-color'}
 													name={'prdSubId'}
 													onChange={onChange}>
+													<option value=''>Chọn danh mục con</option>
 													{subCategory.map((value, key) => (
 														<React.Fragment key={key}>
 															<option value={value.subCategoryId}>
@@ -261,7 +259,6 @@ const AddNewProduct = () => {
 												</select>
 											</div>
 										</div>
-										{/*Tiêu đề*/}
 										<div className={'flex items-center mt-6'}>
 											<div>
 												<label className={'label-AddNewProduct-subTitle'}>
@@ -276,7 +273,6 @@ const AddNewProduct = () => {
 												/>
 											</div>
 										</div>
-										{/*Xuất Xứ*/}
 										<div className={'flex items-center mt-6'}>
 											<div>
 												<label className={'label-AddNewProduct-subTitle'}>
@@ -291,7 +287,6 @@ const AddNewProduct = () => {
 												/>
 											</div>
 										</div>
-										{/*Ngày Sản Xuất*/}
 										<div className={'flex items-center mt-6'}>
 											<div>
 												<label className={'label-AddNewProduct-subTitle'}>
@@ -307,7 +302,6 @@ const AddNewProduct = () => {
 												/>
 											</div>
 										</div>
-										{/*Giá Bán*/}
 										<div className={'flex items-center mt-6'}>
 											<div>
 												<label className={'label-AddNewProduct-subTitle'}>
@@ -341,11 +335,10 @@ const AddNewProduct = () => {
 												</select>
 											</div>
 										</div>
-										{/*Sale*/}
 										<div className={'flex items-center mt-6'}>
 											<div>
 												<label className={'label-AddNewProduct-subTitle'}>
-													Numbers In Storage
+													Số lượng trong kho
 												</label>
 											</div>
 											<div>
@@ -356,14 +349,12 @@ const AddNewProduct = () => {
 												/>
 											</div>
 										</div>
-										{/*Ảnh*/}
 										<div className={'flex mt-6'}>
 											<div>
 												<label className={'label-AddNewProduct-subTitle'}>
 													Ảnh
 												</label>
 											</div>
-											{/*anh bia*/}
 											<div className={'ml-16'}>
 												<input
 													className={'input-AddNewProduct-addImg'}
@@ -387,7 +378,6 @@ const AddNewProduct = () => {
 													</label>
 												</div>
 											</div>
-											{/*Hinh anh 1*/}
 											<div className={'ml-8'}>
 												<input
 													className={'input-AddNewProduct-addImg'}
@@ -411,7 +401,6 @@ const AddNewProduct = () => {
 													</label>
 												</div>
 											</div>
-											{/*Hinh anh 2*/}
 											<div className={'ml-8'}>
 												<input
 													className={'input-AddNewProduct-addImg'}
@@ -436,7 +425,6 @@ const AddNewProduct = () => {
 												</div>
 											</div>
 										</div>
-										{/*Mô Tả*/}
 										<div className={'flex mt-6'}>
 											<div>
 												<label className={'label-AddNewProduct-subTitle'}>
@@ -475,11 +463,9 @@ const AddNewProduct = () => {
 												</Link>
 											</div>
 											<div>
-												{/*<Link href={'/user/settings/listProduct'}>*/}
 												<button className={'btn-AddNewProduct-save'}>
 													Lưu
 												</button>
-												{/*</Link>*/}
 											</div>
 										</div>
 									</div>

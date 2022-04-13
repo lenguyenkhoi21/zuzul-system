@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { TITLE_ACTION, TitleContext } from '../../../reducer/Title.Reducer'
-import { UserContext } from '../../../reducer/User.Reducer'
-import Authentication from '../../../component/common/Authentication'
-import LeftMenuUser from '../../../component/user/settings/LeftMenuUser'
-import UserAccountBackground from '../../../component/common/UserAccountBackground'
+import { TITLE_ACTION, TitleContext } from '../../../../reducer/Title.Reducer'
+import { UserContext } from '../../../../reducer/User.Reducer'
+import Authentication from '../../../../component/common/Authentication'
+import LeftMenuUser from '../../../../component/user/settings/LeftMenuUser'
+import UserAccountBackground from '../../../../component/common/UserAccountBackground'
 import {
 	API_DOMAIN,
 	API_PRODUCT_SERVICE,
 	API_USER_SERVICE
-} from '../../../utils/APIUtils'
+} from '../../../../utils/APIUtils'
 
 const OrderManagementPage = () => {
 	const titleCTX = useContext(TitleContext)
@@ -39,19 +39,6 @@ const OrderManagementPage = () => {
 					setHistoryShop(data)
 				})
 	}, [userCTX.state.userID])
-
-	/*  const objectsEqual = (object_1, object_2) =>
-    typeof object_1 === 'object' && Object.keys(object_1).length > 0
-      ? Object.keys(object_1).length === Object.keys(object_2).length
-      && Object.keys(object_1).every(attribute => objectsEqual(object_1[attribute], object_2[attribute]))
-      : object_1 === object_2
-
-  const arraysEqual = (array_1, array_2) =>
-    array_1.length === array_2.length && array_1.every((object, index) => objectsEqual(object, array_2[index]))*/
-
-	/*const set = useCallback((e) => {
-    setKey( {...key, [e.target.name]: e.target.value})
-  }, [key])*/
 
 	const [key, setKey] = useState('ALL')
 
@@ -119,7 +106,7 @@ const OrderManagementPage = () => {
 	} else {
 		return (
 			<>
-				<div className={'px-330 div-OrderManagement-container'}>
+				<div className={'px-330 page-body div-OrderManagement-container'}>
 					<div className={'grid grid-cols-1'}>
 						<UserAccountBackground />
 
@@ -173,7 +160,7 @@ const OrderManagementPage = () => {
 												<th width={150}>Số Lượng</th>
 												<th width={180}>Danh Mục</th>
 												<th width={100}>Giá (Đã sale)</th>
-												<th >Trạng Thái</th>
+												<th>Trạng Thái</th>
 												<th width={100}></th>
 											</tr>
 										</thead>
@@ -208,7 +195,7 @@ const OrderManagementPage = () => {
 															</select>*/}
 															{/*//TODO CuongNQ Fix CSS*/}
 															<button
-                                className={'div-test'}
+																className={'div-test'}
 																onClick={e =>
 																	changeState(e, value.id, value.status)
 																}>
@@ -232,140 +219,140 @@ const OrderManagementPage = () => {
 				</div>
 
 				<style jsx>{`
-          .div-test {
-            width: 100%;
-            height: 30px;
-            background: #f5f5f8;
-            border: 1px solid #46760a;
-            box-sizing: border-box;
-            border-radius: 12px;
-            font-family: Poppins;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 15px;
-            line-height: 22px;
+					.div-test {
+						width: 100%;
+						height: 30px;
+						background: #f5f5f8;
+						border: 1px solid #46760a;
+						box-sizing: border-box;
+						border-radius: 12px;
+						font-family: Poppins;
+						font-style: normal;
+						font-weight: bold;
+						font-size: 15px;
+						line-height: 22px;
 
-            color: #0e0909;
-          }
+						color: #0e0909;
+					}
 
-          .div-OrderManagement-container {
-            background: #f9f9f9;
-          }
+					.div-OrderManagement-container {
+						background: #f9f9f9;
+					}
 
-          .hr-OrderManagement-size {
-            height: 0px;
-            border-radius: 12px;
-          }
+					.hr-OrderManagement-size {
+						height: 0px;
+						border-radius: 12px;
+					}
 
-          .div-OrderManagement-leftMenu {
-            width: 217px;
-            height: fit-content;
-            background: #ffffff;
-            box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25);
-            border-radius: 12px;
-            margin-bottom: 25px;
-          }
+					.div-OrderManagement-leftMenu {
+						width: 217px;
+						height: fit-content;
+						background: #ffffff;
+						box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25);
+						border-radius: 12px;
+						margin-bottom: 25px;
+					}
 
-          .div-OrderManagement-formAccount {
-            width: 100%;
-            border-radius: 12px;
-            background: #ffffff;
-            margin-bottom: 25px;
-          }
+					.div-OrderManagement-formAccount {
+						width: 100%;
+						border-radius: 12px;
+						background: #ffffff;
+						margin-bottom: 25px;
+					}
 
-          .span-OrderManagement-textTitle {
-            font-family: Poppins;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 32px;
-            line-height: 23px;
-            color: #151515;
-          }
+					.span-OrderManagement-textTitle {
+						font-family: Poppins;
+						font-style: normal;
+						font-weight: 600;
+						font-size: 32px;
+						line-height: 23px;
+						color: #151515;
+					}
 
-          th {
-            font-family: Poppins;
-            font-style: normal;
-            font-weight: 700;
-            font-size: 18px;
-            line-height: 23px;
-            color: #151515;
-          }
+					th {
+						font-family: Poppins;
+						font-style: normal;
+						font-weight: 700;
+						font-size: 18px;
+						line-height: 23px;
+						color: #151515;
+					}
 
-          td {
-            font-family: Open Sans;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 18px;
-            line-height: 23px;
-            color: #151515;
-          }
+					td {
+						font-family: Open Sans;
+						font-style: normal;
+						font-weight: 400;
+						font-size: 18px;
+						line-height: 23px;
+						color: #151515;
+					}
 
-          th,
-          td {
-            vertical-align: top;
-            padding: 12px 5px;
-          }
+					th,
+					td {
+						vertical-align: top;
+						padding: 12px 5px;
+					}
 
-          .div-OrderManagement-table {
-            margin-left: 38px;
-            margin-top: 12px;
-            overflow-x: auto;
-            width: 92%;
-          }
+					.div-OrderManagement-table {
+						margin-left: 38px;
+						margin-top: 12px;
+						overflow-x: auto;
+						width: 92%;
+					}
 
-          .div-OrderManagement-marginStatus {
-            margin-right: 100px;
-          }
+					.div-OrderManagement-marginStatus {
+						margin-right: 100px;
+					}
 
-          .div-OrderManagement-marginCategory {
-            margin-right: 10px;
-          }
+					.div-OrderManagement-marginCategory {
+						margin-right: 10px;
+					}
 
-          .select-OrderManagement-color {
-            height: 30px;
-            background: #46d362;
-            border: 1px solid #000000;
-            border-radius: 10px;
-            box-sizing: border-box;
-            font-family: Open Sans;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 18px;
-            line-height: 23px;
+					.select-OrderManagement-color {
+						height: 30px;
+						background: #46d362;
+						border: 1px solid #000000;
+						border-radius: 10px;
+						box-sizing: border-box;
+						font-family: Open Sans;
+						font-style: normal;
+						font-weight: 400;
+						font-size: 18px;
+						line-height: 23px;
 
-            color: #ffffff;
-          }
+						color: #ffffff;
+					}
 
-          .select-OrderManagement-table {
-            font-family: Open Sans;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 18px;
-            line-height: 23px;
+					.select-OrderManagement-table {
+						font-family: Open Sans;
+						font-style: normal;
+						font-weight: 400;
+						font-size: 18px;
+						line-height: 23px;
 
-            border: 1px solid #000000;
-            box-sizing: border-box;
+						border: 1px solid #000000;
+						box-sizing: border-box;
 
-            color: #151515;
-            background: #ffffff;
-          }
+						color: #151515;
+						background: #ffffff;
+					}
 
-          .btn-OrderManagement-size {
-            width: 55px;
-            height: 30px;
-            background: #46d362;
-            border: 1px solid #46760a;
-            box-sizing: border-box;
-            border-radius: 12px;
-            font-family: Poppins;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 15px;
-            line-height: 22px;
+					.btn-OrderManagement-size {
+						width: 55px;
+						height: 30px;
+						background: #46d362;
+						border: 1px solid #46760a;
+						box-sizing: border-box;
+						border-radius: 12px;
+						font-family: Poppins;
+						font-style: normal;
+						font-weight: bold;
+						font-size: 15px;
+						line-height: 22px;
 
-            color: #ffffff;
-          }
-        `}</style>
+						color: #ffffff;
+					}
+				`}</style>
 			</>
 		)
 	}

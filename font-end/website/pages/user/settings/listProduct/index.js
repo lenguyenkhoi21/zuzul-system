@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../../../reducer/User.Reducer'
-import { TITLE_ACTION, TitleContext } from '../../../reducer/Title.Reducer'
+import { UserContext } from '../../../../reducer/User.Reducer'
+import { TITLE_ACTION, TitleContext } from '../../../../reducer/Title.Reducer'
 import {
 	LEFT_MENU_USER_ACTION,
 	LeftMenuUserContext
-} from '../../../reducer/LeftMenuUser.Reducer'
-import Authentication from '../../../component/common/Authentication'
-import LeftMenuUser from '../../../component/user/settings/LeftMenuUser'
-import UserAccountBackground from '../../../component/common/UserAccountBackground'
+} from '../../../../reducer/LeftMenuUser.Reducer'
+import Authentication from '../../../../component/common/Authentication'
+import LeftMenuUser from '../../../../component/user/settings/LeftMenuUser'
+import UserAccountBackground from '../../../../component/common/UserAccountBackground'
 import Link from 'next/link'
-import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../../utils/APIUtils'
+import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../../../utils/APIUtils'
 
-const ListProduct = () => {
+const ListProductPage = () => {
 	const userCTX = useContext(UserContext)
 	const titleCTX = useContext(TitleContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
@@ -50,7 +50,7 @@ const ListProduct = () => {
 	} else {
 		return (
 			<>
-				<div className={'px-330 div-ListProduct-container'}>
+				<div className={'px-330 page-body div-ListProduct-container'}>
 					<div className={'grid grid-cols-1'}>
 						<UserAccountBackground />
 
@@ -243,4 +243,4 @@ const ListProduct = () => {
 	}
 }
 
-export default ListProduct
+export default ListProductPage
