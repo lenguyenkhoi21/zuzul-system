@@ -10,14 +10,6 @@ const CategoryManagement = () => {
 	const [data, setData] = useState([])
 
 	useEffect(() => {
-		// Fetch API list of all category
-		/*
-		 * [{
-		 *   categoryId:
-		 *   categoryName:
-		 * }]
-		 * */
-
 		fetch(
 			`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/admin/management/category/all/${userCTX.state.userID}`,
 			{

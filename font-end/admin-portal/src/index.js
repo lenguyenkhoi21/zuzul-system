@@ -8,13 +8,16 @@ import { BrowserRouter } from 'react-router-dom'
 import UserReducer from './reducer/User.Reducer'
 import CookieValidation from './component/CookieValidation'
 import HeaderReducer from './reducer/Header.Reducer'
+import PopupContainer from './PopupContainer'
 
 ReactDOM.render(
 	<BrowserRouter>
 		<UserReducer>
 			<HeaderReducer>
 				<CookieValidation>
-					<App />
+					<PopupContainer>
+						<App />
+					</PopupContainer>
 				</CookieValidation>
 			</HeaderReducer>
 		</UserReducer>
