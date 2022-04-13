@@ -1,14 +1,13 @@
 import React, { useContext } from 'react'
 import './ShopRequestItem.css'
-import {
-	API_DOMAIN,
-	API_PRODUCT_SERVICE,
-	API_USER_SERVICE
-} from '../../utils/Constant'
+import { API_DOMAIN, API_USER_SERVICE } from '../../utils/Constant'
 import { UserContext } from '../../reducer/User.Reducer'
+import { HEADER_ACTION, HeaderContext } from '../../reducer/Header.Reducer'
 
 const ShopRequestItem = ({ username, address, date, setRender, userId }) => {
 	const userCTX = useContext(UserContext)
+	const headerCTX = useContext(HeaderContext)
+
 	const accept = (e, type) => {
 		e.preventDefault()
 		const productId = e.target.name
@@ -23,7 +22,24 @@ const ShopRequestItem = ({ username, address, date, setRender, userId }) => {
 				}
 			}
 		)
-			.then(response => response.json())
+			.then(response => {
+				if (response.status === 200) {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Đăng Nhập Thành Công'
+					)
+					return response.json()
+				} else {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Đăng Thất Bại'
+					)
+				}
+			})
 			.then(data => {
 				if (data.status === 'SUCCESS') {
 					setRender({})

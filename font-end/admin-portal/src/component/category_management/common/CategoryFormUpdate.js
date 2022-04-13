@@ -3,16 +3,16 @@ import './CategoryForm.css'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../../../reducer/User.Reducer'
 import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../../utils/Constant'
+import { HEADER_ACTION, HeaderContext } from '../../../reducer/Header.Reducer'
 
 const CategoryFormUpdate = ({ title, data }) => {
 	const userCTX = useContext(UserContext)
+	const headerCTX = useContext(HeaderContext)
 
 	const [category, setCategory] = useState({
 		userId: userCTX.state.userID,
 		categoryName: ''
 	})
-
-	console.log(data.categoryImage)
 
 	const [picture, setPicture] = useState(null)
 
@@ -40,7 +40,24 @@ const CategoryFormUpdate = ({ title, data }) => {
 			mode: 'cors',
 			body: formData
 		})
-			.then(response => response.json())
+			.then(response => {
+				if (response.status === 200) {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Đăng Nhập Thành Công'
+					)
+					return response.json()
+				} else {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Đăng Thất Bại'
+					)
+				}
+			})
 			.catch(data => console.log(data))
 	}
 

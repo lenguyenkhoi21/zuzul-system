@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom'
 import { UserContext } from '../../../reducer/User.Reducer'
 import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../../utils/Constant'
 import { useNavigate } from 'react-router-dom'
+import { HEADER_ACTION, HeaderContext } from '../../../reducer/Header.Reducer'
 
 const CategoryForm = ({ title }) => {
-  const navigate = useNavigate()
+	const navigate = useNavigate()
 	const userCTX = useContext(UserContext)
+	const headerCTX = useContext(HeaderContext)
 	const [category, setCategory] = useState({
 		userId: userCTX.state.userID,
 		categoryName: '',
@@ -37,19 +39,28 @@ const CategoryForm = ({ title }) => {
 			body: formData
 		})
 			.then(response => {
-        navigate('/category_management')
-        return response.json()
-      })
+				if (response.status === 200) {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Đăng Nhập Thành Công'
+					)
+					navigate('/category_management')
+					return response.json()
+				} else {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Đăng Thất Bại'
+					)
+				}
+			})
 			.catch(data => {
 				console.log(data)
 			})
 	}
-
-	// const resetCategory = e => {
-	// 	e.preventDefault()
-	// 	setCategory({ ...category, categoryName: '' })
-	//   setPicture(null)
-	// }
 
 	return (
 		<>

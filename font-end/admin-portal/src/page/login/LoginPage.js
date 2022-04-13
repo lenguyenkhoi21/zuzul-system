@@ -30,8 +30,20 @@ const LoginPage = () => {
 		})
 			.then(response => {
 				if (response.status === 200) {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Đăng Nhập Thành Công'
+					)
 					return response.json()
 				} else {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Đăng Thất Bại'
+					)
 					userCTX.logout(USER_ACTION.LOGOUT)
 				}
 			})
@@ -42,6 +54,12 @@ const LoginPage = () => {
 				})
 			})
 			.catch(reason => {
+				headerCTX.renderPopup(
+					HEADER_ACTION.RENDER_POPUP,
+					true,
+					false,
+					'Đăng Thất Bại'
+				)
 				userCTX.logout(USER_ACTION.LOGOUT)
 			})
 	}
@@ -51,12 +69,6 @@ const LoginPage = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	// const setCookie = () => {
-	// 	userCTX.login(USER_ACTION.LOGIN, {
-	// 		userID: 'admin',
-	// 		accessToken: 'token-01'
-	// 	})
-	// }
 	return (
 		<>
 			<div

@@ -5,8 +5,6 @@ import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../utils/Constant'
 import { UserContext } from '../../reducer/User.Reducer'
 
 const ProductCensorShipContent = () => {
-	const points = [...Array(50)]
-
 	const userCTX = useContext(UserContext)
 	const [product, setProduct] = useState([])
 	const [render, setRender] = useState({})

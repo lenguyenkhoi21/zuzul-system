@@ -3,11 +3,12 @@ import { UserContext } from '../../../reducer/User.Reducer'
 import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../../utils/Constant'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import { HEADER_ACTION, HeaderContext } from '../../../reducer/Header.Reducer'
 
 const SubFormCreate = ({ cateId }) => {
-  const navigate = useNavigate()
+	const navigate = useNavigate()
 	const userCTX = useContext(UserContext)
-
+	const headerCTX = useContext(HeaderContext)
 	const [subCategory, setSubCategory] = useState({
 		userId: '',
 		subCategoryName: '',
@@ -42,9 +43,24 @@ const SubFormCreate = ({ cateId }) => {
 			body: JSON.stringify(data)
 		})
 			.then(response => {
-        navigate('/category_management')
-        return response.json()
-      })
+				if (response.status === 200) {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Đăng Nhập Thành Công'
+					)
+					navigate('/category_management')
+					return response.json()
+				} else {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Đăng Thất Bại'
+					)
+				}
+			})
 			.then(data => setStatus(data))
 	}
 

@@ -3,10 +3,11 @@ import './SubForm.css'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../../../reducer/User.Reducer'
 import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../../utils/Constant'
+import { HEADER_ACTION, HeaderContext } from '../../../reducer/Header.Reducer'
 
 const SubForm = ({ title, subCateId }) => {
 	const userCTX = useContext(UserContext)
-
+	const headerCTX = useContext(HeaderContext)
 	const [subCategory, setSubCategory] = useState({
 		subCategoryId: '',
 		userId: '',
@@ -44,8 +45,21 @@ const SubForm = ({ title, subCateId }) => {
 				subCategoryName: subCategory.subCategoryName
 			})
 		}).then(response => {
-			response.json()
-			console.log(response)
+			if (response.status === 200) {
+				headerCTX.renderPopup(
+					HEADER_ACTION.RENDER_POPUP,
+					true,
+					true,
+					'Đăng Nhập Thành Công'
+				)
+			} else {
+				headerCTX.renderPopup(
+					HEADER_ACTION.RENDER_POPUP,
+					true,
+					false,
+					'Đăng Thất Bại'
+				)
+			}
 		})
 	}
 	return (
