@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { TITLE_ACTION, TitleContext } from '../../../reducer/Title.Reducer'
-import { UserContext } from '../../../reducer/User.Reducer'
+import { TITLE_ACTION, TitleContext } from '../../../../reducer/Title.Reducer'
+import { UserContext } from '../../../../reducer/User.Reducer'
 import {
 	LEFT_MENU_USER_ACTION,
 	LeftMenuUserContext
-} from '../../../reducer/LeftMenuUser.Reducer'
-import Authentication from '../../../component/common/Authentication'
-import LeftMenuUser from '../../../component/user/settings/LeftMenuUser'
-import UserAccountBackground from '../../../component/common/UserAccountBackground'
-import { API_DOMAIN, API_USER_SERVICE } from '../../../utils/APIUtils'
+} from '../../../../reducer/LeftMenuUser.Reducer'
+import Authentication from '../../../../component/common/Authentication'
+import LeftMenuUser from '../../../../component/user/settings/LeftMenuUser'
+import UserAccountBackground from '../../../../component/common/UserAccountBackground'
+import { API_DOMAIN, API_USER_SERVICE } from '../../../../utils/APIUtils'
 
 const AccountPage = () => {
 	const titleCTX = useContext(TitleContext)
@@ -133,7 +133,7 @@ const AccountPage = () => {
 	if (userCTX.state.userID !== null) {
 		return (
 			<>
-				<div className={'px-330 div-AccountPage-container'}>
+				<div className={'px-330 page-body div-AccountPage-container'}>
 					<div className={'grid grid-cols-1'}>
 						<UserAccountBackground
 							userId={userInfo.userId}

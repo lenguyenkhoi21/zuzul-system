@@ -143,32 +143,32 @@ const EditProduct = () => {
 	}
 
 	const discountStandard = []
-	for (var i = 0; i <= 100; i++) {
+	for (const i = 0; i <= 100; i++) {
 		discountStandard.push(i)
 	}
 
 	const getImagePreview0 = e => {
-		var image = URL.createObjectURL(e.target.files[0])
-		var imagediv = document.getElementById('display_image')
-		var newdiv = document.createElement('img')
+		const image = URL.createObjectURL(e.target.files[0])
+		const imagediv = document.getElementById('display_image')
+		const newdiv = document.createElement('img')
 		imagediv.innerHTML = ''
 		newdiv.src = image
 		newdiv.width = 85
 		imagediv.appendChild(newdiv)
 	}
 	const getImagePreview1 = e => {
-		var image = URL.createObjectURL(e.target.files[0])
-		var imagediv = document.getElementById('display_image1')
-		var newdiv = document.createElement('img')
+		const image = URL.createObjectURL(e.target.files[0])
+		const imagediv = document.getElementById('display_image1')
+		const newdiv = document.createElement('img')
 		imagediv.innerHTML = ''
 		newdiv.src = image
 		newdiv.width = 85
 		imagediv.appendChild(newdiv)
 	}
 	const getImagePreview2 = e => {
-		var image = URL.createObjectURL(e.target.files[0])
-		var imagediv = document.getElementById('display_image2')
-		var newdiv = document.createElement('img')
+		const image = URL.createObjectURL(e.target.files[0])
+		const imagediv = document.getElementById('display_image2')
+		const newdiv = document.createElement('img')
 		imagediv.innerHTML = ''
 		newdiv.src = image
 		newdiv.width = 85
@@ -188,7 +188,7 @@ const EditProduct = () => {
 	} else {
 		return (
 			<>
-				<div className={'px-330 div-EditProduct-container'}>
+				<div className={'px-330 page-body div-EditProduct-container'}>
 					<div className={'grid grid-cols-1'}>
 						<UserAccountBackground />
 

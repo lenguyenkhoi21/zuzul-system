@@ -30,7 +30,7 @@ const CategoryPage = () => {
 
 	return (
 		<>
-			<div className='fluid-container'>
+			<div className='fluid-container page-body'>
 				<div className={'flex mx-auto container-content page-body'}>
 					<div className='left-content'>
 						<div className='category-main'>

@@ -2,85 +2,46 @@ import React, { useContext } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { timeNow } from '../../utils/Utils'
-import { UserContext } from '../../reducer/User.Reducer'
+import { USER_ACTION, UserContext } from '../../reducer/User.Reducer'
 /*import { ChatContext } from '../../reducer/Chat.Reducer'*/
-import { CartContext } from '../../reducer/Cart.Reducer'
+import { CART_ACTION, CartContext } from '../../reducer/Cart.Reducer'
+import { CHAT_ACTION } from '../../reducer/Chat.Reducer'
+import { NOTIFY_ACTION } from '../../reducer/Notify.Reducer'
 
 const IconBar = () => {
 	console.log(
 		`${timeNow()} --- [IconBar] --- Render at component/nav/IconBar.js`
 	)
-  const cartCTX = useContext(CartContext)
+	// const cartCTX = useContext(CartContext)
 	const userCTX = useContext(UserContext)
 	/*const chatCTX = useContext(ChatContext)*/
+
+	const deleteCookie = () => {
+		if (
+			userCTX.state.userID !== null &&
+			userCTX.state.userID !== '' &&
+			userCTX.state.role !== null &&
+			userCTX.state.role !== '' &&
+			userCTX.state.access_token !== null &&
+			userCTX.state.access_token !== ''
+		) {
+			userCTX.removeUser(USER_ACTION.REMOVE_USER)
+		}
+	}
 
 	return (
 		<>
 			<div className={'float-right'}>
 				<div className={'flex'}>
-					{/*<div className={'mr-3.5 div-IconBar-container'}>
-						<Link href={'/'}>
-							<a>
-								<div className={'flex'}>
-									<Image
-										src={'/svg/notify.svg'}
-										width={25}
-										height={25}
-										alt={'Notify'}
-									/>
-									<p className={'ml-0.5 font-poppins'}>Thông báo</p>
-								</div>
-							</a>
-						</Link>
-					</div>
 					<div className={'mr-3.5 div-IconBar-container'}>
-						<Link href={'/'}>
+						<Link href={'/checkout'}>
 							<a>
 								<div className={'flex'}>
-									<Image
-										src={'/svg/community.svg'}
-										width={25}
-										height={25}
-										alt={'Community'}
-									/>
-									<p className={'ml-0.5 font-poppins'}>Cộng đồng</p>
+									<p className={'ml-0.5 font-poppins'}>Giỏ hàng</p>
 								</div>
 							</a>
 						</Link>
 					</div>
-					<div className={'flex mr-3.5 div-IconBar-container'}>
-						<Link href={'/message'}>
-							<a>
-								<div className={'flex'}>
-									<Image
-										src={'/svg/messenger.svg'}
-										width={25}
-										height={25}
-										alt={'Messenger'}
-									/>
-									<p className={'ml-0.5 font-poppins'}>
-										{' '}
-										Tin nhắn {chatCTX.state.inComeMessage}
-									</p>
-								</div>
-							</a>
-						</Link>
-					</div>*/}
-          <div className={'flex items-center mr-2 mt-1'}>
-            <Link href={'/checkout'}>
-              <a>
-                <div>
-                  <Image
-                    src={'/svg/shopping-cart.svg'}
-                    width={25}
-                    height={25}
-                    alt={'Shopping Cart'}
-                  />
-                  <span> {cartCTX.state.totalProduct} </span>
-                </div>
-              </a>
-            </Link>
-          </div>
 					{userCTX.state.userID === null ? (
 						<>
 							<div className={'flex mr-3.5 div-IconBar-container'}>
@@ -103,25 +64,33 @@ const IconBar = () => {
 							</div>
 						</>
 					) : (
-						<div className={'flex mr-3.5 div-IconBar-container'}>
-							<Link href={'/user/settings/account'}>
-								<a>
-									<div className={'flex gap-2'}>
-										<Image
-											src={'/svg/user.svg'}
-											width={25}
-											height={25}
-											alt={'Shopping Cart'}
-										/>
-										<p className={'ml-0.5 font-poppins'}>
-											{userCTX.state.name === null
-												? userCTX.state.userID
-												: userCTX.state.name}
-										</p>
-									</div>
-								</a>
-							</Link>
-						</div>
+						<>
+							<div className={'flex mr-3.5 div-IconBar-container'}>
+								<Link href={'/user/settings'}>
+									<a>
+										<div className={'flex gap-2'}>
+											<Image
+												src={'/svg/user.svg'}
+												width={25}
+												height={25}
+												alt={'Shopping Cart'}
+											/>
+											<p className={'ml-0.5 font-poppins'}>
+												{userCTX.state.name === null
+													? userCTX.state.userID
+													: userCTX.state.name}
+											</p>
+										</div>
+									</a>
+								</Link>
+							</div>
+							<div className={'flex mr-3.5 div-IconBar-container'}>
+								<p className={'ml-0.5 font-poppins'} onClick={deleteCookie}>
+									{' '}
+									Đăng Xuất{' '}
+								</p>
+							</div>
+						</>
 					)}
 				</div>
 			</div>
@@ -140,4 +109,4 @@ const IconBar = () => {
 	)
 }
 
-export default React.memo(IconBar)
+export default IconBar

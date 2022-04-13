@@ -77,7 +77,7 @@ const AuthenticationRegister = ({
 		<>
 			<div
 				className={
-					'flex justify-center px-330 div-AuthenticationRegister-container'
+					'flex justify-center px-330 page-body div-AuthenticationRegister-container'
 				}>
 				<form
 					onSubmit={registerAccount}

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import IconBar from './IconBar'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -54,32 +54,16 @@ const NavigationBar = () => {
 								className={'mr-2 focus:outline-none input-NavigationBar'}
 								placeholder={'Find your product that you want !'}
 							/>
-              <button>
-                <Image
-                  src={'/svg/search.svg'}
-                  width={25}
-                  height={25}
-                  alt={'Shopping Cart'}
-                />
-              </button>
-
+							<button>
+								<Image
+									src={'/svg/search.svg'}
+									width={25}
+									height={25}
+									alt={'Shopping Cart'}
+								/>
+							</button>
 						</div>
 					</div>
-					{/*<div className={'h-auto'}>
-						<Link href={'/checkout'}>
-							<a>
-								<div>
-									<Image
-										src={'/svg/shopping-cart.svg'}
-										width={25}
-										height={25}
-										alt={'Shopping Cart'}
-									/>
-									<span> {cartCTX.state.totalProduct} </span>
-								</div>
-							</a>
-						</Link>
-					</div>*/}
 				</div>
 			</div>
 			<style jsx>
@@ -115,4 +99,4 @@ const NavigationBar = () => {
 	)
 }
 
-export default React.memo(NavigationBar)
+export default NavigationBar

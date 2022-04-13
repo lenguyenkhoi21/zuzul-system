@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../../../reducer/User.Reducer'
-import { TITLE_ACTION, TitleContext } from '../../../reducer/Title.Reducer'
-import Authentication from '../../../component/common/Authentication'
-import LeftMenuUser from '../../../component/user/settings/LeftMenuUser'
-import UserAccountBackground from '../../../component/common/UserAccountBackground'
-import { API_DOMAIN, API_USER_SERVICE } from '../../../utils/APIUtils'
+import { UserContext } from '../../../../reducer/User.Reducer'
+import { TITLE_ACTION, TitleContext } from '../../../../reducer/Title.Reducer'
+import Authentication from '../../../../component/common/Authentication'
+import LeftMenuUser from '../../../../component/user/settings/LeftMenuUser'
+import UserAccountBackground from '../../../../component/common/UserAccountBackground'
+import { API_DOMAIN, API_USER_SERVICE } from '../../../../utils/APIUtils'
 import { useRouter } from 'next/router'
 
 const SendRequestPage = () => {
@@ -73,7 +73,7 @@ const SendRequestPage = () => {
 	} else {
 		return (
 			<>
-				<div className={'px-330 div-SendRequest-container'}>
+				<div className={'px-330 page-body div-SendRequest-container'}>
 					<div className={'grid grid-cols-1'}>
 						<UserAccountBackground />
 

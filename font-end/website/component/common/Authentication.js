@@ -64,7 +64,7 @@ const Authentication = ({
 	return (
 		<>
 			<div
-				className={'flex justify-center px-330 div-Authentication-container'}>
+				className={'flex justify-center px-330 page-body div-Authentication-container'}>
 				<form
 					onSubmit={loginAccount}
 					className={

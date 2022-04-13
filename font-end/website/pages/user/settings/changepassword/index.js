@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from 'react'
-import { TITLE_ACTION, TitleContext } from '../../../reducer/Title.Reducer'
-import { UserContext } from '../../../reducer/User.Reducer'
+import { TITLE_ACTION, TitleContext } from '../../../../reducer/Title.Reducer'
+import { UserContext } from '../../../../reducer/User.Reducer'
 import {
 	LEFT_MENU_USER_ACTION,
 	LeftMenuUserContext
-} from '../../../reducer/LeftMenuUser.Reducer'
-import Authentication from '../../../component/common/Authentication'
-import LeftMenuUser from '../../../component/user/settings/LeftMenuUser'
-import UserAccountBackground from '../../../component/common/UserAccountBackground'
+} from '../../../../reducer/LeftMenuUser.Reducer'
+import Authentication from '../../../../component/common/Authentication'
+import LeftMenuUser from '../../../../component/user/settings/LeftMenuUser'
+import UserAccountBackground from '../../../../component/common/UserAccountBackground'
 
 const ChangePasswordPage = () => {
 	const titleCTX = useContext(TitleContext)
@@ -32,7 +32,7 @@ const ChangePasswordPage = () => {
 	} else {
 		return (
 			<>
-				<div className={'px-330 div-ChangePasswordPage-container'}>
+				<div className={'px-330 page-body div-ChangePasswordPage-container'}>
 					<div className={'grid grid-cols-1'}>
 						<UserAccountBackground />
 

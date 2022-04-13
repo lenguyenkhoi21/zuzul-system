@@ -6,6 +6,7 @@ import { timeNow } from '../../../../utils/Utils'
 import { TITLE_ACTION, TitleContext } from '../../../../reducer/Title.Reducer'
 import { UserContext } from '../../../../reducer/User.Reducer'
 import { API_DOMAIN, API_USER_SERVICE } from '../../../../utils/APIUtils'
+
 const EditAddressFormPage = () => {
 	console.log(
 		`${timeNow()} --- [EditAddressForm] --- /user/settings/editAddressForm.js`
@@ -108,7 +109,7 @@ const EditAddressFormPage = () => {
 	} else {
 		return (
 			<>
-				<div className={'flex justify-center px-330'}>
+				<div className={'flex justify-center px-330 page-body'}>
 					<form className={'form-EditAddressForm-size '} onSubmit={editAddress}>
 						<div>
 							<div>
