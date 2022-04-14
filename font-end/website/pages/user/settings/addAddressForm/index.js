@@ -56,7 +56,20 @@ const AddAddressFormPage = () => {
 		})
 			.then(response => {
 				if (response.status === 200) {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Đăng Nhập Thành Công'
+					)
 					return response.json()
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Đăng Nhập Thất Bại'
+					)
 				}
 			})
 			.then(data => {

@@ -66,14 +66,14 @@ const ListProductPage = () => {
 										</p>
 									</div>
 									<div>
-										<Link href={'/product/addNewProduct'}>
-											<button
+										<Link href={'/user/settings/addNewProduct'}>
+											<a
 												className={
 													'flex justify-center items-center btn-ListProduct-addPrd'
 												}>
 												<span className={'mr-5 span-ListProduct-plus'}>+</span>
 												Thêm Sản Phẩm Mới
-											</button>
+											</a>
 										</Link>
 									</div>
 								</div>
