@@ -20,7 +20,7 @@ const ListProductPage = () => {
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Tất cả sản phẩm')
-		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.RESET)
+		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_ALL_PRODUCT)
 		if (userCTX.state.userID !== null) {
 			fetch(
 				`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/user/product/${userCTX.state.userID}/all`,
@@ -50,7 +50,7 @@ const ListProductPage = () => {
 	} else {
 		return (
 			<>
-				<div className={'px-330 page-body div-ListProduct-container'}>
+				<div className={'px-330 div-ListProduct-container'}>
 					<div className={'grid grid-cols-1'}>
 						<UserAccountBackground />
 

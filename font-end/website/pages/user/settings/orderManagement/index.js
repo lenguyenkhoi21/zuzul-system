@@ -6,18 +6,20 @@ import LeftMenuUser from '../../../../component/user/settings/LeftMenuUser'
 import UserAccountBackground from '../../../../component/common/UserAccountBackground'
 import {
 	API_DOMAIN,
-	API_PRODUCT_SERVICE,
 	API_USER_SERVICE
 } from '../../../../utils/APIUtils'
+import {LEFT_MENU_USER_ACTION, LeftMenuUserContext} from "../../../../reducer/LeftMenuUser.Reducer";
 
 const OrderManagementPage = () => {
 	const titleCTX = useContext(TitleContext)
 	const userCTX = useContext(UserContext)
+  const leftMenuUserCTX = useContext(LeftMenuUserContext)
 
 	const [historyShop, setHistoryShop] = useState([])
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Quản lí đơn hàng')
+    leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_ALL_ORDER)
 
 		if (userCTX.state.userID !== null)
 			fetch(
@@ -134,7 +136,7 @@ const OrderManagementPage = () => {
 	} else {
 		return (
 			<>
-				<div className={'px-330 page-body div-OrderManagement-container'}>
+				<div className={'px-330 div-OrderManagement-container'}>
 					<div className={'grid grid-cols-1'}>
 						<UserAccountBackground />
 

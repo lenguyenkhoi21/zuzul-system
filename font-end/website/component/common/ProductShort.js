@@ -73,7 +73,10 @@ const ProductShort = ({ product }) => {
 							className={'img-ProductShort'}
 							alt={'image'}
 						/>
-						<p className={'font-poppins'}> {product.prdName} </p>
+						<p className={'font-poppins p-ProductShort-des'}>
+							{' '}
+							{product.prdName}{' '}
+						</p>
 						<p className={'font-poppins p-ProductShort-med p-ProductShort-des'}>
 							{' '}
 							{product.prdShortDes}{' '}

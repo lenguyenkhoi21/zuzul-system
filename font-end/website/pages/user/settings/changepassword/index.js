@@ -32,7 +32,7 @@ const ChangePasswordPage = () => {
 	} else {
 		return (
 			<>
-				<div className={'px-330 page-body div-ChangePasswordPage-container'}>
+				<div className={'px-330 div-ChangePasswordPage-container'}>
 					<div className={'grid grid-cols-1'}>
 						<UserAccountBackground />
 

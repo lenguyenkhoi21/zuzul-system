@@ -81,7 +81,7 @@ const Authentication = ({
 		<>
 			<div
 				className={
-					'flex justify-center px-330 page-body div-Authentication-container'
+					'flex justify-center px-330 div-Authentication-container'
 				}>
 				<form
 					onSubmit={loginAccount}

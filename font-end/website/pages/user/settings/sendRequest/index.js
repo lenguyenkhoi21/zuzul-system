@@ -6,14 +6,17 @@ import LeftMenuUser from '../../../../component/user/settings/LeftMenuUser'
 import UserAccountBackground from '../../../../component/common/UserAccountBackground'
 import { API_DOMAIN, API_USER_SERVICE } from '../../../../utils/APIUtils'
 import { useRouter } from 'next/router'
+import {LEFT_MENU_USER_ACTION, LeftMenuUserContext} from "../../../../reducer/LeftMenuUser.Reducer";
 
 const SendRequestPage = () => {
 	const userCTX = useContext(UserContext)
 	const titleCTX = useContext(TitleContext)
+  const leftMenuUserCTX = useContext(LeftMenuUserContext)
 	const [render, setRender] = useState({})
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Gửi yêu cầu')
+    leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_SEND_REQUEST)
 	}, [render])
 
 	const [userShopName, setUserShopName] = useState('')
@@ -86,7 +89,7 @@ const SendRequestPage = () => {
 	} else {
 		return (
 			<>
-				<div className={'px-330 page-body div-SendRequest-container'}>
+				<div className={'px-330 div-SendRequest-container'}>
 					<div className={'grid grid-cols-1'}>
 						<UserAccountBackground />
 
@@ -104,20 +107,32 @@ const SendRequestPage = () => {
 									</span>
 								</div>
 								<hr className={'mt-7 mr-10 ml-10 hr-SendRequest-size'} />
-								<div className={'grid grid-col-1'}>
-									<form onSubmit={requestShop}>
-										Tên cửa hàng:{' '}
-										<input
-											type={'text'}
-											name={'userShopName'}
-											onChange={onChange}
-										/>
-										<div>
-											<button className={'btn-SendRequest-sendRequest'}>
-												Gửi yêu cầu
-											</button>
-										</div>
-									</form>
+								<div className={'grid grid-cols-1 content-center h-3/5'}>
+									<div className={'flex justify-center'}>
+										<form onSubmit={requestShop}>
+											<div
+												className={
+													'flex gap-5 items-center div-SendRequest-textAndInput'
+												}>
+												<div>
+													<p className={'w-32'}>Tên cửa hàng:</p>
+												</div>
+												<div>
+													<input
+														type={'text'}
+														className={'input-SendRequest-size'}
+														name={'userShopName'}
+														onChange={onChange}
+													/>
+												</div>
+											</div>
+											<div className={'flex justify-center'}>
+												<button className={'btn-SendRequest-sendRequest'}>
+													Gửi yêu cầu
+												</button>
+											</div>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -125,6 +140,27 @@ const SendRequestPage = () => {
 				</div>
 
 				<style jsx>{`
+					.div-SendRequest-textAndInput {
+						width: 92%;
+						font-family: Poppins;
+						font-style: normal;
+						font-weight: 400;
+						font-size: 18px;
+						line-height: 23px;
+						color: #151515;
+
+						margin-top: 30px;
+					}
+					.input-SendRequest-size {
+						width: 300px;
+						height: 42px;
+						background: #f9f9f9;
+						border: 1px solid #d1d1d1;
+						box-sizing: border-box;
+						border-radius: 12px;
+						text-indent: 10px;
+						cursor: pointer;
+					}
 					.div-SendRequest-container {
 						background: #f9f9f9;
 					}
@@ -142,6 +178,7 @@ const SendRequestPage = () => {
 					}
 					.div-SendRequest-formAccount {
 						width: 100%;
+						height: 420px;
 						margin-bottom: 25px;
 						border-radius: 12px;
 						background: #ffffff;
@@ -163,11 +200,11 @@ const SendRequestPage = () => {
 						color: #151515;
 					}
 					.btn-SendRequest-sendRequest {
-						width: 200px;
-						height: 45px;
+						width: 150px;
+						height: 35px;
 
 						margin-top: 30px;
-						margin-left: 38px;
+						margin-bottom: 20px;
 
 						background: #46d362;
 						border: 2px solid #2aa71a;
