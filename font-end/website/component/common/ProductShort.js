@@ -79,12 +79,15 @@ const ProductShort = ({ product }) => {
 							{product.prdShortDes}{' '}
 						</p>
 						<div className={''}>
-							<p className={'float-left font-poppins p-ProductShort-price'}>
-								{product.prdPriceOrigin}
-							</p>
+              <div>
+                <p className={'float-left font-poppins p-ProductShort-price'}>
+                  {product.prdPriceOrigin}
+                </p>
+              </div>
+
 							{/* eslint-disable-next-line tailwindcss/no-custom-classname */}
 							<Link href={'/cart'}>
-								<div>
+								<div className={'flex justify-end items-end'}>
 									<button
 										onClick={e => onClickHandle(e)}
 										name={product.prdId}
@@ -123,9 +126,13 @@ const ProductShort = ({ product }) => {
 					}
 
 					.p-ProductShort-des {
-						text-overflow: Ellipsis;
+						overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            padding: 0;
 					}
-
 					.btn-ProductShort {
 						padding-top: 6.5px;
 						padding-bottom: 6.5px;
