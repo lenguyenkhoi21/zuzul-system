@@ -71,7 +71,7 @@ const AddressPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						true,
-						'Đăng Nhập Thành Công'
+						'Thiết Lập Thành Công'
 					)
 					return response.json()
 				} else {
@@ -79,12 +79,27 @@ const AddressPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						false,
-						'Đăng Nhập Thất Bại'
+						'Thiết Lâp Thất Bại'
 					)
 				}
 			})
 			.then(data => {
-				if (data.status === 'SUCCESS') setRender({})
+				if (data.status === 'SUCCESS') {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Thiết Lập Thành Công'
+					)
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Thiết Lâp Thất Bại'
+					)
+				}
+				setRender({})
 			})
 	}
 
@@ -112,7 +127,7 @@ const AddressPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						true,
-						'Đăng Nhập Thành Công'
+						'Xóa Địa Chỉ Thành Công'
 					)
 					return response.json()
 				} else {
@@ -120,12 +135,27 @@ const AddressPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						false,
-						'Đăng Nhập Thất Bại'
+						'Xóa Địa Chỉ Thất Bại'
 					)
 				}
 			})
 			.then(data => {
-				if (data.status === 'SUCCESS') setRender({})
+				if (data.status === 'SUCCESS') {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Xóa Địa Chỉ Thành Công'
+					)
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Xóa Địa Chỉ Thất Bại'
+					)
+				}
+				setRender({})
 			})
 	}
 

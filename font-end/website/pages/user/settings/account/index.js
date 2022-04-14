@@ -117,7 +117,7 @@ const AccountPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						true,
-						'Đăng Nhập Thành Công'
+						'Cập Nhật Hồ Sơ Thành Công'
 					)
 					return response.json()
 				} else {
@@ -125,11 +125,27 @@ const AccountPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						false,
-						'Đăng Nhập Thất Bại'
+						'Cập Nhật Hồ Sơ Thất Bại'
 					)
 				}
 			})
-			.then(data => console.log(data))
+			.then(data => {
+				if (data.status === 'SUCCESS') {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Cập Nhật Hồ Sơ Thành Công'
+					)
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Cập Nhật Hồ Sơ Thất Bại'
+					)
+				}
+			})
 	}
 
 	if (userCTX.state.userID === null) {

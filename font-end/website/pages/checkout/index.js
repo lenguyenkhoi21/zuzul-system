@@ -89,7 +89,7 @@ const CheckoutPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						true,
-						'Đăng Nhập Thành Công'
+						'Đặt Hàng Thành Công'
 					)
 					return response.json()
 				} else {
@@ -97,7 +97,7 @@ const CheckoutPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						false,
-						'Đăng Nhập Thất Bại'
+						'Đặt Hàng Thất Bại'
 					)
 				}
 			})
@@ -151,7 +151,7 @@ const CheckoutPage = () => {
 			}
 		)
 			.then(response => {
-				if (response.status === 200) {
+				/*if (response.status === 200) {
 					titleCTX.renderPopup(
 						TITLE_ACTION.RENDER_POPUP,
 						true,
@@ -166,7 +166,8 @@ const CheckoutPage = () => {
 						false,
 						'Đăng Nhập Thất Bại'
 					)
-				}
+				}*/
+				if (response.status === 200) return response.json()
 			})
 			.then(data => {
 				console.dir(data)
@@ -223,7 +224,7 @@ const CheckoutPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						true,
-						'Đăng Nhập Thành Công'
+						'Đặt Hàng Thành Công'
 					)
 					return response.json()
 				} else {
@@ -231,13 +232,13 @@ const CheckoutPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						false,
-						'Đăng Nhập Thất Bại'
+						'Đặt Hàng Thất Bại'
 					)
 				}
 			})
 			.then(data => {
-				setCart([])
-				setTotal(0)
+				setCart(data.cartModelList)
+				setTotal(data.totalMoney)
 			})
 	}
 	if (userCTX.state.userID === null) {

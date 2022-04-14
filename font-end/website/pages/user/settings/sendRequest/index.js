@@ -6,17 +6,20 @@ import LeftMenuUser from '../../../../component/user/settings/LeftMenuUser'
 import UserAccountBackground from '../../../../component/common/UserAccountBackground'
 import { API_DOMAIN, API_USER_SERVICE } from '../../../../utils/APIUtils'
 import { useRouter } from 'next/router'
-import {LEFT_MENU_USER_ACTION, LeftMenuUserContext} from "../../../../reducer/LeftMenuUser.Reducer";
+import {
+	LEFT_MENU_USER_ACTION,
+	LeftMenuUserContext
+} from '../../../../reducer/LeftMenuUser.Reducer'
 
 const SendRequestPage = () => {
 	const userCTX = useContext(UserContext)
 	const titleCTX = useContext(TitleContext)
-  const leftMenuUserCTX = useContext(LeftMenuUserContext)
+	const leftMenuUserCTX = useContext(LeftMenuUserContext)
 	const [render, setRender] = useState({})
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Gửi yêu cầu')
-    leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_SEND_REQUEST)
+		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_SEND_REQUEST)
 	}, [render])
 
 	const [userShopName, setUserShopName] = useState('')
@@ -52,7 +55,7 @@ const SendRequestPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						true,
-						'Đăng Nhập Thành Công'
+						'Gửi Yêu Cầu Thành Công'
 					)
 					return response.json()
 				} else {
@@ -60,18 +63,30 @@ const SendRequestPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						false,
-						'Đăng Nhập Thất Bại'
+						'Gửi Yêu Cầu Thất Bại'
 					)
 				}
 			})
 			.then(data => {
 				if (data.status === 'SUCCESS') {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Gửi Yêu Cầu Thành Công'
+					)
 					//					userCTX.state.isActiveShop = true
 					userCTX.state.sendRequest = true
 					setRender({})
 				}
 				if (data.status === 'NO ADDRESS') {
-					router.push('/user/settings/address')
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Gửi Yêu Cầu Thất Bại'
+					)
+					router.push('/user/settings/sendRequest')
 				}
 			})
 	}

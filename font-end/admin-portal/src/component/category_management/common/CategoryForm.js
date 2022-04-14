@@ -44,7 +44,7 @@ const CategoryForm = ({ title }) => {
 						HEADER_ACTION.RENDER_POPUP,
 						true,
 						true,
-						'Đăng Nhập Thành Công'
+						'Thêm Danh Mục Thành Công'
 					)
 					navigate('/category_management')
 					return response.json()
@@ -53,12 +53,27 @@ const CategoryForm = ({ title }) => {
 						HEADER_ACTION.RENDER_POPUP,
 						true,
 						false,
-						'Đăng Thất Bại'
+						'Thêm Danh Mục Thất Bại'
 					)
 				}
 			})
 			.catch(data => {
-				console.log(data)
+				if (data.status === 'SUCCESS') {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Thêm Danh Mục Thành Công'
+					)
+					navigate('/category_management')
+				} else {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Thêm Danh Mục Thất Bại'
+					)
+				}
 			})
 	}
 

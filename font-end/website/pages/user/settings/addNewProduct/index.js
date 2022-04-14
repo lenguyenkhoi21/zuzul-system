@@ -138,7 +138,7 @@ const AddNewProduct = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						true,
-						'Đăng Nhập Thành Công'
+						'Thêm Sản Phẩm Thành Công'
 					)
 					return response.json()
 				} else {
@@ -146,12 +146,27 @@ const AddNewProduct = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						false,
-						'Đăng Nhập Thất Bại'
+						'Thêm Sản Phẩm Thất Bại'
 					)
 				}
 			})
 			.then(data => {
-				if (data.status === 'Success') router.push('/user/settings/listProduct')
+				if (data.status === 'Success') {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Thêm Sản Phẩm Thành Công'
+					)
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Thêm Sản Phẩm Thất Bại'
+					)
+				}
+				router.push('/user/settings/listProduct')
 			})
 	}
 

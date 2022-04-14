@@ -6,6 +6,7 @@ import { CartContext } from '../../reducer/Cart.Reducer'
 import { UserContext } from '../../reducer/User.Reducer'
 import { API_DOMAIN, API_USER_SERVICE } from '../../utils/APIUtils'
 import { useRouter } from 'next/router'
+import { TITLE_ACTION, TitleContext } from '../../reducer/Title.Reducer'
 
 const ProductShort = ({ product }) => {
 	console.log(
@@ -14,6 +15,7 @@ const ProductShort = ({ product }) => {
 
 	const cartCTX = useContext(CartContext)
 	const userCTX = useContext(UserContext)
+	const titleCTX = useContext(TitleContext)
 
 	const router = useRouter()
 
@@ -49,7 +51,24 @@ const ProductShort = ({ product }) => {
 			},
 			body: JSON.stringify(payload)
 		})
-			.then(response => response.json())
+			.then(response => {
+				if (response.status === 200) {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Thêm Giỏ Hàng Thành Công'
+					)
+					return response.json()
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Thêm Giỏ Hàng Thất Bại'
+					)
+				}
+			})
 			.then(data => {
 				if (data.alert === false) {
 					router.push('/checkout')

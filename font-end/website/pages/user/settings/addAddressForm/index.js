@@ -60,7 +60,7 @@ const AddAddressFormPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						true,
-						'Đăng Nhập Thành Công'
+						'Thêm Địa Chỉ Thành Công'
 					)
 					return response.json()
 				} else {
@@ -68,11 +68,26 @@ const AddAddressFormPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						false,
-						'Đăng Nhập Thất Bại'
+						'Thêm Địa Chỉ Thất Bại'
 					)
 				}
 			})
 			.then(data => {
+				if (data.status === 'SUCCESS') {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Thêm Địa Chỉ Thành Công'
+					)
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Thêm Địa Chỉ Thất Bại'
+					)
+				}
 				router.push('/user/settings/address')
 			})
 	}
