@@ -22,6 +22,7 @@ const EditProduct = () => {
 	const path = router.asPath
 	const productId = path.split('/')[4]
 
+	const [discountStandard] = useState(Array.from(Array(99).keys(), n => n))
 	const [product, setProduct] = useState({})
 	const [category, setCategory] = useState([])
 	const [subCategory, setSubCategory] = useState([])
@@ -122,7 +123,20 @@ const EditProduct = () => {
 		)
 			.then(response => {
 				if (response.status === 200) {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Đăng Nhập Thành Công'
+					)
 					return response.json()
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Đăng Nhập Thất Bại'
+					)
 				}
 			})
 			.then(data => {
@@ -140,11 +154,6 @@ const EditProduct = () => {
 		} else {
 			setProduct({ ...product, [e.target.name]: e.target.value })
 		}
-	}
-
-	const discountStandard = []
-	for (const i = 0; i <= 100; i++) {
-		discountStandard.push(i)
 	}
 
 	const getImagePreview0 = e => {

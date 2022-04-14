@@ -56,7 +56,20 @@ const OrderManagementPage = () => {
 		)
 			.then(response => {
 				if (response.status === 200) {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Đăng Nhập Thành Công'
+					)
 					return response.json()
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Đăng Nhập Thất Bại'
+					)
 				}
 			})
 			.then(data => {
@@ -86,7 +99,22 @@ const OrderManagementPage = () => {
 			body: JSON.stringify(payload)
 		})
 			.then(response => {
-				if (response.status === 200) return response.json()
+				if (response.status === 200) {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Đăng Nhập Thành Công'
+					)
+					return response.json()
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Đăng Nhập Thất Bại'
+					)
+				}
 			})
 			.then(data => {
 				setHistoryShop(data)

@@ -66,15 +66,15 @@ const IconBar = () => {
 					) : (
 						<>
 							<div className={'flex mr-3.5 div-IconBar-container'}>
-								<Link href={'/user/settings'}>
+								<Link href={'/user/settings/account'}>
 									<a>
 										<div className={'flex gap-2'}>
-											<Image
-												src={'/svg/user.svg'}
-												width={25}
-												height={25}
-												alt={'Shopping Cart'}
-											/>
+											{/*<Image*/}
+											{/*	src={'/svg/user.svg'}*/}
+											{/*	width={25}*/}
+											{/*	height={25}*/}
+											{/*	alt={'Shopping Cart'}*/}
+											{/*/>*/}
 											<p className={'ml-0.5 font-poppins'}>
 												{userCTX.state.name === null
 													? userCTX.state.userID

@@ -133,7 +133,22 @@ const AddNewProduct = () => {
 			body: formData
 		})
 			.then(response => {
-				if (response.status === 200) return response.json()
+				if (response.status === 200) {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Đăng Nhập Thành Công'
+					)
+					return response.json()
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Đăng Nhập Thất Bại'
+					)
+				}
 			})
 			.then(data => {
 				if (data.status === 'Success') router.push('/user/settings/listProduct')
@@ -268,6 +283,7 @@ const AddNewProduct = () => {
 											<div>
 												<input
 													className={'input-AddNewProduct-title'}
+													type={'number'}
 													name={'prdMonthWarranty'}
 													onChange={onChange}
 												/>
@@ -311,6 +327,7 @@ const AddNewProduct = () => {
 											<div>
 												<input
 													className={'input-AddNewProduct-createDate'}
+													type={'number'}
 													onChange={onChange}
 													name={'prdPriceOrigin'}
 												/>
@@ -344,6 +361,7 @@ const AddNewProduct = () => {
 											<div>
 												<input
 													className={'input-AddNewProduct-sale'}
+													type={'number'}
 													onChange={onChange}
 													name={'prdNumberInStorage'}
 												/>
@@ -479,10 +497,12 @@ const AddNewProduct = () => {
 					.div-AddNewProduct-container {
 						background: #f9f9f9;
 					}
+
 					.hr-AddNewProduct-size {
 						height: 0px;
 						border-radius: 12px;
 					}
+
 					.div-AddNewProduct-leftMenu {
 						width: 217px;
 						height: fit-content;
@@ -490,6 +510,7 @@ const AddNewProduct = () => {
 						box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25);
 						border-radius: 12px;
 					}
+
 					.div-AddNewProduct-formAccount {
 						width: 100%;
 						border-radius: 12px;
@@ -504,6 +525,7 @@ const AddNewProduct = () => {
 						line-height: 23px;
 						color: #151515;
 					}
+
 					.label-AddNewProduct-subTitle {
 						display: block;
 						width: 165px;
@@ -517,9 +539,11 @@ const AddNewProduct = () => {
 
 						color: #151515;
 					}
+
 					.input-AddNewProduct-addImg {
 						display: none;
 					}
+
 					.img-AddNewProduct-add {
 						width: 125px;
 						height: 125px;
@@ -531,6 +555,7 @@ const AddNewProduct = () => {
 						justify-content: center;
 						align-items: center;
 					}
+
 					.input-AddNewProduct-namePrd {
 						width: 416px;
 						height: 42px;
@@ -542,6 +567,7 @@ const AddNewProduct = () => {
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
+
 					.input-AddNewProduct-title {
 						width: 187px;
 						height: 42px;
@@ -553,6 +579,13 @@ const AddNewProduct = () => {
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
+
+					.input-AddNewProduct-title::-webkit-inner-spin-button,
+					.input-AddNewProduct-title::-webkit-outer-spin-button {
+						-webkit-appearance: none;
+						margin: 0;
+					}
+
 					.input-AddNewProduct-origin {
 						width: 283px;
 						height: 42px;
@@ -564,6 +597,7 @@ const AddNewProduct = () => {
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
+
 					.input-AddNewProduct-createDate {
 						width: 187px;
 						height: 42px;
@@ -575,6 +609,13 @@ const AddNewProduct = () => {
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
+
+					.input-AddNewProduct-createDate::-webkit-inner-spin-button,
+					.input-AddNewProduct-createDate::-webkit-outer-spin-button {
+						-webkit-appearance: none;
+						margin: 0;
+					}
+
 					.input-AddNewProduct-sale {
 						width: 116px;
 						height: 42px;
@@ -586,6 +627,13 @@ const AddNewProduct = () => {
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
+
+					.input-AddNewProduct-sale::-webkit-inner-spin-button,
+					.input-AddNewProduct-title::-webkit-outer-spin-button {
+						-webkit-appearance: none;
+						margin: 0;
+					}
+
 					.input-AddNewProduct-description {
 						width: 585px;
 						height: 400px;
@@ -597,6 +645,7 @@ const AddNewProduct = () => {
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
+
 					.label-AddNewProduct-imageTitle {
 						display: block;
 						text-align: center;
@@ -608,6 +657,7 @@ const AddNewProduct = () => {
 
 						color: #151515;
 					}
+
 					.select-AddNewProduct-color {
 						width: 283px;
 						height: 42px;
@@ -619,6 +669,7 @@ const AddNewProduct = () => {
 						box-sizing: border-box;
 						border-radius: 12px;
 					}
+
 					.btn-AddNewProduct-cancel {
 						width: 102px;
 						height: 50px;
@@ -634,6 +685,7 @@ const AddNewProduct = () => {
 						border: 1px solid #46760a;
 						border-radius: 12px;
 					}
+
 					.btn-AddNewProduct-save {
 						width: 150px;
 						height: 50px;

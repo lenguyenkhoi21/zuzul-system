@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { TITLE_ACTION, TitleContext } from '../../../../reducer/Title.Reducer'
-import { UserContext } from '../../../../reducer/User.Reducer'
+import { USER_ACTION, UserContext } from '../../../../reducer/User.Reducer'
 import {
 	LEFT_MENU_USER_ACTION,
 	LeftMenuUserContext
@@ -113,7 +113,20 @@ const AccountPage = () => {
 		})
 			.then(response => {
 				if (response.status === 200) {
-					response.json()
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Đăng Nhập Thành Công'
+					)
+					return response.json()
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Đăng Nhập Thất Bại'
+					)
 				}
 			})
 			.then(data => console.log(data))

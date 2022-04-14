@@ -3,6 +3,7 @@ import { API_DOMAIN, API_USER_SERVICE } from '../../utils/APIUtils'
 import { USER_ACTION, UserContext } from '../../reducer/User.Reducer'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { TITLE_ACTION, TitleContext } from '../../reducer/Title.Reducer'
 
 const Authentication = ({
 	titleHeader,
@@ -12,7 +13,7 @@ const Authentication = ({
 	textRegisterSub
 }) => {
 	const userCTX = useContext(UserContext)
-
+	const titleCTX = useContext(TitleContext)
 	const [account, setAccount] = useState({
 		username: '',
 		password: ''
@@ -34,8 +35,23 @@ const Authentication = ({
 			body: JSON.stringify(account)
 		})
 			.then(response => {
-				if (response.status === 200) return response.json()
-				else userCTX.removeUser(USER_ACTION.REMOVE_USER)
+				if (response.status === 200) {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Đăng Nhập Thành Công'
+					)
+					return response.json()
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Đăng Nhập Thất Bại'
+					)
+					userCTX.removeUser(USER_ACTION.REMOVE_USER)
+				}
 			})
 			.then(data => {
 				userCTX.addUser(USER_ACTION.ADD_USER, {

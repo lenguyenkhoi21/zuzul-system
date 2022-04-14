@@ -79,11 +79,11 @@ const ProductShort = ({ product }) => {
 							{product.prdShortDes}{' '}
 						</p>
 						<div className={''}>
-              <div>
-                <p className={'float-left font-poppins p-ProductShort-price'}>
-                  {product.prdPriceOrigin}
-                </p>
-              </div>
+							<div>
+								<p className={'float-left font-poppins p-ProductShort-price'}>
+									{product.prdPriceOrigin}
+								</p>
+							</div>
 
 							{/* eslint-disable-next-line tailwindcss/no-custom-classname */}
 							<Link href={'/cart'}>
@@ -127,11 +127,11 @@ const ProductShort = ({ product }) => {
 
 					.p-ProductShort-des {
 						overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            padding: 0;
+						text-overflow: ellipsis;
+						display: -webkit-box;
+						-webkit-box-orient: vertical;
+						-webkit-line-clamp: 2;
+						padding: 0;
 					}
 					.btn-ProductShort {
 						padding-top: 6.5px;

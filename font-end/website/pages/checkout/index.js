@@ -85,7 +85,20 @@ const CheckoutPage = () => {
 		})
 			.then(response => {
 				if (response.status === 200) {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Đăng Nhập Thành Công'
+					)
 					return response.json()
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Đăng Nhập Thất Bại'
+					)
 				}
 			})
 			.then(data => {
@@ -93,6 +106,7 @@ const CheckoutPage = () => {
 				setTotal(data.totalMoney)
 			})
 	}
+
 	const deleteProductCart = (e, purchaserId, productId) => {
 		e.preventDefault()
 
@@ -137,7 +151,22 @@ const CheckoutPage = () => {
 			}
 		)
 			.then(response => {
-				if (response.status === 200) return response.json()
+				if (response.status === 200) {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Đăng Nhập Thành Công'
+					)
+					return response.json()
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Đăng Nhập Thất Bại'
+					)
+				}
 			})
 			.then(data => {
 				console.dir(data)
@@ -190,7 +219,20 @@ const CheckoutPage = () => {
 		})
 			.then(response => {
 				if (response.status === 200) {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Đăng Nhập Thành Công'
+					)
 					return response.json()
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Đăng Nhập Thất Bại'
+					)
 				}
 			})
 			.then(data => {

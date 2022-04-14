@@ -17,7 +17,7 @@ const ChangePasswordPage = () => {
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Thay đổi mật khẩu')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_CHANGE_PASSWORD)
-	}, [])
+	}, [userCTX.state.userID])
 
 	if (userCTX.state.userID === null) {
 		return (
