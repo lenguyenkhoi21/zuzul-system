@@ -28,7 +28,7 @@ const ShopRequestItem = ({ username, address, date, setRender, userId }) => {
 						HEADER_ACTION.RENDER_POPUP,
 						true,
 						true,
-						'Đăng Nhập Thành Công'
+						'Thành Công'
 					)
 					return response.json()
 				} else {
@@ -36,13 +36,26 @@ const ShopRequestItem = ({ username, address, date, setRender, userId }) => {
 						HEADER_ACTION.RENDER_POPUP,
 						true,
 						false,
-						'Đăng Thất Bại'
+						'Thất Bại'
 					)
 				}
 			})
 			.then(data => {
 				if (data.status === 'SUCCESS') {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Thành Công'
+					)
 					setRender({})
+				} else {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Thất Bại'
+					)
 				}
 			})
 	}

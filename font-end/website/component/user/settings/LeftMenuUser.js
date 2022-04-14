@@ -141,25 +141,28 @@ const LeftMenuUser = () => {
 									</div>
 								</div>
 								<ul className={'ml-11'}>
-                  <li>
-									{leftMenuUserCTX.state.allProduct ? (
-										<Link href={'/user/settings/listProduct'}>
-                        <a>
-                          <span className={' button-LeftMenuUser-active div-LeftMenuUser-subHeader'}>
-                            Tất cả sản phẩm
-                          </span>
-                        </a>
-										</Link>
-									) : (
-										<Link href={'/user/settings/listProduct'}>
-                        <a>
-                          <span className={'div-LeftMenuUser-subHeader'}>
-                            Tất cả sản phẩm
-                          </span>
-                        </a>
-										</Link>
-									)}
-                  </li>
+									<li>
+										{leftMenuUserCTX.state.allProduct ? (
+											<Link href={'/user/settings/listProduct'}>
+												<a>
+													<span
+														className={
+															' button-LeftMenuUser-active div-LeftMenuUser-subHeader'
+														}>
+														Tất cả sản phẩm
+													</span>
+												</a>
+											</Link>
+										) : (
+											<Link href={'/user/settings/listProduct'}>
+												<a>
+													<span className={'div-LeftMenuUser-subHeader'}>
+														Tất cả sản phẩm
+													</span>
+												</a>
+											</Link>
+										)}
+									</li>
 									{leftMenuUserCTX.state.newProduct ? (
 										<Link href={'/user/settings/addNewProduct'}>
 											<li>

@@ -48,7 +48,7 @@ const SubFormCreate = ({ cateId }) => {
 						HEADER_ACTION.RENDER_POPUP,
 						true,
 						true,
-						'Đăng Nhập Thành Công'
+						'Thêm Danh Mục Con Thành Công'
 					)
 					navigate('/category_management')
 					return response.json()
@@ -57,11 +57,29 @@ const SubFormCreate = ({ cateId }) => {
 						HEADER_ACTION.RENDER_POPUP,
 						true,
 						false,
-						'Đăng Thất Bại'
+						'Thêm Danh Mục Con Thất Bại'
 					)
 				}
 			})
-			.then(data => setStatus(data))
+			.then(data => {
+				if (data.status === 200) {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Thêm Danh Mục Con Thành Công'
+					)
+					navigate('/category_management')
+					return response.json()
+				} else {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Thêm Danh Mục Con Thất Bại'
+					)
+				}
+			})
 	}
 
 	return (

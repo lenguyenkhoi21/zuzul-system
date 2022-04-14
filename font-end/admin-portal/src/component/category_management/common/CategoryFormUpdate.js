@@ -46,7 +46,7 @@ const CategoryFormUpdate = ({ title, data }) => {
 						HEADER_ACTION.RENDER_POPUP,
 						true,
 						true,
-						'Đăng Nhập Thành Công'
+						'Cập Nhật Danh Mục Thành Công'
 					)
 					return response.json()
 				} else {
@@ -54,11 +54,27 @@ const CategoryFormUpdate = ({ title, data }) => {
 						HEADER_ACTION.RENDER_POPUP,
 						true,
 						false,
-						'Đăng Thất Bại'
+						'Cập Nhật Danh Mục Thất Bại'
 					)
 				}
 			})
-			.catch(data => console.log(data))
+			.catch(data => {
+				if (data.status === 'SUCCESS') {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Cập Nhật Danh Mục Thành Công'
+					)
+				} else {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Cập Nhật Danh Mục Thất Bại'
+					)
+				}
+			})
 	}
 
 	return (

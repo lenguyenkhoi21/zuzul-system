@@ -118,7 +118,7 @@ const HistoryPage = () => {
 		if (router.asPath.split('/').length === 4) {
 			return (
 				<>
-					<div className={'px-330  div-HistoryPage-container'}>
+					<div className={'px-330 div-HistoryPage-container'}>
 						<div className={'grid grid-cols-1'}>
 							<UserAccountBackground />
 

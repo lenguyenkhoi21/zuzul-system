@@ -55,7 +55,8 @@ const Popup = ({ content, kind }) => {
 			<style jsx>{`
 				.div-Popup-container {
 					position: absolute;
-					background-color: rgba(0, 0, 0, 0.3);
+					background-color: transparent;
+					//backdrop-filter: blur(1px);
 					top: 0;
 					right: 0;
 					bottom: 0;
@@ -79,7 +80,8 @@ const Popup = ({ content, kind }) => {
 					width: 800px;
 					height: 200px;
 					padding: 40px;
-					opacity: unset;
+					border: 2px solid black;
+					border-radius: 10px;
 				}
 
 				.p-Popup-text {

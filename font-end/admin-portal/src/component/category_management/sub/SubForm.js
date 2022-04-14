@@ -44,23 +44,41 @@ const SubForm = ({ title, subCateId }) => {
 				userId: subCategory.userId,
 				subCategoryName: subCategory.subCategoryName
 			})
-		}).then(response => {
-			if (response.status === 200) {
-				headerCTX.renderPopup(
-					HEADER_ACTION.RENDER_POPUP,
-					true,
-					true,
-					'Đăng Nhập Thành Công'
-				)
-			} else {
-				headerCTX.renderPopup(
-					HEADER_ACTION.RENDER_POPUP,
-					true,
-					false,
-					'Đăng Thất Bại'
-				)
-			}
 		})
+			.then(response => {
+				if (response.status === 200) {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Cập Nhật Danh Mục Con Thành Công'
+					)
+				} else {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Cập Nhật Danh Mục Con Thất Bại'
+					)
+				}
+			})
+			.then(data => {
+				if (data.status === 'SUCCESS') {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Cập Nhật Danh Mục Con Thành Công'
+					)
+				} else {
+					headerCTX.renderPopup(
+						HEADER_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Cập Nhật Danh Mục Con Thất Bại'
+					)
+				}
+			})
 	}
 	return (
 		<>
