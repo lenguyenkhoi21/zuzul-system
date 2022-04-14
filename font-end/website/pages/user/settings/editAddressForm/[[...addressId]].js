@@ -122,7 +122,7 @@ const EditAddressFormPage = () => {
 	} else {
 		return (
 			<>
-				<div className={'flex justify-center px-330 page-body'}>
+				<div className={'flex justify-center px-330'}>
 					<form className={'form-EditAddressForm-size '} onSubmit={editAddress}>
 						<div>
 							<div>

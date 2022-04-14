@@ -142,7 +142,7 @@ const AddressPage = () => {
 	} else {
 		return (
 			<>
-				<div className={'px-330 page-body div-AddressPage-container'}>
+				<div className={'px-330 div-AddressPage-container'}>
 					<div className={'grid grid-cols-1'}>
 						<UserAccountBackground />
 

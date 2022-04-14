@@ -30,7 +30,7 @@ const AddNewProduct = () => {
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Thêm sản phẩm')
-		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.RESET)
+		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_NEW_PRODUCT)
 
 		const handleLogic = async () => {
 			const cateResponse = await fetch(
