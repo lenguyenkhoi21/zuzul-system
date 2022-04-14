@@ -169,6 +169,11 @@ const HistoryPage = () => {
 					<style jsx>{`
 						.div-HistoryPage-idPrd {
 							cursor: pointer;
+							overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
 						}
 						.div-HistoryPage-container {
 							background: #f9f9f9;
