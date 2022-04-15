@@ -10,7 +10,7 @@ import UserAccountBackground from '../../../../component/common/UserAccountBackg
 import LeftMenuUser from '../../../../component/user/settings/LeftMenuUser'
 import Image from 'next/image'
 import Link from 'next/link'
-import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../../../utils/APIUtils'
+import {API_DOMAIN, API_PRODUCT_SERVICE, API_USER_SERVICE} from '../../../../utils/APIUtils'
 import { useRouter } from 'next/router'
 
 const EditProduct = () => {
@@ -27,6 +27,15 @@ const EditProduct = () => {
 	const [category, setCategory] = useState([])
 	const [subCategory, setSubCategory] = useState([])
 	const [date, setDate] = useState('')
+  const [userInfo, setUserInfo] = useState({
+    userId: userCTX.state.userID,
+    userFullName: '',
+    userPhone: '',
+    userBirthday: '',
+    userSex: '',
+    userEmail: '',
+    userName: ''
+  })
 
 	const formatDate = date => {
 		let timestamp = date * 1000
@@ -86,7 +95,24 @@ const EditProduct = () => {
 					setCategory(data)
 				})
 		}
-
+    if (userCTX.state.userID !== null) {
+      fetch(
+        `${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/${userCTX.state.userID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${userCTX.state.accessToken}`
+          },
+          mode: 'cors',
+          method: 'GET'
+        }
+      )
+        .then(response => response.json())
+        .then(data => {
+          if (data.status !== 403) {
+            setUserInfo(data)
+          }
+        })
+    }
 		if (product !== {}) {
 			fetch(
 				`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/${product.prdCateId}/sub/all`,
@@ -199,7 +225,12 @@ const EditProduct = () => {
 			<>
 				<div className={'px-330 page-body div-EditProduct-container'}>
 					<div className={'grid grid-cols-1'}>
-						<UserAccountBackground />
+            <UserAccountBackground
+              userId={userInfo.userId}
+              avatarImage={userInfo.currentAvatar}
+              coverImage={userInfo.currentCover}
+              userFullName={userInfo.userFullName}
+            />
 
 						<div className={'flex grid-flow-col mt-6'}>
 							<div className={'div-EditProduct-leftMenu min-h-fit'}>
@@ -254,42 +285,45 @@ const EditProduct = () => {
 												))}
 											</select>
 										</div>
-										<div>
-											<label className={'label-EditProduct-subTitle'}>
-												Tên Danh Mục Con
-											</label>
-										</div>
-										<div className={''}>
-											<select
-												className={'select-EditProduct-color'}
-												name={'prdSubId'}
-												onChange={onChange}
-												defaultValue={product.prdSubId}>
-												{subCategory.map((value, key) => (
-													<React.Fragment key={key}>
-														<option value={value.subCategoryId}>
-															{value.subCategoryName}
-														</option>
-													</React.Fragment>
-												))}
-											</select>
-										</div>
+
 									</div>
-									{/*Tiêu đề*/}
-									<div className={'flex items-center mt-6'}>
-										<div>
-											<label className={'label-EditProduct-subTitle'}>
-												Thời hạn bảo hành (tháng)
-											</label>
-										</div>
-										<div>
-											<input
-												className={'input-EditProduct-title'}
-												name={'prdMonthWarranty'}
-												onChange={onChange}
-												defaultValue={product.prdMonthWarranty}
-											/>
-										</div>
+                    <div  className={'flex items-center mt-6'}>
+                      <div>
+                        <label className={'label-EditProduct-subTitle'}>
+                          Tên Danh Mục Con
+                        </label>
+                      </div>
+                      <div className={''}>
+                        <select
+                          className={'select-EditProduct-color'}
+                          name={'prdSubId'}
+                          onChange={onChange}
+                          defaultValue={product.prdSubId}>
+                          {subCategory.map((value, key) => (
+                            <React.Fragment key={key}>
+                              <option value={value.subCategoryId}>
+                                {value.subCategoryName}
+                              </option>
+                            </React.Fragment>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    {/*Tiêu đề*/}
+                    <div className={'flex items-center mt-6'}>
+                      <div>
+                        <label className={'label-EditProduct-subTitle'}>
+                          Thời hạn bảo hành (tháng)
+                        </label>
+                      </div>
+                      <div>
+                        <input
+                          className={'input-EditProduct-title'}
+                          name={'prdMonthWarranty'}
+                          onChange={onChange}
+                          defaultValue={product.prdMonthWarranty}
+                        />
+                      </div>
 									</div>
 									{/*Xuất Xứ*/}
 									<div className={'flex items-center mt-6'}>

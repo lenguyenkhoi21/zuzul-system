@@ -8,12 +8,13 @@ import {
 import Authentication from '../../component/common/Authentication'
 import Image from 'next/image'
 import { API_DOMAIN, API_USER_SERVICE } from '../../utils/APIUtils'
-import Link from 'next/link'
+import {useRouter} from "next/router";
 
 const CheckoutPage = () => {
 	const userCTX = useContext(UserContext)
 	const titleCTX = useContext(TitleContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
+  const router = useRouter()
 	const [cart, setCart] = useState([])
 	const [address, setAddress] = useState([])
 	const [chooseAddress, setChooseAddress] = useState({})
@@ -83,24 +84,7 @@ const CheckoutPage = () => {
 			},
 			body: JSON.stringify(payload)
 		})
-			.then(response => {
-				if (response.status === 200) {
-					titleCTX.renderPopup(
-						TITLE_ACTION.RENDER_POPUP,
-						true,
-						true,
-						'Đặt Hàng Thành Công'
-					)
-					return response.json()
-				} else {
-					titleCTX.renderPopup(
-						TITLE_ACTION.RENDER_POPUP,
-						true,
-						false,
-						'Đặt Hàng Thất Bại'
-					)
-				}
-			})
+
 			.then(data => {
 				setCart(data.cartModelList)
 				setTotal(data.totalMoney)
@@ -151,22 +135,6 @@ const CheckoutPage = () => {
 			}
 		)
 			.then(response => {
-				/*if (response.status === 200) {
-					titleCTX.renderPopup(
-						TITLE_ACTION.RENDER_POPUP,
-						true,
-						true,
-						'Đăng Nhập Thành Công'
-					)
-					return response.json()
-				} else {
-					titleCTX.renderPopup(
-						TITLE_ACTION.RENDER_POPUP,
-						true,
-						false,
-						'Đăng Nhập Thất Bại'
-					)
-				}*/
 				if (response.status === 200) return response.json()
 			})
 			.then(data => {
@@ -237,8 +205,7 @@ const CheckoutPage = () => {
 				}
 			})
 			.then(data => {
-				setCart(data.cartModelList)
-				setTotal(data.totalMoney)
+        router.push('/')
 			})
 	}
 	if (userCTX.state.userID === null) {
@@ -373,72 +340,12 @@ const CheckoutPage = () => {
 									</div>
 								</div>
 							</div>
-
-							{/*<div className={'mt-12 ml-4'}>
-								<span>Thông tin bổ sung</span>
-								<br />
-								<p className={'p-CheckoutPage-subHeader'}>
-									Cần thứ gì khác? Chúng tôi sẽ làm cho nó cho bạn!
-								</p>
-							</div>
-
-							<div className={'mt-8 ml-4'}>
-								<label>Ghi chú đơn hàng</label>
-								<br />
-								<textarea
-									className={'input-CheckoutPage-description'}
-									placeholder={
-										'Cần một ngày giao hàng cụ thể? Gửi gitf? Hãy cùng nói nào ...'
-									}
-								/>
-							</div>*/}
-
-							{/*<div className={'mt-16 ml-4'}>
-								<div>
-									<span>Xác nhận</span>
-									<br />
-									<p className={'p-CheckoutPage-subHeader'}>
-										Chúng ta đang đi đến bước cuối cùng. Chỉ cần vài cú nhấp
-										chuột và đơn đặt hàng của bạn đã sẵn sàng!
-									</p>
-								</div>
-								<div className={'mt-8 '}>
-									<div
-										className={
-											'flex items-center mb-4 div-CheckoutPage-radioBtn'
-										}>
-										<input
-											className={'mr-2 ml-4 input-CheckoutPage-radio'}
-											type={'radio'}
-											name={'tag'}
-										/>
-										<p>
-											Tôi đồng ý với việc gửi email Tiếp thị và bản tin. Không
-											có thư rác, được chấp nhận!
-										</p>
-									</div>
-									<div
-										className={'flex items-center div-CheckoutPage-radioBtn'}>
-										<input
-											className={'mr-2 ml-4 input-CheckoutPage-radio'}
-											type={'radio'}
-											name={'tag'}
-										/>
-										<p>
-											Tôi đồng ý với các điều khoản và điều kiện và chính sách
-											bảo mật của chúng tôi.
-										</p>
-									</div>
-								</div>
-							</div>*/}
 							<div className={'flex mt-20 ml-4'}>
-								<Link href={'/'}>
 									<button
 										className={'btn-CheckoutPage-accept'}
 										onClick={e => Order(e)}>
 										Đặt Hàng
 									</button>
-								</Link>
 							</div>
 						</div>
 
@@ -453,7 +360,6 @@ const CheckoutPage = () => {
 								</p>
 
 								{/*product*/}
-
 								<div className={'mt-8'}>
 									{cart.map((value, key) => (
 										<React.Fragment key={key}>
@@ -471,30 +377,6 @@ const CheckoutPage = () => {
 														<p className={'p-CheckoutPage-productName'}>
 															{value.productName}
 														</p>
-														{/* <div className={'flex items-center'}>
-                              <div>
-                                <p className={'p-CheckoutPage-subHeader'}>
-                                  Xuất xứ:
-                                </p>
-                              </div>
-                              <div>
-                                <p className={'p-CheckoutPage-textProduct'}>
-                                  nông trại ?
-                                </p>
-                              </div>
-                            </div>*/}
-														{/*<div className={'flex items-center'}>
-                              <div>
-                                <p className={'p-CheckoutPage-subHeader'}>
-                                  Hạn sử dụng:
-                                </p>
-                              </div>
-                              <div>
-                                <p className={'p-CheckoutPage-textProduct'}>
-                                  còn 1 ngày
-                                </p>
-                              </div>
-                            </div>*/}
 														<div className={'flex gap-2 items-center'}>
 															<div>
 																<p className={'p-CheckoutPage-subHeader'}>
@@ -558,12 +440,6 @@ const CheckoutPage = () => {
 											<label>Phí Vận Chuyển</label>
 											<label>0 VND</label>
 										</div>
-										{/*<div className={''}>
-											<input
-												className={'input-CheckoutPage-saleCode '}
-												placeholder={'Nhập mã giảm giá'}
-											/>
-										</div>*/}
 										<div className={'flex justify-between'}>
 											<div>
 												<label>Tổng Tiền</label>

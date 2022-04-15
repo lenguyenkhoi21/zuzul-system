@@ -4,7 +4,8 @@ import { imageLoader, timeNow } from '../../utils/Utils'
 import { TITLE_ACTION, TitleContext } from '../../reducer/Title.Reducer'
 import Image from 'next/image'
 import Link from 'next/link'
-import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../utils/APIUtils'
+import {API_DOMAIN, API_PRODUCT_SERVICE, API_USER_SERVICE} from '../../utils/APIUtils'
+import {UserContext} from "../../reducer/User.Reducer";
 // import style from "styles/Product.module.css"
 // import Image from "next/image";
 
@@ -17,6 +18,64 @@ const ProductPage = () => {
 	const path = router.asPath
 	const arr = path.split('/')
 	const titleCTX = useContext(TitleContext)
+  const userCTX = useContext(UserContext)
+
+  const onClickHandle = e => {
+    e.preventDefault()
+    //TODO set payload
+    const payload = {
+      productId: productDetail.prdId,
+      purchaserId: userCTX.state.userID,
+      sellerId: productDetail.prdUserId,
+      count: 1
+    }
+
+    //TODO fetch POST cart
+    fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/cart`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        Authorization: `Bearer ${userCTX.state.accessToken}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.alert === false) {
+          router.push('/checkout')
+        }
+      })
+  }
+  const onClickAddCart = e => {
+    e.preventDefault()
+    //TODO set payload
+    const payload = {
+      productId: productDetail.prdId,
+      purchaserId: userCTX.state.userID,
+      sellerId: productDetail.prdUserId,
+      count: 1
+    }
+
+    //TODO fetch POST cart
+    fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/cart`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        Authorization: `Bearer ${userCTX.state.accessToken}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.alert === false) {
+          router.push('/')
+        }
+      })
+  }
 
 	//TODO: Change the title to name of product
 
@@ -146,24 +205,28 @@ const ProductPage = () => {
 							</div>
 
 							<div className='inline flex-auto mt-1 mr-2 btn-Product'>
-								<Link href={'/'}>
+								<Link href={'/checkout'}>
 									<a>
 										<button
+                      onClick={e => onClickHandle(e)}
+                      name={productDetail.prdId}
 											className={' font-poppins btn-ProductShort btn-buy '}>
 											<span className='text-lg'>+</span> Mua ngay
 										</button>
 									</a>
 								</Link>
-								<Link href={'/'}>
-									<a>
+								{/*<Link href={'/'}>*/}
+
 										<button
+                      onClick={e => onClickAddCart(e)}
+                      name={productDetail.prdId}
 											className={
 												'flex-auto font-poppins btn-ProductShort btn-add-cart'
 											}>
 											<span className='text-lg'>+</span> Thêm vào giỏ hàng
 										</button>
-									</a>
-								</Link>
+
+								{/*</Link>*/}
 							</div>
 						</div>
 						<div className='Product-disciption'>

@@ -16,11 +16,37 @@ const OrderManagementPage = () => {
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
 
 	const [historyShop, setHistoryShop] = useState([])
+  const [userInfo, setUserInfo] = useState({
+    userId: userCTX.state.userID,
+    userFullName: '',
+    userPhone: '',
+    userBirthday: '',
+    userSex: '',
+    userEmail: '',
+    userName: ''
+  })
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Quản lí đơn hàng')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_ALL_ORDER)
-
+    if (userCTX.state.userID !== null) {
+      fetch(
+        `${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/${userCTX.state.userID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${userCTX.state.accessToken}`
+          },
+          mode: 'cors',
+          method: 'GET'
+        }
+      )
+        .then(response => response.json())
+        .then(data => {
+          if (data.status !== 403) {
+            setUserInfo(data)
+          }
+        })
+    }
 		if (userCTX.state.userID !== null)
 			fetch(
 				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/${userCTX.state.userID}/historyShop/ALL`,
@@ -106,7 +132,7 @@ const OrderManagementPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						true,
-						'Đăng Nhập Thành Công'
+						'Thay Đổi Trạng Thái Đơn Hàng Thành Công'
 					)
 					return response.json()
 				} else {
@@ -114,7 +140,7 @@ const OrderManagementPage = () => {
 						TITLE_ACTION.RENDER_POPUP,
 						true,
 						false,
-						'Đăng Nhập Thất Bại'
+						'Thay Đổi Trạng Thái Đơn Hàng Thất Bại'
 					)
 				}
 			})
@@ -138,7 +164,12 @@ const OrderManagementPage = () => {
 			<>
 				<div className={'px-330 div-OrderManagement-container'}>
 					<div className={'grid grid-cols-1'}>
-						<UserAccountBackground />
+            <UserAccountBackground
+              userId={userInfo.userId}
+              avatarImage={userInfo.currentAvatar}
+              coverImage={userInfo.currentCover}
+              userFullName={userInfo.userFullName}
+            />
 
 						<div className={'flex grid-flow-col mt-6'}>
 							<div className={'div-OrderManagement-leftMenu min-h-fit'}>
@@ -152,21 +183,6 @@ const OrderManagementPage = () => {
 								</div>
 								<hr className={'mt-7 mr-10 ml-10 hr-OrderManagement-size'} />
 								<div className={'flex grid-flow-col justify-end mt-6'}>
-									{/*									<div className={'div-OrderManagement-marginCategory'}>
-										<select
-											className={'select-OrderManagement-color'}
-											onChange={filterList}
-											name={'category'}>
-											<option value='ALL'>Chọn danh mục</option>
-											{categoryList.map((value, key) => (
-												<React.Fragment key={key}>
-													<option value={value.categoryId}>
-														{value.categoryName}
-													</option>
-												</React.Fragment>
-											))}
-										</select>
-									</div>*/}
 									<div className={'div-OrderManagement-marginStatus'}>
 										<select
 											className={'select-OrderManagement-color '}
@@ -211,19 +227,6 @@ const OrderManagementPage = () => {
 															đ
 														</td>
 														<td>
-															{/*<select
-																className={'select-OrderManagement-table'}>
-																<option value='ALL'>Chọn trạng thái</option>
-																<option value='WAIT_FOR_ACCEPTING'>
-																	Chờ xác nhận
-																</option>
-																<option value='WAIT_FOR_GETTING'>
-																	Chờ lấy hàng
-																</option>
-																<option value='DELIVERING'>Đang giao</option>
-																<option value='DELIVERED'>Đã giao</option>
-															</select>*/}
-															{/*//TODO CuongNQ Fix CSS*/}
 															<button
 																className={'div-test'}
 																onClick={e =>
@@ -234,7 +237,7 @@ const OrderManagementPage = () => {
 														</td>
 														<td>
 															<button className={'btn-OrderManagement-size'}>
-																xóa
+																Hủy
 															</button>
 														</td>
 													</tr>

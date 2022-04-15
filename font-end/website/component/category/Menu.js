@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { API_DOMAIN, API_PRODUCT_SERVICE } from '../../utils/APIUtils'
 
-const Menu = ({ pathname, setCategoryName }) => {
+const   Menu = ({ pathname, setCategoryName }) => {
 	const [category, setCategory] = useState([])
 
 	useEffect(() => {
@@ -32,7 +32,7 @@ const Menu = ({ pathname, setCategoryName }) => {
 								pathname: `/category/${element.categoryId}`
 							}}>
 							<a>
-								<p className={'p-Menu-text'}> {element.categoryName} </p>
+								<p className={'p-Menu-active p-Menu-text'}> {element.categoryName} </p>
 							</a>
 						</Link>
 					) : (
@@ -42,7 +42,7 @@ const Menu = ({ pathname, setCategoryName }) => {
 								pathname: `/category/${element.categoryId}`
 							}}>
 							<a>
-								<p> {element.categoryName} </p>
+								<p className={'p-Menu-text'}> {element.categoryName} </p>
 							</a>
 						</Link>
 					)}
@@ -51,8 +51,15 @@ const Menu = ({ pathname, setCategoryName }) => {
 
 			<style jsx>
 				{`
+          .p-Menu-active{
+            color: #46d362;
+          }
 					.p-Menu-text {
-						background-color: darkolivegreen;
+						font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 19px;
 					}
 					p {
 						padding-bottom: 12px;

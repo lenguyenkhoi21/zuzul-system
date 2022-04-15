@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { TITLE_ACTION, TitleContext } from '../../../../reducer/Title.Reducer'
-import { USER_ACTION, UserContext } from '../../../../reducer/User.Reducer'
+import { UserContext } from '../../../../reducer/User.Reducer'
 import {
 	LEFT_MENU_USER_ACTION,
 	LeftMenuUserContext

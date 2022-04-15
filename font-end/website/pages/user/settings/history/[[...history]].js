@@ -26,6 +26,15 @@ const HistoryPage = () => {
 		address: '',
 		phone: ''
 	})
+  const [userInfo, setUserInfo] = useState({
+    userId: userCTX.state.userID,
+    userFullName: '',
+    userPhone: '',
+    userBirthday: '',
+    userSex: '',
+    userEmail: '',
+    userName: ''
+  })
 
 	const formatDate = date => {
 		let timestamp = date * 1000
@@ -71,6 +80,24 @@ const HistoryPage = () => {
 					setHistory(data)
 				})
 		}
+    if (userCTX.state.userID !== null) {
+      fetch(
+        `${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/${userCTX.state.userID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${userCTX.state.accessToken}`
+          },
+          mode: 'cors',
+          method: 'GET'
+        }
+      )
+        .then(response => response.json())
+        .then(data => {
+          if (data.status !== 403) {
+            setUserInfo(data)
+          }
+        })
+    }
 	}, [userCTX.state.userID])
 
 	useEffect(() => {
@@ -120,7 +147,12 @@ const HistoryPage = () => {
 				<>
 					<div className={'px-330 div-HistoryPage-container'}>
 						<div className={'grid grid-cols-1'}>
-							<UserAccountBackground />
+              <UserAccountBackground
+                userId={userInfo.userId}
+                avatarImage={userInfo.currentAvatar}
+                coverImage={userInfo.currentCover}
+                userFullName={userInfo.userFullName}
+              />
 
 							<div className={'flex grid-flow-col mt-6'}>
 								<div className={'div-HistoryPage-leftMenu min-h-fit'}>
