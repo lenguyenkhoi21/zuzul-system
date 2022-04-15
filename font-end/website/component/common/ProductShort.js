@@ -21,17 +21,6 @@ const ProductShort = ({ product }) => {
 
 	const onClickHandle = e => {
 		e.preventDefault()
-		/*if (userCTX.state.userID !== null && userCTX.state.userID !== '') {
-			const socket = cartCTX.state.socket
-			if (socket !== null) {
-				socket.emit('synchronization-cart', {
-					userID: userCTX.state.userID,
-					productID: product.prdId,
-					number: 1,
-					type: 'INCREMENT'
-				})
-			}
-		}*/
 		//TODO set payload
 		const payload = {
 			productId: product.prdId,

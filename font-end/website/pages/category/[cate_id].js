@@ -33,11 +33,16 @@ const CategoryPage = () => {
 			<div className='fluid-container page-body'>
 				<div className={'flex mx-auto container-content page-body'}>
 					<div className='left-content'>
+            <div className='category-other'>
+              <h1 className='text-lg font-semibold text-fontColor-bl1 category-title p-CategoryPage-header'>
+                Danh mục sản phẩm khác
+              </h1>
+              <Menu pathname={categoryId} setCategoryName={setCategoryName} />
+            </div>
 						<div className='category-main'>
-							<h1 className='text-lg font-semibold text-fontColor-bl1 category-titile'>
+							<h1 className='text-lg font-semibold text-fontColor-bl1 category-title p-CategoryPage-header'>
 								Danh mục con
 							</h1>
-
 							<SubMenu
 								setProduct={setProduct}
 								pathname={categoryId}
@@ -45,13 +50,7 @@ const CategoryPage = () => {
 							/>
 							{/*<hr/>*/}
 						</div>
-						<div className='category-other'>
-							<h1 className='text-lg font-semibold text-fontColor-bl1 category-titile'>
-								Danh mục sản phẩm khác{' '}
-							</h1>
-							<Menu pathname={categoryId} setCategoryName={setCategoryName} />
-							{/*<ProductDisplay product={data.productModels} />*/}
-						</div>
+
 					</div>
 					<div className='right-content'>
 						<div className='list-products'>
@@ -63,6 +62,15 @@ const CategoryPage = () => {
 			</div>
 
 			<style jsx>{`
+        .p-CategoryPage-header{
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 27px;
+
+            color: #151515;
+          }
 				.fluid-container {
 					background-color: rgb(249, 249, 249);
 				}
@@ -98,7 +106,7 @@ const CategoryPage = () => {
 					padding-top: 0px;
 				}
 
-				.category-titile {
+				.category-title {
 					padding-bottom: 15px;
 				}
 			`}</style>
