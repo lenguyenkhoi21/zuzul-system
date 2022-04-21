@@ -14,4 +14,6 @@ public interface HistoryShopRepository extends MongoRepository<HistoryShop, Stri
     List<HistoryShop> findAllByUserIdAndStatus(String userId, String status);
     List<HistoryShop> findAllByUserIdAndCategoryId(String userId, String categoryId);
     Optional<HistoryShop> findById (String historyId);
+    List<HistoryShop> findAllByHistoryId(String historyId);
+    boolean deleteHistoryShopByPurchaserIdAndProductNameAndHistoryId(String purchaserId, String productName, String historyId);
 }

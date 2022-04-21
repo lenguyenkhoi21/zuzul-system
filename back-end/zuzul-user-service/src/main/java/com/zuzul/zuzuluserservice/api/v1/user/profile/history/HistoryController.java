@@ -1,6 +1,9 @@
 package com.zuzul.zuzuluserservice.api.v1.user.profile.history;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.zuzul.zuzuluserservice.api.v1.user.profile.history.cancel_order.PUTCancelOrder;
+import com.zuzul.zuzuluserservice.api.v1.user.profile.history.cancel_order.PUTCancelOrderPayload;
+import com.zuzul.zuzuluserservice.api.v1.user.profile.history.cancel_order.PUTCancelOrderResponse;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.history.create_history.CreateHistory;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.history.create_history.POSTCreateHistoryPayload;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.history.create_history.POSTCreateHistoryResponse;
@@ -23,6 +26,7 @@ public class HistoryController {
     private final CreateHistory createHistory;
     private final GetAllHistory getAllHistory;
     private final GetHistoryDetail getHistoryDetail;
+    private final PUTCancelOrder putCancelOrder;
 
     @PostMapping("/user/history")
     public POSTCreateHistoryResponse createHistory (@RequestBody POSTCreateHistoryPayload payload, Principal principal) throws JsonProcessingException {
@@ -39,5 +43,10 @@ public class HistoryController {
             , @PathVariable("historyId") String historyId
             , Principal principal) {
         return getHistoryDetail.getHistoryDetail(userId, historyId, principal);
+    }
+
+    @PutMapping("/user/history/cancelOrder")
+    public PUTCancelOrderResponse cancelOrderFromUser (@RequestBody PUTCancelOrderPayload payload, Principal principal) {
+        return putCancelOrder.cancelOrder(payload, principal);
     }
 }
