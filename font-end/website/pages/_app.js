@@ -13,6 +13,7 @@ import ChatReducer from '../reducer/Chat.Reducer'
 import CartReducer from '../reducer/Cart.Reducer'
 import LeftMenuUserReducer from '../reducer/LeftMenuUser.Reducer'
 import PopupContainer from '../component/common/popup/PopupContainer'
+import SearchReducer from '../reducer/Search.Reducer'
 
 const MyApp = ({ Component, pageProps }) => {
 	console.log(`${timeNow()} --- [Component MyApp] --- Render at pages/_app.js`)
@@ -24,17 +25,19 @@ const MyApp = ({ Component, pageProps }) => {
 					<NotifyReducer>
 						<ChatReducer>
 							<CartReducer>
-								<LeftMenuUserReducer>
-									<CookieValidation>
-										{/*<ConnectSocket />*/}
-										<PopupContainer>
-											<Metadata />
-											<NavigationBar />
-											<Component {...pageProps} />
-											<Footer />
-										</PopupContainer>
-									</CookieValidation>
-								</LeftMenuUserReducer>
+								<SearchReducer>
+									<LeftMenuUserReducer>
+										<CookieValidation>
+											{/*<ConnectSocket />*/}
+											<PopupContainer>
+												<Metadata />
+												<NavigationBar />
+												<Component {...pageProps} />
+												<Footer />
+											</PopupContainer>
+										</CookieValidation>
+									</LeftMenuUserReducer>
+								</SearchReducer>
 							</CartReducer>
 						</ChatReducer>
 					</NotifyReducer>

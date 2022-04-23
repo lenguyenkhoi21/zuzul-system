@@ -1,16 +1,22 @@
 import Link from 'next/link'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { CHAT_CONSTANT, ChatContext } from '../../reducer/Chat.Reducer'
 import { useRouter } from 'next/router'
 import { UserContext } from '../../reducer/User.Reducer'
 import Login from '../../component/common/Authentication'
+import { SEARCH_ACTION, SearchContext } from '../../reducer/Search.Reducer'
 
 const RoomChatPage = () => {
 	const chatCTX = useContext(ChatContext)
 	const userCTX = useContext(UserContext)
 	const router = useRouter()
+	const searchCTX = useContext(SearchContext)
 
 	const [message, setMessage] = useState('')
+
+	useEffect(() => {
+		searchCTX.setSearchPage(SEARCH_ACTION.RESET)
+	}, [])
 
 	const onChangeText = e => {
 		setMessage(e.target.value)

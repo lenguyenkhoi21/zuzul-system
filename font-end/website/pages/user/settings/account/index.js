@@ -9,11 +9,16 @@ import Authentication from '../../../../component/common/Authentication'
 import LeftMenuUser from '../../../../component/user/settings/LeftMenuUser'
 import UserAccountBackground from '../../../../component/common/UserAccountBackground'
 import { API_DOMAIN, API_USER_SERVICE } from '../../../../utils/APIUtils'
+import {
+	SEARCH_ACTION,
+	SearchContext
+} from '../../../../reducer/Search.Reducer'
 
 const AccountPage = () => {
 	const titleCTX = useContext(TitleContext)
 	const userCTX = useContext(UserContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
+	const searchCTX = useContext(SearchContext)
 
 	const [userInfo, setUserInfo] = useState({
 		userId: userCTX.state.userID,
@@ -65,7 +70,7 @@ const AccountPage = () => {
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Hồ sơ người dùng')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_PROFILE)
-
+		searchCTX.setSearchPage(SEARCH_ACTION.RESET)
 		if (userCTX.state.userID !== null) {
 			fetch(
 				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/${userCTX.state.userID}`,

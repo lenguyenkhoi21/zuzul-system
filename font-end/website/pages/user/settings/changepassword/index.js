@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { TITLE_ACTION, TitleContext } from '../../../../reducer/Title.Reducer'
 import { UserContext } from '../../../../reducer/User.Reducer'
 import {
@@ -8,44 +8,51 @@ import {
 import Authentication from '../../../../component/common/Authentication'
 import LeftMenuUser from '../../../../component/user/settings/LeftMenuUser'
 import UserAccountBackground from '../../../../component/common/UserAccountBackground'
-import {API_DOMAIN, API_USER_SERVICE} from "../../../../utils/APIUtils";
+import { API_DOMAIN, API_USER_SERVICE } from '../../../../utils/APIUtils'
+import {
+	SEARCH_ACTION,
+	SearchContext
+} from '../../../../reducer/Search.Reducer'
 
 const ChangePasswordPage = () => {
 	const titleCTX = useContext(TitleContext)
 	const userCTX = useContext(UserContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
-  const [userInfo, setUserInfo] = useState({
-    userId: userCTX.state.userID,
-    userFullName: '',
-    userPhone: '',
-    userBirthday: '',
-    userSex: '',
-    userEmail: '',
-    userName: ''
-  })
+	const searchCTX = useContext(SearchContext)
+	const [userInfo, setUserInfo] = useState({
+		userId: userCTX.state.userID,
+		userFullName: '',
+		userPhone: '',
+		userBirthday: '',
+		userSex: '',
+		userEmail: '',
+		userName: ''
+	})
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Thay đổi mật khẩu')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_CHANGE_PASSWORD)
-    if (userCTX.state.userID !== null) {
-      fetch(
-        `${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/${userCTX.state.userID}`,
-        {
-          headers: {
-            Authorization: `Bearer ${userCTX.state.accessToken}`
-          },
-          mode: 'cors',
-          method: 'GET'
-        }
-      )
-        .then(response => response.json())
-        .then(data => {
-          if (data.status !== 403) {
-            setUserInfo(data)
-          }
-        })
-    }
-  }, [userCTX.state.userID])
+		searchCTX.setSearchPage(SEARCH_ACTION.RESET)
+
+		if (userCTX.state.userID !== null) {
+			fetch(
+				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/${userCTX.state.userID}`,
+				{
+					headers: {
+						Authorization: `Bearer ${userCTX.state.accessToken}`
+					},
+					mode: 'cors',
+					method: 'GET'
+				}
+			)
+				.then(response => response.json())
+				.then(data => {
+					if (data.status !== 403) {
+						setUserInfo(data)
+					}
+				})
+		}
+	}, [userCTX.state.userID])
 
 	if (userCTX.state.userID === null) {
 		return (
@@ -62,12 +69,12 @@ const ChangePasswordPage = () => {
 			<>
 				<div className={'px-330 div-ChangePasswordPage-container'}>
 					<div className={'grid grid-cols-1'}>
-            <UserAccountBackground
-              userId={userInfo.userId}
-              avatarImage={userInfo.currentAvatar}
-              coverImage={userInfo.currentCover}
-              userFullName={userInfo.userFullName}
-            />
+						<UserAccountBackground
+							userId={userInfo.userId}
+							avatarImage={userInfo.currentAvatar}
+							coverImage={userInfo.currentCover}
+							userFullName={userInfo.userFullName}
+						/>
 
 						<div className={'flex grid-flow-col mt-6'}>
 							<div className={'div-ChangePasswordPage-leftMenu min-h-fit'}>

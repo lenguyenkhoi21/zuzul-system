@@ -5,6 +5,7 @@ import { TITLE_ACTION, TitleContext } from '../../reducer/Title.Reducer'
 import { useRouter } from 'next/router'
 import SubMenu from '../../component/category/SubMenu'
 import ProductFilterCategory from '../../component/index/ProductFilter'
+import { SEARCH_ACTION, SearchContext } from '../../reducer/Search.Reducer'
 
 //TODO: Build staics page with category
 // eslint-disable-next-line no-unused-vars
@@ -16,11 +17,13 @@ const CategoryPage = () => {
 	const [product, setProduct] = useState([])
 	const [categoryName, setCategoryName] = useState('')
 	const titleCTX = useContext(TitleContext)
+	const searchCTX = useContext(SearchContext)
 	const router = useRouter()
 	const path = router.asPath
 	const categoryId = path.split('/category/')[1]
 
 	useEffect(() => {
+		searchCTX.setSearchPage(SEARCH_ACTION.RESET)
 		if (categoryName.length === 0) {
 			titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Danh mục')
 		} else {
@@ -33,12 +36,12 @@ const CategoryPage = () => {
 			<div className='fluid-container page-body'>
 				<div className={'flex mx-auto container-content page-body'}>
 					<div className='left-content'>
-            <div className='category-other'>
-              <h1 className='text-lg font-semibold text-fontColor-bl1 category-title p-CategoryPage-header'>
-                Danh mục sản phẩm khác
-              </h1>
-              <Menu pathname={categoryId} setCategoryName={setCategoryName} />
-            </div>
+						<div className='category-other'>
+							<h1 className='text-lg font-semibold text-fontColor-bl1 category-title p-CategoryPage-header'>
+								Danh mục sản phẩm khác
+							</h1>
+							<Menu pathname={categoryId} setCategoryName={setCategoryName} />
+						</div>
 						<div className='category-main'>
 							<h1 className='text-lg font-semibold text-fontColor-bl1 category-title p-CategoryPage-header'>
 								Danh mục con
@@ -50,7 +53,6 @@ const CategoryPage = () => {
 							/>
 							{/*<hr/>*/}
 						</div>
-
 					</div>
 					<div className='right-content'>
 						<div className='list-products'>
@@ -62,15 +64,15 @@ const CategoryPage = () => {
 			</div>
 
 			<style jsx>{`
-        .p-CategoryPage-header{
-            font-family: 'Poppins';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 18px;
-            line-height: 27px;
+				.p-CategoryPage-header {
+					font-family: 'Poppins';
+					font-style: normal;
+					font-weight: 600;
+					font-size: 18px;
+					line-height: 27px;
 
-            color: #151515;
-          }
+					color: #151515;
+				}
 				.fluid-container {
 					background-color: rgb(249, 249, 249);
 				}
