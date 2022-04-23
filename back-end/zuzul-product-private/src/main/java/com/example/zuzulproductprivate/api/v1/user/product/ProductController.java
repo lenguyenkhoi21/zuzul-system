@@ -83,7 +83,7 @@ public class ProductController {
     }
 
     @RolesAllowed("USER")
-    @PutMapping("/user/product/")
+    @PutMapping("/user/product")
     public PUTUpdateProductResponse updateProduct (@ModelAttribute PUTUpdateProductPayload payload,
                                                    @RequestPart("prd_image1") MultipartFile prd_image1,
                                                    @RequestPart("prd_image2") MultipartFile prd_image2,
