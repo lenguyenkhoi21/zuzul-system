@@ -2,6 +2,7 @@ package com.example.zuzulproductprivate.api.v1.pub;
 import com.example.zuzulproductprivate.api.v1.pub.category.CategoryModel;
 import com.example.zuzulproductprivate.api.v1.pub.category.GETAllCategory;
 import com.example.zuzulproductprivate.api.v1.pub.category.get_category_image.GetCategoryImage;
+import com.example.zuzulproductprivate.api.v1.pub.product.filter_product.FilterProduct;
 import com.example.zuzulproductprivate.api.v1.pub.product.get_all_product.GetAllProduct;
 import com.example.zuzulproductprivate.api.v1.pub.product.ProductsModel;
 import com.example.zuzulproductprivate.api.v1.pub.product.get_all_product_by_category.CategoryModels;
@@ -32,6 +33,7 @@ public class PublicController {
     private final GetAllProductBySub getAllProductBySub;
     private final GetCategoryImage getCategoryImage;
     private final GETSubCategoryByCatePub getSubCategoryByCate;
+    private final FilterProduct filterProduct;
 
     @GetMapping("/pub")
     public String helloPub() {
@@ -143,4 +145,9 @@ public class PublicController {
                 .contentType(MediaType.IMAGE_PNG)
                 .body(imageData);
     }*/
+
+    @GetMapping("/pub/search/{type}/{query}")
+    public List<ProductsModel> searchProduct (@PathVariable("type") String type, @PathVariable("query") String query) {
+        return filterProduct.searchProduct(type, query);
+    }
 }

@@ -8,6 +8,9 @@ import com.zuzul.zuzuluserservice.api.v1.user.cart.change_number_of_items.PUTNum
 import com.zuzul.zuzuluserservice.api.v1.user.cart.get_all_items.GetAllItems;
 import com.zuzul.zuzuluserservice.api.v1.user.cart.remove_item.DELETEItemInCartPayload;
 import com.zuzul.zuzuluserservice.api.v1.user.cart.remove_item.DeleteItem;
+import com.zuzul.zuzuluserservice.api.v1.user.profile.shop.find_users_by_shopname.GETUserByShopName;
+import com.zuzul.zuzuluserservice.api.v1.user.profile.shop.find_users_by_shopname.Response;
+import com.zuzul.zuzuluserservice.api.v1.user.profile.shop.find_users_by_shopname.UserModel;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.shop.shop_request.PUTRequestShopPayload;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.shop.shop_request.PUTRequestShopResponse;
 import com.zuzul.zuzuluserservice.api.v1.user.profile.shop.shop_request.RequestShop;
@@ -38,6 +41,7 @@ public class UserController {
     private final GetUserInfoById getUserInfoById;
     private final RequestShop requestShop;
     private final GetUserInfoByPrd getUserInfoByPrd;
+    private final GETUserByShopName getUserByShopName;
 
     @RolesAllowed("USER")
     @PutMapping("/user/profile")
@@ -103,5 +107,11 @@ public class UserController {
             exception.printStackTrace();
         }
         return GETUserInfoByPrdResponse.builder().build();
+    }
+
+    @RolesAllowed("USER")
+    @GetMapping("/user/{userId}/shop/{shopName}")
+    public Response getUserByShopName (@PathVariable ("userId") String userId, @PathVariable ("shopName") String shopName, Principal principal) {
+        return getUserByShopName.getUserByShopName(userId, shopName, principal);
     }
 }

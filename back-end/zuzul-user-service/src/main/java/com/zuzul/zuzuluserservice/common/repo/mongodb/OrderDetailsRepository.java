@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface OrderDetailsRepository extends MongoRepository<OrderDetails, String> {
     List<OrderDetails> findAllByHistoryId(String id);
+    boolean deleteOrderDetailsById(String id);
 }
