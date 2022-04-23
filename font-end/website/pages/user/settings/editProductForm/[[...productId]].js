@@ -16,6 +16,7 @@ import {
 	API_USER_SERVICE
 } from '../../../../utils/APIUtils'
 import { useRouter } from 'next/router'
+import { imageLoader } from '../../../../utils/Utils'
 import {
 	SEARCH_ACTION,
 	SearchContext
@@ -45,6 +46,10 @@ const EditProduct = () => {
 		userName: ''
 	})
 
+	const [picture1, setPicture1] = useState(null)
+	const [picture2, setPicture2] = useState(null)
+	const [picture3, setPicture3] = useState(null)
+
 	const formatDate = date => {
 		let timestamp = date * 1000
 		let date_not_formatted = new Date(timestamp)
@@ -67,116 +72,146 @@ const EditProduct = () => {
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Sửa thông tin sản phẩm')
-		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.RESET)
+		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_NEW_PRODUCT)
 		searchCTX.setSearchPage(SEARCH_ACTION.RESET)
 
 		if (userCTX.state.userID !== null && productId !== '[[...productId]]') {
-			fetch(
-				`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/user/${userCTX.state.userID}/product/${productId}`,
-				{
-					method: 'GET',
-					mode: 'cors',
-					headers: {
-						Authorization: `Bearer ${userCTX.state.accessToken}`
+			const handleLogic = async () => {
+				const productResponse = await fetch(
+					`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/user/${userCTX.state.userID}/product/${productId}`,
+					{
+						method: 'GET',
+						mode: 'cors',
+						headers: {
+							Authorization: `Bearer ${userCTX.state.accessToken}`
+						}
 					}
-				}
-			)
-				.then(response => {
-					if (response.status === 200) {
-						return response.json()
-					}
-				})
-				.then(data => {
-					setProduct(data)
-					setDate(formatDate(data.prdDateManufacture))
-				})
+				)
 
-			fetch(`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/category/all`, {
-				method: 'GET',
-				mode: 'cors'
-			})
-				.then(response => {
-					if (response.status === 200) {
-						return response.json()
+				const productData = await productResponse.json()
+
+				const cateResponse = await fetch(
+					`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/category/all`,
+					{
+						method: 'GET',
+						mode: 'cors'
 					}
-				})
-				.then(data => {
-					setCategory(data)
-				})
-		}
-		if (userCTX.state.userID !== null) {
-			fetch(
-				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/${userCTX.state.userID}`,
-				{
-					headers: {
-						Authorization: `Bearer ${userCTX.state.accessToken}`
-					},
-					mode: 'cors',
-					method: 'GET'
+				)
+				const cateData = await cateResponse.json()
+
+				const arr = []
+
+				for (let i = 0; i < cateData.length; i++) {
+					const subResponse = await fetch(
+						`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/${cateData[i].categoryId}/sub/all`,
+						{
+							method: 'GET',
+							mode: 'cors'
+						}
+					)
+
+					const subData = await subResponse.json()
+
+					const row = {
+						categoryId: cateData[i].categoryId,
+						categoryName: cateData[i].categoryName,
+						sub: subData
+					}
+					arr.push(row)
 				}
-			)
-				.then(response => response.json())
-				.then(data => {
-					if (data.status !== 403) {
-						setUserInfo(data)
+
+				const listImage = productData.prdImages
+
+				let imageBlog1
+				let imageBlog2
+				let imageBlog3
+
+				for (let i = 0; i < listImage.length; i++) {
+					const imageRespone = await fetch(
+						`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/product/${productData.prdId}/${listImage[i]}?w=75&q=75`
+					)
+					switch (i) {
+						case 0:
+							imageBlog1 = await imageRespone.blob()
+							break
+						case 1:
+							imageBlog2 = await imageRespone.blob()
+							break
+						case 2:
+							imageBlog3 = await imageRespone.blob()
+							break
+
+						default:
+							break
 					}
-				})
-		}
-		if (product !== {}) {
-			fetch(
-				`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/${product.prdCateId}/sub/all`,
-				{
-					method: 'GET',
-					mode: 'cors'
 				}
-			)
-				.then(response => {
-					if (response.status === 200) {
-						return response.json()
+
+				const image = URL.createObjectURL(imageBlog1)
+				const imagediv = document.getElementById('display_image')
+				const newdiv = document.createElement('img')
+				imagediv.innerHTML = ''
+				newdiv.src = image
+				newdiv.width = 85
+				imagediv.appendChild(newdiv)
+
+				const image1 = URL.createObjectURL(imageBlog2)
+				const imagediv1 = document.getElementById('display_image1')
+				const newdiv1 = document.createElement('img')
+				imagediv1.innerHTML = ''
+				newdiv1.src = image1
+				newdiv1.width = 85
+				imagediv1.appendChild(newdiv1)
+
+				const image2 = URL.createObjectURL(imageBlog3)
+				const imagediv2 = document.getElementById('display_image2')
+				const newdiv2 = document.createElement('img')
+				imagediv2.innerHTML = ''
+				newdiv2.src = image2
+				newdiv2.width = 85
+				imagediv2.appendChild(newdiv2)
+
+				setPicture1(imageBlog1)
+				setPicture2(imageBlog2)
+				setPicture3(imageBlog3)
+				setCategory(arr)
+				setProduct(productData)
+				setDate(formatDate(productData.prdDateManufacture))
+			}
+
+			handleLogic()
+
+			if (userCTX.state.userID !== null) {
+				fetch(
+					`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/${userCTX.state.userID}`,
+					{
+						headers: {
+							Authorization: `Bearer ${userCTX.state.accessToken}`
+						},
+						mode: 'cors',
+						method: 'GET'
 					}
-				})
-				.then(data => {
-					setSubCategory(data)
-				})
+				)
+					.then(response => response.json())
+					.then(data => {
+						if (data.status !== 403) {
+							setUserInfo(data)
+						}
+					})
+			}
 		}
 	}, [userCTX.state.userID, path])
 
 	const onSelectSub = e => {
-		e.preventDefault()
-
-		setProduct({
-			...product,
-			['prdCateId']: e.target.value
-		})
-
-		fetch(
-			`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/${e.target.value}/sub/all`,
-			{
-				method: 'GET',
-				mode: 'cors'
-			}
+		const findSub = category.filter(
+			category => category.categoryId === e.target.value
 		)
-			.then(response => {
-				if (response.status === 200) {
-					titleCTX.renderPopup(
-						TITLE_ACTION.RENDER_POPUP,
-						true,
-						true,
-						'Đăng Nhập Thành Công'
-					)
-					return response.json()
-				} else {
-					titleCTX.renderPopup(
-						TITLE_ACTION.RENDER_POPUP,
-						true,
-						false,
-						'Đăng Nhập Thất Bại'
-					)
-				}
-			})
-			.then(data => {
-				setSubCategory(data)
-			})
+		if (findSub.length === 0) {
+			setSubCategory([])
+			setProduct({ ...product, prdCateId: '', prdSubId: '' })
+		} else {
+			setSubCategory(findSub[0].sub)
+			setProduct({ ...product, prdCateId: e.target.value, prdSubId: '' })
+		}
 	}
 
 	const onChange = e => {
@@ -200,6 +235,7 @@ const EditProduct = () => {
 		newdiv.width = 85
 		imagediv.appendChild(newdiv)
 	}
+
 	const getImagePreview1 = e => {
 		const image = URL.createObjectURL(e.target.files[0])
 		const imagediv = document.getElementById('display_image1')
@@ -209,6 +245,7 @@ const EditProduct = () => {
 		newdiv.width = 85
 		imagediv.appendChild(newdiv)
 	}
+
 	const getImagePreview2 = e => {
 		const image = URL.createObjectURL(e.target.files[0])
 		const imagediv = document.getElementById('display_image2')
@@ -217,6 +254,72 @@ const EditProduct = () => {
 		newdiv.src = image
 		newdiv.width = 85
 		imagediv.appendChild(newdiv)
+	}
+
+	const updateProduct = e => {
+		e.preventDefault()
+
+		const formData = new FormData()
+
+		formData.append('prdName', product.prdName)
+		formData.append('prdUserId', userCTX.state.userID)
+		formData.append('prdCateId', product.prdCateId)
+		formData.append('prdSubId', product.prdSubId)
+		formData.append('prdPriceOrigin', product.prdPriceOrigin)
+		formData.append('prdOrigin', product.prdOrigin)
+		formData.append('prdShortDes', product.prdShortDes)
+		formData.append('prdLongDes', product.prdLongDes)
+		formData.append('prdNumberInStorage', product.prdNumberInStorage)
+		formData.append('discount', product.discount)
+		formData.append('prdMonthWarranty', product.prdMonthWarranty)
+		formData.append('prd_image1', picture1)
+		formData.append('prd_image2', picture2)
+		formData.append('prd_image3', picture3)
+
+		fetch(`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/user/product`, {
+			method: 'PUT',
+			mode: 'cors',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`
+			},
+			body: formData
+		})
+			.then(response => {
+				if (response.status === 200) {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Thêm Sản Phẩm Thành Công'
+					)
+					return response.json()
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Thêm Sản Phẩm Thất Bại'
+					)
+				}
+			})
+			.then(data => {
+				if (data.status === 'Success') {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Thêm Sản Phẩm Thành Công'
+					)
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Thêm Sản Phẩm Thất Bại'
+					)
+				}
+				router.push('/user/settings/listProduct')
+			})
 	}
 
 	if (userCTX.state.userID === null) {
@@ -253,8 +356,7 @@ const EditProduct = () => {
 								</div>
 								<hr className={'mt-7 mr-10 ml-10 hr-EditProduct-size'} />
 								<div className={'grid ml-20 grid-col-1'}>
-									{/*ten san pham*/}
-									<div className={'flex items-center mt-20'}>
+									<div className={'flex items-center mt-6'}>
 										<div>
 											<label className={'label-EditProduct-subTitle'}>
 												Tên Sản Phẩm
@@ -269,7 +371,6 @@ const EditProduct = () => {
 											/>
 										</div>
 									</div>
-									{/*Tên Danh Mục*/}
 									<div className={'flex items-center mt-6'}>
 										<div>
 											<label className={'label-EditProduct-subTitle'}>
@@ -280,10 +381,7 @@ const EditProduct = () => {
 											<select
 												className={'select-EditProduct-color'}
 												name={'prdCateId'}
-												onChange={onSelectSub}
-												defaultValue={category.filter(
-													cate => cate.categoryId === product.prdCateId
-												)}>
+												onChange={onSelectSub}>
 												<option value='0'>Chọn danh mục</option>
 												{category.map((value, key) => (
 													<React.Fragment key={key}>
@@ -305,8 +403,7 @@ const EditProduct = () => {
 											<select
 												className={'select-EditProduct-color'}
 												name={'prdSubId'}
-												onChange={onChange}
-												defaultValue={product.prdSubId}>
+												onChange={onChange}>
 												{subCategory.map((value, key) => (
 													<React.Fragment key={key}>
 														<option value={value.subCategoryId}>
@@ -317,7 +414,6 @@ const EditProduct = () => {
 											</select>
 										</div>
 									</div>
-									{/*Tiêu đề*/}
 									<div className={'flex items-center mt-6'}>
 										<div>
 											<label className={'label-EditProduct-subTitle'}>
@@ -326,6 +422,7 @@ const EditProduct = () => {
 										</div>
 										<div>
 											<input
+												type={'number'}
 												className={'input-EditProduct-title'}
 												name={'prdMonthWarranty'}
 												onChange={onChange}
@@ -333,7 +430,6 @@ const EditProduct = () => {
 											/>
 										</div>
 									</div>
-									{/*Xuất Xứ*/}
 									<div className={'flex items-center mt-6'}>
 										<div>
 											<label className={'label-EditProduct-subTitle'}>
@@ -349,7 +445,6 @@ const EditProduct = () => {
 											/>
 										</div>
 									</div>
-									{/*Ngày Sản Xuất*/}
 									<div className={'flex items-center mt-6'}>
 										<div>
 											<label className={'label-EditProduct-subTitle'}>
@@ -366,7 +461,6 @@ const EditProduct = () => {
 											/>
 										</div>
 									</div>
-									{/*Giá Bán*/}
 									<div className={'flex items-center mt-6'}>
 										<div>
 											<label className={'label-EditProduct-subTitle'}>
@@ -375,6 +469,7 @@ const EditProduct = () => {
 										</div>
 										<div>
 											<input
+												type={'number'}
 												className={'input-EditProduct-createDate'}
 												defaultValue={product.prdPriceOrigin}
 												name={'prdPriceOrigin'}
@@ -402,15 +497,15 @@ const EditProduct = () => {
 											</select>
 										</div>
 									</div>
-									{/*Sale*/}
 									<div className={'flex items-center mt-6'}>
 										<div>
 											<label className={'label-EditProduct-subTitle'}>
-												Numbers In Storage
+												Số lượng trong kho
 											</label>
 										</div>
 										<div>
 											<input
+												type={'number'}
 												className={'input-EditProduct-sale'}
 												onChange={onChange}
 												defaultValue={product.prdNumberInStorage}
@@ -418,14 +513,12 @@ const EditProduct = () => {
 											/>
 										</div>
 									</div>
-									{/*Ảnh*/}
 									<div className={'flex mt-6'}>
 										<div>
 											<label className={'label-EditProduct-subTitle'}>
 												Ảnh
 											</label>
 										</div>
-										{/*anh bia*/}
 										<div className={'ml-16'}>
 											<input
 												className={'input-EditProduct-addImg'}
@@ -449,7 +542,6 @@ const EditProduct = () => {
 												</label>
 											</div>
 										</div>
-										{/*Hinh anh 1*/}
 										<div className={'ml-8'}>
 											<input
 												className={'input-EditProduct-addImg'}
@@ -465,7 +557,9 @@ const EditProduct = () => {
 													<Image
 														width={24}
 														height={24}
+														loader={imageLoader}
 														src={'/png/add_image.png'}
+														alt={'image'}
 													/>
 												</label>
 												<label className={'label-EditProduct-imageTitle'}>
@@ -473,7 +567,6 @@ const EditProduct = () => {
 												</label>
 											</div>
 										</div>
-										{/*Hinh anh 2*/}
 										<div className={'ml-8'}>
 											<input
 												className={'input-EditProduct-addImg'}
@@ -498,7 +591,6 @@ const EditProduct = () => {
 											</div>
 										</div>
 									</div>
-									{/*Mô Tả*/}
 									<div className={'flex mt-6'}>
 										<div>
 											<label className={'label-EditProduct-subTitle'}>
@@ -514,7 +606,6 @@ const EditProduct = () => {
 											/>
 										</div>
 									</div>
-
 									<div className={'flex mt-6'}>
 										<div>
 											<label className={'label-EditProduct-subTitle'}>
@@ -530,7 +621,6 @@ const EditProduct = () => {
 											/>
 										</div>
 									</div>
-
 									<div className={'flex gap-9 justify-end mt-6 mr-28 mb-10'}>
 										<div>
 											<Link href={'/user/settings/listProduct'}>
@@ -540,9 +630,11 @@ const EditProduct = () => {
 											</Link>
 										</div>
 										<div>
-											<Link href={'/user/settings/listProduct'}>
-												<button className={'btn-EditProduct-save'}>Lưu</button>
-											</Link>
+											<button
+												className={'btn-EditProduct-save'}
+												onClick={updateProduct}>
+												Lưu
+											</button>
 										</div>
 									</div>
 								</div>

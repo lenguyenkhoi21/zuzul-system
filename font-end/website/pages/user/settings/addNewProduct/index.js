@@ -85,6 +85,7 @@ const AddNewProduct = () => {
 		}
 
 		handleLogic()
+
 		if (userCTX.state.userID !== null) {
 			fetch(
 				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/${userCTX.state.userID}`,
@@ -121,8 +122,13 @@ const AddNewProduct = () => {
 		const findSub = category.filter(
 			category => category.categoryId === e.target.value
 		)
-		setSubCategory(findSub[0].sub)
-		setProduct({ ...product, prdCateId: e.target.value, prdSubId: '' })
+		if (findSub.length === 0) {
+			setSubCategory([])
+			setProduct({ ...product, prdCateId: '', prdSubId: '' })
+		} else {
+			setSubCategory(findSub[0].sub)
+			setProduct({ ...product, prdCateId: e.target.value, prdSubId: '' })
+		}
 	}
 
 	const [product, setProduct] = useState({

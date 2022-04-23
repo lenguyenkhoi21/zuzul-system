@@ -16,6 +16,8 @@ import com.example.zuzulproductprivate.api.v1.pub.subcategory.getAllSubByCate.GE
 import com.example.zuzulproductprivate.api.v1.pub.subcategory.getAllSubByCate.SubCategoryModel;
 import com.example.zuzulproductprivate.common.ultis.Constant;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -133,19 +135,19 @@ public class PublicController {
     }
 
 
-/*    @GetMapping(value = "/pub/product/{productId}/{imageName}",
-        produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE}
-    )
-    public ResponseEntity<byte[]> getProductImage (@PathVariable("productId") String productId,
-                                                 @PathVariable("imageName") String imageName) {
-        byte [] imageData = getProductImage.getProductImage(imageName, productId);
-
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .contentType(MediaType.IMAGE_PNG)
-                .body(imageData);
-    }*/
+//    @GetMapping(value = "/pub/product/{productId}/{imageName}",
+//        produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE}
+//    )
+//    public ResponseEntity<byte[]> getProductImage (@PathVariable("productId") String productId,
+//                                                   @PathVariable("imageName") String imageName) {
+//        byte [] imageData = getProductImage.getProductImage(imageName, productId);
+//
+//        return ResponseEntity
+//                .ok()
+//                .contentType(MediaType.IMAGE_JPEG)
+//                .contentType(MediaType.IMAGE_PNG)
+//                .body(imageData);
+//    }
 
     @PostMapping("/pub/search/{type}")
     public List<ProductsModel> searchProduct (@PathVariable("type") String type,
