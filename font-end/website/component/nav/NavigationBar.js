@@ -1,14 +1,38 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import IconBar from './IconBar'
 import Image from 'next/image'
 import Link from 'next/link'
 import { timeNow } from '../../utils/Utils'
+import { SEARCH_ACTION, SearchContext } from '../../reducer/Search.Reducer'
+import { useRouter } from 'next/router'
 /*import { CartContext } from '../../reducer/Cart.Reducer'*/
 
 const NavigationBar = () => {
 	console.log(
 		`${timeNow()} --- [NavigationBar] --- Render at component/nav/NavigationBar.js`
 	)
+
+	const searchCTX = useContext(SearchContext)
+
+	const [text, setText] = useState('')
+
+	const router = useRouter()
+
+	const onChangeText = e => {
+		setText(e.target.value)
+	}
+
+	const onSubmit = e => {
+		e.preventDefault()
+		if (!searchCTX.state.isSearchPage) {
+			router.push('/search')
+		}
+		if (text !== '') {
+			searchCTX.setSearchText(SEARCH_ACTION.SET_TEXT, text)
+		} else {
+			searchCTX.reset(SEARCH_ACTION.RESET_TEXT)
+		}
+	}
 
 	/*const cartCTX = useContext(CartContext)*/
 
@@ -51,15 +75,17 @@ const NavigationBar = () => {
 							</select>
 							<input
 								type={'search'}
+								onChange={onChangeText}
+								value={text}
 								className={'mr-2 focus:outline-none input-NavigationBar'}
 								placeholder={'Find your product that you want !'}
 							/>
-							<button>
+							<button onClick={onSubmit}>
 								<Image
 									src={'/svg/search.svg'}
 									width={25}
 									height={25}
-									alt={'Shopping Cart'}
+									alt={'Search'}
 								/>
 							</button>
 						</div>

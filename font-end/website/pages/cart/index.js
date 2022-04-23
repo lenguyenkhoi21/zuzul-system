@@ -9,18 +9,20 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Authentication from '../../component/common/Authentication'
 import { API_DOMAIN, API_USER_SERVICE } from '../../utils/APIUtils'
+import { SEARCH_ACTION, SearchContext } from '../../reducer/Search.Reducer'
 
 const CartPage = () => {
 	const userCTX = useContext(UserContext)
 	const titleCTX = useContext(TitleContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
-
+	const searchCTX = useContext(SearchContext)
 	const [cart, setCart] = useState([])
 	const [total, setTotal] = useState(0)
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Giỏ Hàng')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.RESET)
+		searchCTX.setSearchPage(SEARCH_ACTION.RESET)
 
 		if (userCTX.state.userID !== null) {
 			fetch(

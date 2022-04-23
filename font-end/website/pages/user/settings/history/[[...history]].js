@@ -11,11 +11,16 @@ import UserAccountBackground from '../../../../component/common/UserAccountBackg
 import { useRouter } from 'next/router'
 import { API_DOMAIN, API_USER_SERVICE } from '../../../../utils/APIUtils'
 import Link from 'next/link'
+import {
+	SEARCH_ACTION,
+	SearchContext
+} from '../../../../reducer/Search.Reducer'
 
 const HistoryPage = () => {
 	const titleCTX = useContext(TitleContext)
 	const userCTX = useContext(UserContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
+	const searchCTX = useContext(SearchContext)
 	const router = useRouter()
 
 	const [history, setHistory] = useState([])
@@ -26,15 +31,15 @@ const HistoryPage = () => {
 		address: '',
 		phone: ''
 	})
-  const [userInfo, setUserInfo] = useState({
-    userId: userCTX.state.userID,
-    userFullName: '',
-    userPhone: '',
-    userBirthday: '',
-    userSex: '',
-    userEmail: '',
-    userName: ''
-  })
+	const [userInfo, setUserInfo] = useState({
+		userId: userCTX.state.userID,
+		userFullName: '',
+		userPhone: '',
+		userBirthday: '',
+		userSex: '',
+		userEmail: '',
+		userName: ''
+	})
 
 	const formatDate = date => {
 		let timestamp = date * 1000
@@ -59,6 +64,7 @@ const HistoryPage = () => {
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Lịch sử mua hàng')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_HISTORY)
+		searchCTX.setSearchPage(SEARCH_ACTION.RESET)
 
 		if (userCTX.state.userID !== null) {
 			fetch(
@@ -80,24 +86,24 @@ const HistoryPage = () => {
 					setHistory(data)
 				})
 		}
-    if (userCTX.state.userID !== null) {
-      fetch(
-        `${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/${userCTX.state.userID}`,
-        {
-          headers: {
-            Authorization: `Bearer ${userCTX.state.accessToken}`
-          },
-          mode: 'cors',
-          method: 'GET'
-        }
-      )
-        .then(response => response.json())
-        .then(data => {
-          if (data.status !== 403) {
-            setUserInfo(data)
-          }
-        })
-    }
+		if (userCTX.state.userID !== null) {
+			fetch(
+				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/${userCTX.state.userID}`,
+				{
+					headers: {
+						Authorization: `Bearer ${userCTX.state.accessToken}`
+					},
+					mode: 'cors',
+					method: 'GET'
+				}
+			)
+				.then(response => response.json())
+				.then(data => {
+					if (data.status !== 403) {
+						setUserInfo(data)
+					}
+				})
+		}
 	}, [userCTX.state.userID])
 
 	useEffect(() => {
@@ -147,12 +153,12 @@ const HistoryPage = () => {
 				<>
 					<div className={'px-330 div-HistoryPage-container'}>
 						<div className={'grid grid-cols-1'}>
-              <UserAccountBackground
-                userId={userInfo.userId}
-                avatarImage={userInfo.currentAvatar}
-                coverImage={userInfo.currentCover}
-                userFullName={userInfo.userFullName}
-              />
+							<UserAccountBackground
+								userId={userInfo.userId}
+								avatarImage={userInfo.currentAvatar}
+								coverImage={userInfo.currentCover}
+								userFullName={userInfo.userFullName}
+							/>
 
 							<div className={'flex grid-flow-col mt-6'}>
 								<div className={'div-HistoryPage-leftMenu min-h-fit'}>

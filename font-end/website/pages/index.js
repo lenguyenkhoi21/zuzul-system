@@ -4,16 +4,19 @@ import { timeNow } from '../utils/Utils'
 import CategoryScroll from '../component/index/CategoryScroll'
 import ProductFilter from '../component/index/ProductFilter'
 import { API_DOMAIN, API_PRODUCT_SERVICE } from '../utils/APIUtils'
+import { SEARCH_ACTION, SearchContext } from '../reducer/Search.Reducer'
 
 const HomePage = () => {
 	console.log(`${timeNow()} --- [Home] --- Render at pages/index.js`)
 	const titleCTX = useContext(TitleContext)
+	const searchCTX = useContext(SearchContext)
 
 	const [categoryList, setCategory] = useState([])
 	const [productList, setProduct] = useState([])
 	//Change title of page
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Trang chủ')
+		searchCTX.setSearchPage(SEARCH_ACTION.RESET)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		fetch(`${API_DOMAIN}/${API_PRODUCT_SERVICE}/v1/pub/category/all`, {
 			method: 'GET',

@@ -8,13 +8,15 @@ import {
 import Authentication from '../../component/common/Authentication'
 import Image from 'next/image'
 import { API_DOMAIN, API_USER_SERVICE } from '../../utils/APIUtils'
-import {useRouter} from "next/router";
+import { useRouter } from 'next/router'
+import { SEARCH_ACTION, SearchContext } from '../../reducer/Search.Reducer'
 
 const CheckoutPage = () => {
 	const userCTX = useContext(UserContext)
 	const titleCTX = useContext(TitleContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
-  const router = useRouter()
+	const searchCTX = useContext(SearchContext)
+	const router = useRouter()
 	const [cart, setCart] = useState([])
 	const [address, setAddress] = useState([])
 	const [chooseAddress, setChooseAddress] = useState({})
@@ -23,6 +25,7 @@ const CheckoutPage = () => {
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Thanh toán')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.RESET)
+		searchCTX.setSearchPage(SEARCH_ACTION.RESET)
 
 		if (userCTX.state.userID !== null) {
 			fetch(
@@ -83,12 +86,10 @@ const CheckoutPage = () => {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(payload)
+		}).then(data => {
+			setCart(data.cartModelList)
+			setTotal(data.totalMoney)
 		})
-
-			.then(data => {
-				setCart(data.cartModelList)
-				setTotal(data.totalMoney)
-			})
 	}
 
 	const deleteProductCart = (e, purchaserId, productId) => {
@@ -205,7 +206,7 @@ const CheckoutPage = () => {
 				}
 			})
 			.then(data => {
-        router.push('/')
+				router.push('/')
 			})
 	}
 	if (userCTX.state.userID === null) {
@@ -341,11 +342,11 @@ const CheckoutPage = () => {
 								</div>
 							</div>
 							<div className={'flex mt-20 ml-4'}>
-									<button
-										className={'btn-CheckoutPage-accept'}
-										onClick={e => Order(e)}>
-										Đặt Hàng
-									</button>
+								<button
+									className={'btn-CheckoutPage-accept'}
+									onClick={e => Order(e)}>
+									Đặt Hàng
+								</button>
 							</div>
 						</div>
 

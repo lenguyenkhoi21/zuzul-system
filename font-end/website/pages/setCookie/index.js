@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { timeNow } from '../../utils/Utils'
 import { USER_ACTION, UserContext } from '../../reducer/User.Reducer'
 import { CHAT_ACTION, ChatContext } from '../../reducer/Chat.Reducer'
 import { NOTIFY_ACTION, NotifyContext } from '../../reducer/Notify.Reducer'
 import { CART_ACTION, CartContext } from '../../reducer/Cart.Reducer'
+import { SEARCH_ACTION, SearchContext } from '../../reducer/Search.Reducer'
 
 const SetCookiePage = () => {
 	console.log(`${timeNow()} --- [SetCookie]--- at pages/setCookie/index.js`)
@@ -11,6 +12,11 @@ const SetCookiePage = () => {
 	const chatCTX = useContext(ChatContext)
 	const notifyCTX = useContext(NotifyContext)
 	const cartCTX = useContext(CartContext)
+	const searchCTX = useContext(SearchContext)
+
+	useEffect(() => {
+		searchCTX.setSearchPage(SEARCH_ACTION.RESET)
+	}, [])
 
 	const [cookie, setCookie] = useState({
 		userID: null,

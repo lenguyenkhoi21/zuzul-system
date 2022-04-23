@@ -92,13 +92,13 @@ const SubMenu = ({ setProduct, pathname, path }) => {
 									<button
 										className={'button-SubMenu-color '}
 										onClick={e => selectOne(e, value.subCategoryId)}>
-                    <input
-                      className=' geekmark'
-                      type='checkbox'
-                      checked={true}
-                      id={index}
-                      name={index}
-                    />
+										<input
+											className=' geekmark'
+											type='checkbox'
+											checked={true}
+											id={index}
+											name={index}
+										/>
 										<label className={'p-Menu-text'} htmlFor={index}>
 											<span className='geekmark' />
 											{value.subCategoryName}
@@ -106,12 +106,12 @@ const SubMenu = ({ setProduct, pathname, path }) => {
 									</button>
 								) : (
 									<button onClick={e => selectOne(e, value.subCategoryId)}>
-                    <input
-                      className='geekmark'
-                      type='checkbox'
-                      id={index}
-                      name={index}
-                    />
+										<input
+											className='geekmark'
+											type='checkbox'
+											id={index}
+											name={index}
+										/>
 										<label className={'p-Menu-text'} htmlFor={index}>
 											<span className='geekmark'></span>
 											{value.subCategoryName}
@@ -125,12 +125,12 @@ const SubMenu = ({ setProduct, pathname, path }) => {
 			))}
 			<style jsx>
 				{`
-          .p-Menu-text {
+					.p-Menu-text {
 						font-family: 'Open Sans';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 19px;
+						font-style: normal;
+						font-weight: 400;
+						font-size: 14px;
+						line-height: 19px;
 					}
 					.button-SubMenu-color {
 						color: #151515;

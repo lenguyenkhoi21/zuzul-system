@@ -6,13 +6,17 @@ import Authentication from '../../../../component/common/Authentication'
 import { UserContext } from '../../../../reducer/User.Reducer'
 import { API_DOMAIN, API_USER_SERVICE } from '../../../../utils/APIUtils'
 import { useRouter } from 'next/router'
+import {
+	SEARCH_ACTION,
+	SearchContext
+} from '../../../../reducer/Search.Reducer'
 const AddAddressFormPage = () => {
 	console.log(
 		`${timeNow()} --- [AddAddressForm] --- /user/settings/AddAddressForm.js`
 	)
 
 	const router = useRouter()
-
+	const searchCTX = useContext(SearchContext)
 	const titleCTX = useContext(TitleContext)
 	const userCTX = useContext(UserContext)
 
@@ -94,6 +98,7 @@ const AddAddressFormPage = () => {
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Thêm địa chỉ')
+		searchCTX.setSearchPage(SEARCH_ACTION.RESET)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userCTX.state.userID])
 	if (userCTX.state.userID === null) {

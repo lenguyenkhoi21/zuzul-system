@@ -10,44 +10,52 @@ import {
 	LEFT_MENU_USER_ACTION,
 	LeftMenuUserContext
 } from '../../../../reducer/LeftMenuUser.Reducer'
+import {
+	SEARCH_ACTION,
+	SearchContext
+} from '../../../../reducer/Search.Reducer'
 
 const SendRequestPage = () => {
 	const userCTX = useContext(UserContext)
 	const titleCTX = useContext(TitleContext)
 	const leftMenuUserCTX = useContext(LeftMenuUserContext)
+	const searchCTX = useContext(SearchContext)
+
 	const [render, setRender] = useState({})
-  const [userInfo, setUserInfo] = useState({
-    userId: userCTX.state.userID,
-    userFullName: '',
-    userPhone: '',
-    userBirthday: '',
-    userSex: '',
-    userEmail: '',
-    userName: ''
-  })
+	const [userInfo, setUserInfo] = useState({
+		userId: userCTX.state.userID,
+		userFullName: '',
+		userPhone: '',
+		userBirthday: '',
+		userSex: '',
+		userEmail: '',
+		userName: ''
+	})
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Gửi yêu cầu')
 		leftMenuUserCTX.setSubTitle(LEFT_MENU_USER_ACTION.SET_SEND_REQUEST)
-    if (userCTX.state.userID !== null) {
-      fetch(
-        `${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/${userCTX.state.userID}`,
-        {
-          headers: {
-            Authorization: `Bearer ${userCTX.state.accessToken}`
-          },
-          mode: 'cors',
-          method: 'GET'
-        }
-      )
-        .then(response => response.json())
-        .then(data => {
-          if (data.status !== 403) {
-            setUserInfo(data)
-          }
-        })
-    }
-  }, [render])
+		searchCTX.setSearchPage(SEARCH_ACTION.RESET)
+
+		if (userCTX.state.userID !== null) {
+			fetch(
+				`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/profile/${userCTX.state.userID}`,
+				{
+					headers: {
+						Authorization: `Bearer ${userCTX.state.accessToken}`
+					},
+					mode: 'cors',
+					method: 'GET'
+				}
+			)
+				.then(response => response.json())
+				.then(data => {
+					if (data.status !== 403) {
+						setUserInfo(data)
+					}
+				})
+		}
+	}, [render])
 
 	const [userShopName, setUserShopName] = useState('')
 	const router = useRouter()
@@ -133,12 +141,12 @@ const SendRequestPage = () => {
 			<>
 				<div className={'px-330 div-SendRequest-container'}>
 					<div className={'grid grid-cols-1'}>
-            <UserAccountBackground
-              userId={userInfo.userId}
-              avatarImage={userInfo.currentAvatar}
-              coverImage={userInfo.currentCover}
-              userFullName={userInfo.userFullName}
-            />
+						<UserAccountBackground
+							userId={userInfo.userId}
+							avatarImage={userInfo.currentAvatar}
+							coverImage={userInfo.currentCover}
+							userFullName={userInfo.userFullName}
+						/>
 
 						<div className={'flex grid-flow-col mt-6'}>
 							<div className={'div-SendRequest-leftMenu min-h-fit'}>

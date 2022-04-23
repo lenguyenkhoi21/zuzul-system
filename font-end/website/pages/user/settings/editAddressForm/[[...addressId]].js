@@ -6,6 +6,10 @@ import { timeNow } from '../../../../utils/Utils'
 import { TITLE_ACTION, TitleContext } from '../../../../reducer/Title.Reducer'
 import { UserContext } from '../../../../reducer/User.Reducer'
 import { API_DOMAIN, API_USER_SERVICE } from '../../../../utils/APIUtils'
+import {
+	SEARCH_ACTION,
+	SearchContext
+} from '../../../../reducer/Search.Reducer'
 
 const EditAddressFormPage = () => {
 	console.log(
@@ -18,6 +22,7 @@ const EditAddressFormPage = () => {
 
 	const titleCTX = useContext(TitleContext)
 	const userCTX = useContext(UserContext)
+	const searchCTX = useContext(SearchContext)
 
 	const [address, setAddress] = useState({
 		userName: '',
@@ -32,7 +37,7 @@ const EditAddressFormPage = () => {
 
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Sửa địa chỉ')
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		searchCTX.setSearchPage(SEARCH_ACTION.RESET)
 
 		if (userCTX.state.userID !== null && addressId !== '[[...addressId]]') {
 			fetch(

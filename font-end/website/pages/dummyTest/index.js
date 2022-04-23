@@ -3,10 +3,11 @@ import { TITLE_ACTION, TitleContext } from '../../reducer/Title.Reducer'
 import { timeNow } from '../../utils/Utils'
 import { UserContext } from '../../reducer/User.Reducer'
 import { ChatContext } from '../../reducer/Chat.Reducer'
+import { SEARCH_ACTION, SearchContext } from '../../reducer/Search.Reducer'
 
 const DummyTestPage = () => {
 	console.log(`${timeNow()} --- [DummyTest] --- at pages/dummyTest/index.js`)
-
+	const searchCTX = useContext(SearchContext)
 	const chatCTX = useContext(ChatContext)
 	const userCTX = useContext(UserContext)
 	const titleCTX = useContext(TitleContext)
@@ -16,6 +17,7 @@ const DummyTestPage = () => {
 	//Change title of page
 	useEffect(() => {
 		titleCTX.changeTitle(TITLE_ACTION.CHANGE_TITLE, 'Dummy Test')
+		searchCTX.setSearchPage(SEARCH_ACTION.RESET)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
