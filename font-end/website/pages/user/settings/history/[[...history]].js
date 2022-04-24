@@ -206,13 +206,13 @@ const HistoryPage = () => {
 					</div>
 					<style jsx>{`
 						.div-HistoryPage-idPrd {
-						  overflow: hidden;
-              text-overflow: ellipsis;
-              line-height: 25px;
-              -webkit-line-clamp: 3;
-              height: 30px;
-              display: -webkit-box;
-              -webkit-box-orient: vertical;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							line-height: 25px;
+							-webkit-line-clamp: 3;
+							height: 30px;
+							display: -webkit-box;
+							-webkit-box-orient: vertical;
 						}
 						.div-HistoryPage-container {
 							background: #f9f9f9;
@@ -359,10 +359,13 @@ const HistoryPage = () => {
 										</div>
 
 										<div className={'flex justify-between'}>
-                      <div>
-                        <button className={'btn-HistoryPage-userCancel ml-10 mt-7'}>Huỷ</button>
-                      </div>
-											<div className={'flex gap-4 mt-12 mb-6 mr-16'}>
+											<div>
+												<button
+													className={'mt-7 ml-10 btn-HistoryPage-userCancel'}>
+													Huỷ
+												</button>
+											</div>
+											<div className={'flex gap-4 mt-12 mr-16 mb-6'}>
 												<span className={'label-HistoryPage-subHeader'}>
 													Thành tiền
 												</span>
@@ -392,24 +395,24 @@ const HistoryPage = () => {
 					</div>
 
 					<style jsx>{`
-            .btn-HistoryPage-userCancel{
-              width: 120px;
-              height: 42px;
-              font-family: 'Roboto';
-              font-style: normal;
-              font-weight: 700;
-              font-size: 15px;
-              line-height: 17px;
-              align-items: center;
-              text-align: center;
-              
-              background: #46D362;
-              border: 2px solid #2AA71A;
-              box-sizing: border-box;
-              border-radius: 12px;
-              
-              color: #FFFFFF;
-            }
+						.btn-HistoryPage-userCancel {
+							width: 120px;
+							height: 42px;
+							font-family: 'Roboto';
+							font-style: normal;
+							font-weight: 700;
+							font-size: 15px;
+							line-height: 17px;
+							align-items: center;
+							text-align: center;
+
+							background: #46d362;
+							border: 2px solid #2aa71a;
+							box-sizing: border-box;
+							border-radius: 12px;
+
+							color: #ffffff;
+						}
 						.div-HistoryPage-container {
 							background: #f9f9f9;
 						}
