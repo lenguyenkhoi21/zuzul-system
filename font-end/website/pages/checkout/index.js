@@ -66,7 +66,7 @@ const CheckoutPage = () => {
 					setAddress(data)
 				})
 		}
-	}, [])
+	}, [userCTX.state.userID])
 
 	const changeNumber = (e, productId, purchaserId) => {
 		e.preventDefault()
@@ -86,10 +86,16 @@ const CheckoutPage = () => {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(payload)
-		}).then(data => {
-			setCart(data.cartModelList)
-			setTotal(data.totalMoney)
 		})
+			.then(response => {
+				if (response.status === 200) {
+					return response.json()
+				}
+			})
+			.then(data => {
+				setCart(data.cartModelList)
+				setTotal(data.totalMoney)
+			})
 	}
 
 	const deleteProductCart = (e, purchaserId, productId) => {
