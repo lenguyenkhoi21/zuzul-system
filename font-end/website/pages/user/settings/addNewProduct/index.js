@@ -157,6 +157,7 @@ const AddNewProduct = () => {
 		formData.append('prdSubId', product.prdSubId)
 		formData.append('prdPriceOrigin', product.prdPriceOrigin)
 		formData.append('prdOrigin', product.prdOrigin)
+		formData.append('prdDateManufacture', product.prdDateManufacture)
 		formData.append('prdDateCreate', product.prdDateCreate)
 		formData.append('prdShortDes', product.prdShortDes)
 		formData.append('prdLongDes', product.prdLongDes)

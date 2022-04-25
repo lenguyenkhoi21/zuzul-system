@@ -28,6 +28,7 @@ public class GetHistoryDetail {
             orderDetailsList.forEach(order -> {
                 orderDetailsModels.add(OrderDetailsModel
                         .builder()
+                        .id(order.getId())
                         .count(order.getCount())
                         .discount(order.getDiscount())
                         .productName(order.getProductName())
@@ -37,8 +38,13 @@ public class GetHistoryDetail {
                         .build());
             });
 
+            if (orderDetailsList.size() == 0) {
+                return GETHistoryDetailResponse.builder().build();
+            }
+
             return GETHistoryDetailResponse
                     .builder()
+                    .historyId(historyId)
                     .address(history.getAddress())
                     .paymentType(history.getPaymentType())
                     .phone(history.getPhone())

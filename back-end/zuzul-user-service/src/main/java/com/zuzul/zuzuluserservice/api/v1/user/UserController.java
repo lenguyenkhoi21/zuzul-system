@@ -58,7 +58,13 @@ public class UserController {
     @RolesAllowed("USER")
     @PutMapping("/user/cart")
     public CartResponse changeNumberItems (@RequestBody PUTNumberItemsPayload payload, Principal principal) {
-        return changeNumberItems.changeNumberItems(payload, principal);
+        try {
+            return changeNumberItems.changeNumberItems(payload, principal);
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return CartResponse.builder().build();
     }
 
     @RolesAllowed("USER")

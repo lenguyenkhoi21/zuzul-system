@@ -10,5 +10,5 @@ import java.util.List;
 public interface HistoryRepository extends MongoRepository<History, String> {
     List<History> findAllByUserId (String userId);
     History findByHistoryId(String id);
-    boolean deleteHistoryByHistoryId (String historyId);
+    long deleteHistoryByHistoryId (String historyId);
 }
