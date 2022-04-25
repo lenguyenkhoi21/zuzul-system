@@ -65,11 +65,13 @@ const CartPage = () => {
 			},
 			body: JSON.stringify(payload)
 		})
-			.then(response => {
+			.then(
+				response => response.json() /*{
 				if (response.status === 200) {
 					return response.json()
 				}
-			})
+			}*/
+			)
 			.then(data => {
 				setCart(data.cartModelList)
 				setTotal(data.totalMoney)

@@ -13,11 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableConfigurationProperties({Keycloak.class, Kafka.class})
 public class ZuzulProductPrivateApplication {
-
-
-
     public static void main(String[] args) {
         SpringApplication.run(ZuzulProductPrivateApplication.class, args);
     }
-
 }

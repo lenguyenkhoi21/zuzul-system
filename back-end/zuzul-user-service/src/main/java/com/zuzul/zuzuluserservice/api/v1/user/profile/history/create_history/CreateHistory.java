@@ -120,7 +120,7 @@ public class CreateHistory {
                         .discount(finalList.get(i).getDiscount())
                         .count(finalList.get(i).getCount())
                         .originPrice(finalList.get(i).getOriginPrice())
-                        .status("WAIT FOR ACCEPTANCE")
+                        .status("WAIT_FOR_ACCEPTING")
                         .build());
 
                 historyShopRepository.save(HistoryShop
@@ -136,7 +136,7 @@ public class CreateHistory {
                         .originPrice(finalList.get(i).getOriginPrice())
                         .dateCreated(payload.getDateCreated())
                         .purchaserId(payload.getUserId())
-                        .status("WAIT")
+                        .status("WAIT_FOR_ACCEPTING")
                         .build());
 
                 totalPrice += (finalList.get(i).getOriginPrice() * finalList.get(i).getCount())

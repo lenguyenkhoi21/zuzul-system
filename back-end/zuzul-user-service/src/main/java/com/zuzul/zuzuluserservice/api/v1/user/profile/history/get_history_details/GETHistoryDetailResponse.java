@@ -15,6 +15,7 @@ import java.util.List;
 public class GETHistoryDetailResponse {
     @Builder.Default
     private List<OrderDetailsModel> orderDetailsList = new ArrayList<>();
+    private String historyId;
     private String userName;
     private String paymentType;
     private String address;

@@ -54,6 +54,27 @@ const ProductPage = () => {
 				}
 			})
 	}
+
+	const formatDate = date => {
+		let timestamp = date * 1000
+		let date_not_formatted = new Date(timestamp)
+
+		let formatted_string = date_not_formatted.getFullYear() + '-'
+
+		if (date_not_formatted.getMonth() < 9) {
+			formatted_string += '0'
+		}
+		formatted_string += date_not_formatted.getMonth() + 1
+		formatted_string += '-'
+
+		if (date_not_formatted.getDate() < 10) {
+			formatted_string += '0'
+		}
+		formatted_string += date_not_formatted.getDate()
+
+		return formatted_string
+	}
+
 	const onClickAddCart = e => {
 		e.preventDefault()
 		//TODO set payload
@@ -177,7 +198,7 @@ const ProductPage = () => {
 								<h6 className='flex mt-3 text-fontColor-gr'>
 									Ngày sản xuất
 									<p className='ml-8 text-fontColor-bl1 align-content-center'>
-										{productDetail.prdDateCreate}
+										{formatDate(productDetail.prdDateCreate)}
 									</p>
 								</h6>
 							</div>

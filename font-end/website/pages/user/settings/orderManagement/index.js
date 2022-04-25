@@ -91,20 +91,7 @@ const OrderManagementPage = () => {
 		)
 			.then(response => {
 				if (response.status === 200) {
-					titleCTX.renderPopup(
-						TITLE_ACTION.RENDER_POPUP,
-						true,
-						true,
-						'Đăng Nhập Thành Công'
-					)
 					return response.json()
-				} else {
-					titleCTX.renderPopup(
-						TITLE_ACTION.RENDER_POPUP,
-						true,
-						false,
-						'Đăng Nhập Thất Bại'
-					)
 				}
 			})
 			.then(data => {
@@ -113,14 +100,16 @@ const OrderManagementPage = () => {
 			})
 	}
 
-	const changeState = (e, historyId, status) => {
+	const changeState = (e, id, historyId, status, productName) => {
 		e.preventDefault()
 
 		const payload = {
+			id: id,
 			userId: userCTX.state.userID,
 			historyId: historyId,
 			status: status,
-			filterStatus: key
+			filterStatus: key,
+			productName: productName
 		}
 
 		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/historyShop`, {
@@ -153,6 +142,52 @@ const OrderManagementPage = () => {
 			})
 			.then(data => {
 				setHistoryShop(data)
+			})
+	}
+
+	const cancelOrderShop = (e, id, historyId, productName) => {
+		e.preventDefault()
+
+		const payload = {
+			id: id,
+			productName: productName,
+			historyId: historyId,
+			filterStatus: key,
+			userId: userCTX.state.userID
+		}
+
+		console.log(payload)
+
+		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/historyShop/cancelOrder`, {
+			method: 'PUT',
+			mode: 'cors',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`,
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(payload)
+		})
+			.then(response => {
+				if (response.status === 200) {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Thay Đổi Trạng Thái Đơn Hàng Thành Công'
+					)
+					return response.json()
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Thay Đổi Trạng Thái Đơn Hàng Thất Bại'
+					)
+				}
+			})
+			.then(data => {
+				setHistoryShop(data.historyShopModelsList)
 			})
 	}
 
@@ -237,13 +272,28 @@ const OrderManagementPage = () => {
 															<button
 																className={'div-test'}
 																onClick={e =>
-																	changeState(e, value.id, value.status)
+																	changeState(
+																		e,
+																		value.id,
+																		value.historyId,
+																		value.status,
+																		value.productName
+																	)
 																}>
 																{value.status}
 															</button>
 														</td>
 														<td>
-															<button className={'btn-OrderManagement-size'}>
+															<button
+																className={'btn-OrderManagement-size'}
+																onClick={e =>
+																	cancelOrderShop(
+																		e,
+																		value.id,
+																		value.historyId,
+																		value.productName
+																	)
+																}>
 																Hủy
 															</button>
 														</td>
