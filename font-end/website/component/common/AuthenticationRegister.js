@@ -136,7 +136,7 @@ const AuthenticationRegister = ({
 											className={
 												'label-AuthenticationRegister-phoneNumberAndPass'
 											}>
-											Số điện thoại
+											Tên Đăng Nhập
 										</label>
 										<label
 											className={

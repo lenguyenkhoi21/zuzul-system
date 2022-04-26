@@ -16,21 +16,23 @@ public class GetUserInfoById {
         if (principal.getName().equals(userId)) {
             UserInfo userInfo = userInfoRepository.findUserInfoByUserId(userId);
 
-            return GETUserInfoByIdResponse
-                    .builder()
-                    .currentAvatar(userInfo.getCurrentAvatar())
-                    .currentCover(userInfo.getCurrentCover())
-                    .userBirthday(userInfo.getUserBirthDay())
-                    .userId(userInfo.getUserId())
-                    .userActivated(userInfo.isUserActivated())
-                    .userName(userInfo.getUserName())
-                    .userFullName(userInfo.getUserFullName())
-                    .userPhone(userInfo.getUserPhone())
-                    .userSex(userInfo.getUserSex())
-                    .userShopName(userInfo.getUserShopName())
-                    .userEmail(userInfo.getUserEmail())
-                    .sendRequest(userInfo.isSendRequest())
-                    .build();
+            if (userInfo != null) {
+                return GETUserInfoByIdResponse
+                        .builder()
+                        .currentAvatar(userInfo.getCurrentAvatar())
+                        .currentCover(userInfo.getCurrentCover())
+                        .userBirthday(userInfo.getUserBirthDay())
+                        .userId(userInfo.getUserId())
+                        .userActivated(userInfo.isUserActivated())
+                        .userName(userInfo.getUserName())
+                        .userFullName(userInfo.getUserFullName())
+                        .userPhone(userInfo.getUserPhone())
+                        .userSex(userInfo.getUserSex())
+                        .userShopName(userInfo.getUserShopName())
+                        .userEmail(userInfo.getUserEmail())
+                        .sendRequest(userInfo.isSendRequest())
+                        .build();
+            }
         }
         return GETUserInfoByIdResponse
                 .builder()

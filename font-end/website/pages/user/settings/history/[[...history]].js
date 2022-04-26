@@ -23,9 +23,12 @@ const HistoryPage = () => {
 	const searchCTX = useContext(SearchContext)
 	const router = useRouter()
 
+	const [render, setRender] = useState({})
+
 	const [history, setHistory] = useState([])
 	const [details, setDetails] = useState({
 		orderDetailsList: [],
+		historyId: '',
 		userName: '',
 		paymentType: '',
 		address: '',
@@ -59,6 +62,69 @@ const HistoryPage = () => {
 		formatted_string += date_not_formatted.getDate()
 
 		return formatted_string
+	}
+
+	const cancelOrder = (e, id, historyId, productName) => {
+		e.preventDefault()
+
+		const payload = {
+			id: id,
+			historyId: historyId,
+			userId: userCTX.state.userID,
+			productName: productName
+		}
+
+		fetch(`${API_DOMAIN}/${API_USER_SERVICE}/v1/user/history/cancelOrder`, {
+			method: 'PUT',
+			mode: 'cors',
+			headers: {
+				Authorization: `Bearer ${userCTX.state.accessToken}`,
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(payload)
+		})
+			.then(response => {
+				if (response.status === 200) {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Hủy Thành Công'
+					)
+					return response.json()
+				} else {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Hủy Thất Bại'
+					)
+				}
+				router.push('/user/settings/history')
+			})
+			.then(data => {
+				if (data.status === 'SUCCESS') {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						true,
+						'Hủy Thành Công'
+					)
+					//					userCTX.state.isActiveShop = true
+					userCTX.state.sendRequest = true
+				}
+				if (data.status === 'FAIL') {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Hủy Thất Bại'
+					)
+				}
+				setRender({})
+				router.push('/user/settings/history')
+			})
 	}
 
 	useEffect(() => {
@@ -104,7 +170,7 @@ const HistoryPage = () => {
 					}
 				})
 		}
-	}, [userCTX.state.userID])
+	}, [userCTX.state.userID, render])
 
 	useEffect(() => {
 		if (
@@ -134,7 +200,7 @@ const HistoryPage = () => {
 					setDetails(data)
 				})
 		}
-	}, [router.asPath])
+	}, [router.asPath, render])
 
 	if (userCTX.state.userID === null) {
 		return (
@@ -351,6 +417,26 @@ const HistoryPage = () => {
 																			(value.originPrice * value.discount) /
 																				100)}
 																</td>
+																{value.status === 'WAIT_FOR_ACCEPTING' ? (
+																	<td>
+																		<button
+																			onClick={e =>
+																				cancelOrder(
+																					e,
+																					value.id,
+																					details.historyId,
+																					value.productName
+																				)
+																			}
+																			className={
+																				'mt-7 ml-10 btn-HistoryPage-userCancel'
+																			}>
+																			Huỷ
+																		</button>
+																	</td>
+																) : (
+																	<></>
+																)}
 															</tr>
 														</React.Fragment>
 													))}
@@ -359,12 +445,7 @@ const HistoryPage = () => {
 										</div>
 
 										<div className={'flex justify-between'}>
-											<div>
-												<button
-													className={'mt-7 ml-10 btn-HistoryPage-userCancel'}>
-													Huỷ
-												</button>
-											</div>
+											<div></div>
 											<div className={'flex gap-4 mt-12 mr-16 mb-6'}>
 												<span className={'label-HistoryPage-subHeader'}>
 													Thành tiền

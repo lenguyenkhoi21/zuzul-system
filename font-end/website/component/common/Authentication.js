@@ -119,7 +119,7 @@ const Authentication = ({
 										<label
 											name={'phoneNumber'}
 											className={'label-Authentication-phoneNumberAndPass'}>
-											Số điện thoại
+											Tên Đăng Nhập
 										</label>
 										<label
 											className={'label-Authentication-phoneNumberAndPass2'}>

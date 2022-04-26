@@ -114,7 +114,25 @@ const SendRequestPage = () => {
 					userCTX.state.sendRequest = true
 					setRender({})
 				}
-				if (data.status === 'NO ADDRESS') {
+				if (data.status === 'NO_ADDRESS') {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Gửi Yêu Cầu Thất Bại Vì Người Dùng Chưa Có Địa Chỉ Mặc Định'
+					)
+					router.push('/user/settings/sendRequest')
+				}
+				if (data.status === 'NO_USERINFO') {
+					titleCTX.renderPopup(
+						TITLE_ACTION.RENDER_POPUP,
+						true,
+						false,
+						'Gửi Yêu Cầu Thất Bại Vì Người Dùng Chưa Cập Nhật Thông Tin Cá Nhân'
+					)
+					router.push('/user/settings/sendRequest')
+				}
+				if (data.status === 'FAIL') {
 					titleCTX.renderPopup(
 						TITLE_ACTION.RENDER_POPUP,
 						true,
