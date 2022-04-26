@@ -18,22 +18,36 @@ public class RequestShop {
         if (principal.getName().equals(userId)) {
             UserInfo userInfo = userInfoRepository.findUserInfoByUserId(userId);
 
-            if (addressRepository.findAddressByUserIdAndType(userId, true) != null) {
-                userInfo.setSendRequest(true);
-                userInfo.setSendRequestDate(payload.getSendRequestDate());
-                userInfo.setUserShopName(payload.getUserShopName());
+            if (userInfo != null) {
+                if (addressRepository.findAddressByUserIdAndType(userId, true) != null) {
+                    userInfo.setSendRequest(true);
+                    userInfo.setSendRequestDate(payload.getSendRequestDate());
+                    userInfo.setUserShopName(payload.getUserShopName());
 
-                userInfoRepository.save(userInfo);
+                    userInfoRepository.save(userInfo);
 
+                    return PUTRequestShopResponse
+                            .builder()
+                            .status("SUCCESS")
+                            .build();
+                }
+                else {
+                    return PUTRequestShopResponse
+                            .builder()
+                            .status("NO_ADDRESS")
+                            .build();
+                }
+            }
+            else {
                 return PUTRequestShopResponse
                         .builder()
-                        .status("SUCCESS")
+                        .status("NO_USERINFO")
                         .build();
             }
         }
         return PUTRequestShopResponse
                 .builder()
-                .status("NO ADDRESS")
+                .status("FAIL")
                 .build();
     }
 }

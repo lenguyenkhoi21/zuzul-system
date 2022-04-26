@@ -70,7 +70,6 @@ const SubFormCreate = ({ cateId }) => {
 						'Thêm Danh Mục Con Thành Công'
 					)
 					navigate('/category_management')
-					return response.json()
 				} else {
 					headerCTX.renderPopup(
 						HEADER_ACTION.RENDER_POPUP,
